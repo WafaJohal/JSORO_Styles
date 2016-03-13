@@ -1,0 +1,12 @@
+
+JSORO.out
+
+*.aux
+
+JSORO.bbl
+
+*.blg
+
+*.log
+
+*.gz
