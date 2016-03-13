@@ -276,10 +276,87 @@ Maccoby and Martin updated and arranged  the parenting styles on two axis (from 
 The figure~\ref{fig:fpareting_style} shows these four parenting styles placed on the \textit{ dominance} and \textit{responsiveness} axes.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.7\linewidth]{../Figures/illustrate/fpareting_style}
+	%\includegraphics[width=0.7\linewidth]{../Figures/illustrate/fpareting_style}
 	\caption{Parenting Styles according to two dimensions}
 	\label{fig:fpareting_style}
 \end{figure}
+
+
+Theories of Personality aim to characterise affective and motivational invariants in the attitudes of individuals.
+According to \cite{Huteau}, behaviours of individuals are characterised both by their plasticity and their consistency.
+Behaviours are sensitive to situational and social contexts. 
+However, there exists a singularity of behaviour in a particular situation.
+
+To summarise the different styles that were reviewed in psychology, styles characterise intra-individual consistency in context (in the same context people tend to adopt the same style) and inter-individual differences in context (in the same context, people act differently). 
+One can notice two perspectives in the way psychologists treat styles. 
+It is either seen as a reflection of personality, as preferred ways. 
+Or, it is seen as a strategy, a method that would suit the context in a better way. 
+
+The link between personality and style \cite{Sternberg1997,Hayes} can be justified by the fact that styles express a preference and a continuum in the same context which can also be the expression of personality.
+Some researchers in psychology even use the term Identity Styles to qualify the different kinds of personalities \cite{Berzonsky2011}.
+
+However, unlike personalities, styles do not characterise across context consistency since the palette of styles varies according to the role played by the individual.
+The review of the literature insists on context and role-specificity of styles. 
+People can adopt a style in a role, even if it is not in line with their personality. 
+One can be shy in his/her everyday life, while showing  self-confidence and dominance traits in a work environment .
+In the same line, there are some works in psycho-therapy aiming to change ones' behaviour by using role-playing activities and letting the individual adopt the best style in the context \cite{Mehrabian1971}. 
+
+The magnitude of these correlations confirms that personality and style are related but also suggests that when playing a social role one can suppress his/her personal preference to adopt a more suited style. 
+
+We choose to argue for a separation of these concepts in order to let the user choose the strategy of their companion in its roles. 
+Indeed, personality traits will be displayed in the behaviour of the companion when it is self-centred (for instance, when speaking about it preferences, it mood, it hobbies) but when playing a social role, one can consider that the behaviour displayed is mainly context-centred (the task, and the way the task should be performed matter more). 
+We propose the figure ~\ref{fig:personality-style} to illustrate this distinction between style and personality in the expressed behaviour. 
+This distinction is in line with \cite{Huteau}, who says that behaviours are characterised by consistency (referring to self-consistency and to personality) and plasticity (referring to styles and context adaptation).
+Besides, apart from the cognitive styles, other styles in psychology are anchored to social roles.
+
+
+As the companion robot should fulfil social roles.
+Style framework  will make social behaviour design more reusable and easier to configure by the user. 
+Hence, the role will be the basis on which styles can be designed to depict variations of the execution of the same role. 
+
+
+\subsubsection{As a tool for animators}
+Traditionally animators used key-framing techniques defining each pose of the animation and then using some interpolation technique to go from one frame(pose) to another. 
+This technique is know to be expressive but less realistic than physically-based technique in which a physical model of the character drives the animation.
+
+In order to give more expressibility to physically-based techniques, recent research in animation has been focusing in designing styles of motion. 
+These styles use motion parameters in order to provide a \textbf{flexible} and \textbf{reusable} way to give expressiveness to simple motions.
+
+In \cite{Liu2005}, authors used styles as a physically-based representation of character motion. 
+In particular, this representation includes preferences of using some muscles more than others.
+By combining it to other parameters they define large range of motion styles.
+This style representation is said to be flexible, allowing animators to use the same style for different tasks defined independently. However, in this work, style descriptions still include an abstracted representation of the actor's anatomy.
+
+In other works \cite{shapiro2006style}, the aim was to enable the animator to transfer a style form one motion to another to retain the same expressiveness as the original motion.
+Authors show how a\textit{ clumsy style} component can be extracted form a clumsily walked motion and ported to a running motion. 
+The authors also show how styles can be used for interactive analysis and editing tools for animators.
+
+\cite{Noot2004} proposed the GESTYLE language to define variation in gestures for Embodied Conversational Agents (ECA). 
+This language is written in the XML format and describes gestures by their meaning allowing the usage of different gestures to express the same thing.
+GESTYLE proposes style dictionaries that specify different styles containing profession, culture, age, gender or personality informations.
+In that sense, styles defined in GESTYLE are mainly self-centred (personality) rather than role/context-centred (see our distinction between style and personality - Figure~\ref{fig:personality-style}). 
+The separation between content (action) and style in not clear within GESTYLE as styles are associated to specific behaviour repertoires.
+For \cite{Noot2004}, behavioural style influences the choice of certain gestures, which can limit the reusability and the flexibility of the styles.
+This work is interesting in the choice of annotating language and meaningful utterance with nonverbal modalities to display variations in the usage of gestures.
+
+\cite{Rajagopal2012} continued this work and proposed to clone users' motion style into an ECA using gestures edited via BML(Behavior Markup Language).
+This work showed that the used parameters to describe the \textit{wrist gesture style} were very efficient as 75\% of participants were able to discriminate a person (among two people) seen via the animation of their avatar.
+Other works have been proposed to generate stylistic behaviours by first collecting data and then extracting features that characterised moods, attitude and personality \cite{Kang2013a,Czy2009}. 
+These works gave good simulation results but were not making a clear distinction between the style repertoire and the context. 
+It is probable that new data collection recorded in new contexts will lead to different style parameters.
+
+Recent works in HRI showed how \textbf{behavioural styles} \cite{Ligthart2013,VandenBrule2014} could affect the trust that a user gives to the robot in accomplishing its task. 
+This work highlights the importance of non-verbal cues of communications in the perceived performance of the robot in a particular context. 
+
+
+To conclude, styles in HRI have been researched only recently. 
+Some research teams have focussed on interaction styles - the way users interact with the robot, and some more recent works start to explore \textbf{behavioural styles} as a way to personalise the robot's behaviour within a task. 
+Most of the works aiming to build stylistic expressive gestures were based on machine learning techniques that were extracted from the context of action. 
+For instance, one would register several people doing the same gesture while recording their motions using a Mocap system.
+They would then extract the inter-individual specificity of the motion.
+This can produce a lot of motion styles, but they can be semantically weak.
+However, works in psychology suggests that styles have a strong link to the social role in which they are expressed. 
+This thesis contributes by proposing a meaningful way to express style based on social roles and style descriptions in psychology.
 
 \section{Style model}
 Several expressibility parameters exist to characterise motion. 
@@ -461,16 +538,20 @@ Following are a list of our principal hypothesis :
 \end{itemize}
 
 \subsection{Subjects/Participants}
-Ethical validation has been obtained from the CNIL and CERNI.
-It enabled us to prepare an Information Notice and a Consent Form for parents and children participating to the experiment.
-The recruitment was done within the researchers of the laboratories of Grenoble area. 
-Parents were either staff members of the administration or the researchers at the laboratory.
-We recruited voluntary parents and children during a period of 2 weeks preceding the experiments. 
-The experiment took place during winter holidays. 
-16 children participated to the experiment with ages from 
+16 children and their their relatives participated to the experiment. 
+Most often, the relatives were parents, but 3 children came with their grand-parents.
+16 children participated to the experiment with ages from  
 
 
 \subsection{Apparatus/Materials}
+
+Each session lasted about 15 minutes. 
+Every child passed two sessions. 
+For every child, we had about 30 minutes of recording of the interaction itself (a bit more because we also recorded explanations of the experimentalist). 
+Every session was about 250Gb of recorded data on the disk. 
+In total, we have collected about 8To of data. 
+
+
 \subsection{Design}
 Within subject
 
@@ -600,7 +681,7 @@ From these researches the Uncanny Valley\footnote{Uncanny Valley:} is not at the
 
 
 \section{Biblography}
-\bibliography{jhri16.bib}
+\bibliography{jsoro16.bib}
 
 
 \end{document}
