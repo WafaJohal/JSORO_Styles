@@ -499,6 +499,12 @@ The Algorithm \ref{algo:speed} gives the method to compute new times for the key
 In this algorithm, we first compute the duration between the time of the current keyframe and the time of the previous keyframe. 
 
 
+\section{Model Validation}
+Prior to this experiment, a first online study was performed. 
+This online study aimed to ensure that generated styles were perceptible by end-users. 
+93 parents watched videos of robots with 
+
+
 \section{Research Questions and Scenario}\label{sec:research-questions-and-scenario}
 After the on-line study (Chapter \ref{cha:evalonline}), this experiment aimed to do a real user experiment in an ecological environment in order to test the credibility and the acceptability of styles by children. 
 
@@ -541,7 +547,7 @@ Following are a list of our principal hypothesis :
 16 children and their their relatives participated to the experiment. 
 Most often, the relatives were parents, but 3 children came with their grand-parents.
 16 children participated to the experiment with ages from  
-
+%todo boy and girl, and age and sd of age
 
 \subsection{Apparatus/Materials}
 
@@ -551,51 +557,24 @@ For every child, we had about 30 minutes of recording of the interaction itself 
 Every session was about 250Gb of recorded data on the disk. 
 In total, we have collected about 8To of data. 
 
+Nao Robot
+
+Domus enviroment
 
 \subsection{Design}
 Within subject
 
 \subsection{Procedure}
-The protocol has been established in collaboration with the PIMLIG.
-Ethical  validation has been obtained from the CNIL and CERNI.
-It enabled us to prepare an Information Notice (see Annex \ref{ann:noticeinfo}) and a Consent Form  (see Annex \ref{ann:consentement}) for parents and children participating to the experiment.
-The recruitment was done within the researchers of the laboratories of Grenoble area. 
-Parents were either staff members of the administration or the researchers at the laboratory.
+
 
 \subsubsection{The Domus Experimental Platform and Sensors}
 The experiment took place in an ecological environment at Domus.
-Domus is an experimental platform of the LIG Laboratory. 
-The Figure \ref{fig:domus3d} shows the map of Domus.
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[width=0.8\linewidth]{Domus_def2}
-%	\caption{Domus Experimental Platform}
-%	\label{fig:domus3d}
-%\end{figure}
-Domus is composed of several rooms, or physical spaces:
-\begin{itemize}[noitemsep,nolistsep]
-	\item A fully equipped and functional apartment composed of:
-	\begin{itemize}[noitemsep,nolistsep]
-		\item a kitchen
-		\item an office/living-room (where the experiment took place)
-		\item a bedroom (where the interviews of the children took place)
-	\end{itemize}
-	\item A sound and video direction room, from where one can access audio and video capture in the apartment and record from the control PCs
-	\item An open space divided into a meeting/video-conference room and a common area.
-\end{itemize}
-
-The Figure \ref{fig:domusroof} shows the experimental settings in the living room. 
-The grey window is a tainted-window (with the green star). 
+\footnote{Domus is an experimental platform of the LIG Laboratory.
+It contains a fully equipped and functional apartment with a kitchen, an office/living-room (where the experiment took place) and  a bedroom (where the interviews of the children took place)
+A sound and video direction room, from where the parents and another experimenter accessed audio and video capture in the apartment and record from the control PCs}
 We added a Kinect sensor (yellow star) and a wooden board on the floor to avoid the robot falling. 
-%\begin{figure}[h]
-%	\begin{tabular}{c c}
-%	%	\includegraphics[width=0.45\linewidth]{illustrate/roof1.png}&
-%	%	\includegraphics[width=0.45\linewidth]{illustrate/roof2.png}
-%	\end{tabular}
-%	\caption{Experimental Settings}
-%	\label{fig:domusroof}
-%\end{figure}
-%The Domus apartment is controllable by the OpenHab\footnote{\url{http://www.openhab.org}} middle-ware. 
+
+The Domus apartment is controllable by the OpenHab\footnote{\url{http://www.openhab.org}} middle-ware. 
 OpenHab is a home control middle-ware that supports various sensors, protocols and operating systems. 
 We were able, for instance, to launch music playback on the speaker of the apartment directly form the robot, by doing a simple HTTP\_REQUEST. 
 
