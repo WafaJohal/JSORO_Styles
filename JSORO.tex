@@ -10,7 +10,7 @@
 \usepackage{subfigure} 
 
 \begin{document}
-\title{Behavioural Styles in Child-Robot Interaction%\thanks{Grants or other notes
+\title{Behavioural Styles for Child-Robot Interaction%\thanks{Grants or other notes
 %about the article that should go on the front page should be
 %placed here. General acknowledgments should be placed at the end of the article.}
 }
@@ -18,8 +18,9 @@
 
 %\titlerunning{Short form of title}        % if too long for running head
 
-\author{First Author         \and
-        Second Author %etc.
+\author{Wafa Johal         \and
+        Gaëlle Calvary \and %etc.
+        Sylvie Pesty
 }
 
 %\authorrunning{Short form of author list} % if too long for running head
@@ -108,11 +109,11 @@ A social role is understood as a set of abilities, goals and beliefs of the robo
 %paragraph 2 others, .... last sentence but pb
 
 %paragraph 3 : In this paper we propose ...
-contrary to prior work
-we then evaluate
-we then introduce
-we compare
-we show that
+contrary to prior work we propse a role specific way to customize nv behaviour of robots called behavioural style
+we then evaluate the expressibility of these styles on two different plateform 
+we then introduce a way to measure the attitude of the user
+we compare attitudes of user according to behavioural style
+we show that styles have an effect on the user
 we also present resulst from experimental analysis indicating that 
 findings from ... test indicate  statistically significant differences un 
 
@@ -138,15 +139,147 @@ The experiment was conducted in the smart apartment Domus\footnote{Domus is an e
 %*****************************************************************************************************
 
 \section{Related Literature/Work}
-Context social adaptability
+%need for acceptabilty
+Robots have mainly served in the industry as their primary utility since their usage came about.
+With development in technology, robots now in our daily lives are taking up roles of assistants or entertainers. 
+Because of these new contexts and the new users that come with it (who are necessarily neither experts, nor programmers) robots need to be able to interact in an intuitive way with them. 
+This implies that the modern day robot has to be able to perceive it's environment and to act accordingly in a humanly acceptable and welcoming manner. 
+We can imagine how robots will be useful to humans in the future, but how they will be accepted in our social lives is still a maturing domain for research.
 
-Personality matching
-pb context independent
 
-We would like a model to be context dependent
+%Context social adaptability
+In order to accommodate the user, many research projects have attempted to enable the robot to display social behaviours.
+The adaptation to the user is also called \textbf{personalisation}.
+This section gives a review of some works on personalisation in HRI.
+The customisation of the robot's appearance will not be reviewed because it is out of the scope of our research eventhought 3D printed robots such as Poppy\footnote{Poppy is an open source 3D printed robot created within the Flowers research team at INRIA Bordeaux\url{https://www.poppy-project.org/technologies/}} make appearance customisation now possible.  
+
+In Human-Computer Interaction, two kinds of personalisation systems are distinguished \cite{Fischer2001,Oppermann1997}, the ones that automatically and dynamically change according to the user, also called \textbf{user adaptive systems}, and the ones that can be changed by the user himself, also called \textbf{user adaptable systems}. 
+
+The term personalisation is also used in other types of research projects in which robots are given a social presence - a name, a story, a past, for example. 
+We won't consider these works in this classification as we believe that a better term to qualify these works would be personification and not personalisation. 
 
 
-Style
+The main difference between the two types of personalisation - \textbf{adaptive} and \textbf{adaptable} - is the control on the adaptation process. 
+In the adaptive systems, the changes in the systems to adapt itself are seamless to the user's view, whereas, in adaptable systems, the user is the actor of the changes. 
+
+Another dimension of the analysis of personalisation is the nature of the changes in the system. 
+The robot can either adapt to the users social characteristics (such as emotional tendency, mood, personality) and preferences (i.e. human values) or to the users abilities (i.e. performance in a specific task, vocabulary to age, school grade).
+\begin{figure}[h]
+	\centering
+	%\includegraphics[width=0.9\linewidth]{personalisation}
+	\caption{Categories of Personalisation in HRI}
+	\label{fig:personalisation}
+\end{figure}
+We propose to classify personalisation systems in HRI on two dimensions as illustrated in the figure~\ref{fig:personalisation}: according to the control of the adaptation (system vs user) and the nature of the adaptation (social vs ability/task performance).
+
+\begin{itemize}[noitemsep,nolistsep]
+	\item \textbf{socially adaptive}: the system adapts itself by detecting and inferring the social preferences of the user by collecting data.
+	\item \textbf{socially adaptable}: the user defines his preferences explicitly to the system. 
+	\item \textbf{ability adaptive}: the systems adapt itself by learning from interactions and inferring the difficulty of the task according to the user's performances.
+	\item \textbf{ability adaptable}: the users sets the difficulty by choosing the levels himself.
+\end{itemize}
+These different types can be combined.
+For instance a teacher robot could first ask user's input to set his social preferences (cultural language sets as French for instance) and then update the user model according to performances, which would be a form of ability-adaptive and social-adaptable personalisation.
+In the following part, we will present examples of works on personalisation in HRI. 
+
+\subsection{Personalized systems in HRI}
+There have been various works on personalisation in HRI. 
+Individual differences are often observed in user studies in HRI. 
+Personalisation can be a tool to adapt to the user's own ability and to his social preferences.
+Personalisation plays a role for long-term relationship credibility, social competences and persuasion. 
+
+\cite{Lee2012} proposed a method in which authors combined several forms of personalisation in a long-term study. 
+In this study, authors used personification, adaptive and adaptable personalisation tools and concluded that personalisation improved engagement, cooperation and relationship between the participants and the robot and saw personalisation has a promising area of research in HRI. 
+This study showed that personalisation was beneficial for HRI but they do not provide a framework or profiles of users. 
+
+From the results of the study of \cite{Jones2013} within the LIREC project on teachers perspective to have a robotic tutor to assist them, personalisation turned out to be a very important requirement. 
+Other research projects have highlighted this need for personalisation - the SERA\footnote{SERA: \url{http://cordis.europa.eu/project/rcn/89259_en.html}} project for instance, keen for personalisation, user or task tailoring. 
+Some research works have shown that personalisation can improve the user's engagement in the task (\cite{Corrigan2013}) and the robot's competencies as perceived  by the user \cite{Fasola2012a}.
+
+
+In \cite{Francois2007a}, authors proposed a \textbf{socially adaptive} robot that adapts its behaviour to the user's interaction styles. Authors collect data during the interaction and infer an interaction style. 
+These works highlighted one of the difficulties in adaptive systems which being the collection of less noisy and more relevant data and the delay required for optimum socially adaptation. 
+\cite{Francois2009a} improved this delay in further research but this method is still limited by the time of interaction (the more interaction, the better adaptation). 
+Some other works \cite{Castro-Gonzalez2011} on learning user's preferences in term of interaction styles showed that it to be possible using Reinforcement Learning but also concluded that it would require long interactions with a larger pool of participants to determine the correct \textbf{socially adaptive} behaviour for the robot. 
+
+Personalisation has proved in previous research to be quite effective in terms of improving acceptability and the trust of a robot. 
+By showing personalised behaviour, users see the robot as more socially competent.
+\cite{Kuhnlenz2013} have focused on socially adaptive robot, showing that by adapting to the mood and emotions of the user, the robot was found to be more helpful.
+
+Personalisation has also been found to be determinant in persuasion processes. 
+\cite{Fogg} claims that adapted social cues can significantly improve the persuasive impact of a computer system and that tailoring the user experience improves credibility of the system. 
+This is also supported by the study of Fasola et al. \cite{Fasola2012} showing how personalisation can improve intrinsic motivation of the user. 
+Some works on proxemics\footnote{Proxemics are a subcategory of non-verbal communication signals that deal with body space and posture. Hall defines four concentric space around a person the closer begin the Intimate space, around it would be, the personal space (for friend and family) the social space and then the public space \cite{hall1966}. Some modality of communication and senses were associated to these spaces.} \cite{Syrdal2007} in human-robot interaction show that there exist individual differences in term of preferred proxemics when interacting with a human. 
+These non-verbal cues of communication are worth being taken into account by the robot in order to show social competence. 
+
+
+Based on works on the "Theory of Companions" \cite{Kramer2011}, we choose to model companion behaviours within the social roles and to work on personalisation as a function of context. 
+Section~\ref{sec:stylemode} offers a style model for socially adaptable robots' behaviours.
+Hence, variability is not only the roles that the robot is expected to have, but also the way the robot will play these roles.
+
+\subsection{Personality in HRI}
+Personality is widely researched in psychology and social sciences. It is often used to characterise individual differences in terms of communication and decision making. 
+There exist in HRI some systems that aim to personalise the behaviour of the robot to the user by giving the robot a personality. 
+These works are social adaptation but can be either adaptable or adaptive systems. 
+
+\cite{Revelle2009} defined \textbf{personality} as a "coherent patterning of affect, behaviour, cognition, and desires (goals) over time and space". 
+Research in robots with personality is an ongoing problematic that would aim to give consistency to the companion's behaviours.
+For companionship and long-term relationship, consistency is particularly important regarding the credibility and the perceived social competence of the companion. 
+
+Some works have shown that people tend to attribute social presence and sometimes personalities to computer or interactive devices such as robots \cite{Woods2006,Meerbeek2009}. 
+Often works on personality have based their work on the Five Factor Model (FFM) (also called OCEAN or Big Five) that describes personality under five dimensional traits : Openness to experience, Conscientiousness, Extraversion, Agreeableness and Neurotiscism. 
+
+
+In terms of the user's adaptation of the robot personality, there has not been so far any consensus in the HRI community. 
+Indeed, some studies have shown that there was a similarity attraction (an extroverted user prefers an extroverted companion robot) \cite{Isbister2000} and some others have found complementarity attraction (an extroverted user prefers an introverted companion robot \cite{Lee2006,Tapus2008}). 
+\cite{Belpaeme2012a} concluded in no significant influence of extrovert and introvert personality trait in child-robot interaction.
+
+However \cite{Joosse2013a} contested the complementary and similarity attraction theories for attribution to the user by showing that the appropriate personality is more related to the task context. 
+Hence a situated personality is perceived to be more adapted and more expected by users. 
+\cite{Tay2014} also recommend designing social robots within the social role framework. 
+In line with this research, as Section~\ref{sec:stylemode} will show that behavioural \textbf{styles} might be seen as consistent personalised behaviour in context and hence provide consistency within a social role. 
+One of our contribution is to offer a new profile-based way to make the companion robot's behaviour adaptable in an intelligible way for the user within specific social contexts. 
+
+According to the survey of \cite{Mahani2009}, controllability, learnability and adaptability of the robot are important for user acceptability. 
+Automatic social personalisation - \textbf{socially adaptive system} - have the drawback of necessitating to collect data in order to make the personalisation possible. 
+Hence they are dynamic and will build on as the user interacts with the system. 
+This poses questions on memory and privacy when dealing with personal data collected by a system. 
+
+Since users often praise controllability as one of the most import criteria for acceptability, the presented approach in this thesis will follow a framework allowing \textbf{socially adaptable} behaviours by the robot.
+We propose to use \textbf{styles} as tools for adaptability of the companion's behaviour within the role it has to play.
+
+%generation or modification of motion
+\subsection{Motion Generation and Modification}
+BML, 
+ACE, DESIRE
+
+These systems were dedicated to programmers. 
+We aim to provide a social understanding of the modified behaviiour and hence to allow the user to pick a style.
+
+\subsection{A Quick Overview of styles in Other Domain}
+\label{sec:soa_styles}
+The concept of \textit{style} is widely used, and before going further it is important to define the term. 
+In this section, we present different definitions of  styles found in  different fields.
+In general,  styles refer to variations or ways  \textit{in doing something }, or even in \textit{appearances}.
+In this review, we consider the first sense of style as a\textit{ manner or a way of doing something that would be recognisable}.
+Some research domains related to ours dealing with style are reviewed in the following paragraphs: in psychology, computer sciences, computer animation and  human-robot interaction. 
+
+\paragraph{In Psychology}:\textit{Styles} describe different ways to behave in a particular context. 
+Some \textit{styles} are associated to specific social roles: management styles, teaching styles, learning styles, parenting styles. 
+And there are some others such as cognitive styles that aim to classify wider preferences.
+We also use the term non-role-specific styles to qualify Cognitive Styles, in opposition to role-specific styles such as  Learning, Teaching, Leadership and Parenting styles that are related to specific social roles. 
+We chose as an example Parenting Styles.
+
+Parenting Styles have been studied in socio-psychology. 
+The most well-known model is Baurmind's parenting styles (\cite{baumrind1991influence}).
+Maccoby and Martin updated and arranged  the parenting styles on two axis (from \cite{Darling1993}). 
+The figure~\ref{fig:fpareting_style} shows these four parenting styles placed on the \textit{ dominance} and \textit{responsiveness} axes.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{../Figures/illustrate/fpareting_style}
+	\caption{Parenting Styles according to two dimensions}
+	\label{fig:fpareting_style}
+\end{figure}
 
 \section{Style model}
 Several expressibility parameters exist to characterise motion. 
@@ -339,6 +472,8 @@ The experiment took place during winter holidays.
 
 \subsection{Apparatus/Materials}
 \subsection{Design}
+Within subject
+
 \subsection{Procedure}
 The protocol has been established in collaboration with the PIMLIG.
 Ethical  validation has been obtained from the CNIL and CERNI.
@@ -385,9 +520,6 @@ We were able, for instance, to launch music playback on the speaker of the apart
 
 \subsection{Measures}
 \section{Results}
-\section{Discussion}
-\section{Conclusion}
-
 %Statistics
 %ANOVA results are cited using the F test (e.g., $F (1, 38) = 4.94$, $p = .04$). F and p are italicized. Give the exact $p$ value to two decimal places except when greater better than $p < .01$. Try to avoid more than two decimal places, as readers are not very interested in exact values; comparisons are more important. The $F$ value is followed by the degrees of freedom in the numerator and denominator. Here is how one author of a mobile phone study (Author, 2010) reported an interaction effect:
 %\begin{quotation}
@@ -397,6 +529,21 @@ We were able, for instance, to launch music playback on the speaker of the apart
 %
 %T tests (e.g., $t [20] = 100.2$, $p < .01$) are reported giving the degrees of freedom in the denominator. (The numerator {\it df} is always $1$, as is true of correlations.)
 %Notice how brackets are placed inside parentheses to reduce confusion.
+
+
+
+\section{Discussion}
+\section{Conclusion}
+
+
+
+%futur for styles and personalisation
+In the future, even the appearance should be customizable by the user since some studies have shown that there exist systematic individual differences in terms of preference of the companion's appearance \cite{Walters2008}. 
+They have highlighted individual differences in the preference of the robot's dynamic which could suggest and emphasise the need for the social adaptation of robots. 
+From these researches the Uncanny Valley\footnote{Uncanny Valley:} is not at the same location for each individual and the creepiness threshold might also be varying. 
+
+
+
 
 %*****************************************************************************************************
 
