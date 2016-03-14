@@ -42,7 +42,7 @@
 \begin{abstract}
 	In this paper we present the concept of behavioural style as a tool for personalisation of robot's behaviour in specific roles. 
 	We propose a study for which we have employed various kind of metrics to evaluate the perception and the influence of a robot's behavioural style on children. 
-	This within subjects experiment took place in a smart apartment equipped with cameras, microphones and kinect sensor. 16 children from 7 to 11 participated to the experiment.
+	This within subjects experiment took place in a smart apartment equipped with cameras, microphones and Kinect sensor. 16 children from 7 to 11 participated to the experiment.
 	In the experiment the robot would either have an authoritative attitude or a permissive attitude. 
 	We measured the influence of this attitude via various medium:
 	interviews of children, questionnaires, task performances, parents observation and confrontation, and postural analysis. 
@@ -360,31 +360,22 @@ This thesis contributes by proposing a meaningful way to express style based on 
 
 \section{Style model}
 Several expressibility parameters exist to characterise motion. 
-We used some of these parameters to filter pre-designed motions and to generate \textit{style}d motion.
+We used some of these parameters to filter pre-designed motions and to generate \textit{styled} motion.
 
-In the state of the art on styles in Psychology (in section \ref{ss:psychostyle}), we have differentiated cognitive styles (closer to the notion of personality) from other kinds of styles which are more role-dependent (such as leadership styles, parenting styles etc.).
-Our definition of Behavioural Styles is in line with psychological role-dependent styles, and hence takes into account the role played by the robot.
-Before giving details in the model and the generation process of \textit{style}d behaviour, let us clarify the properties of our behavioural styles:
-\begin{center}
-Behavioural Style Properties
-	\begin{itemize}[noitemsep]
-		%\item a way of playing a social role by a companion robot.
-		\item described by a list of parameters
-		\item expressed in non-verbal cues of communication
-		\item associated to a meaningful concept in psychology
-	\end{itemize}
-\end{center}
-
-%cf \cite{Dalle2012,Neff2008} for presentation of model and equation
-
+Our definition of \emph{Behavioural Styles} is in line with psychological role-dependent styles, and hence takes into account the role played by the robot.
+Before giving details in the model and the generation process of \textit{styled} behaviour, let us clarify the properties of our behavioural styles:
+\begin{itemize}[noitemsep]
+	\item described by a list of parameters
+	\item expressed in non-verbal cues of communication
+	\item associated to a meaningful concept in psychology in order to be understandable by the end-user
+\end{itemize}
 
 
 \subsection{Design Approach}
 In this section, the different modules involved in the style model are described. 
 Then, we detail on the implementation and give some examples of style sheet and application on the Nao  and Reeti robots are given.
 
-%\subsection{The context as a social role for the companion}
-\subsubsection{Theoretical Grounding}
+
 As presented previously, the \textbf{Plasticity} perspective is taken in order to render an adaptable companion robot.
 Styles characterise the plasticity of the behaviour (variability in the same context) as opposed to the personality that characterises the behaviour consistency (consistency across contexts).
 Our approach aims to apply plasticity concepts to HRI as it was applied in HCI. 
@@ -393,59 +384,46 @@ As described by \cite{Coutaz2012}, the context of use modelling, in which differ
 \begin{itemize}[noitemsep,nolistsep]
 \item the role: which corresponds to the social role for the companion robot.
 \item the entities involved: corresponding to the number of robots involved and their competencies (role they can play).
-\item the situational inter-relation: the listener, the speaker (one can also specify here the relative position of the agents).
+\item the situational inter-relation: the listener, the speaker (one can also specify here the spatial position of the agents).
 \end{itemize}
-Based on the previous study in Chapter~\ref{cha:explostudy}, we have identified 6 problems/situations for children alone at home and proposed 6 social roles for the companion robots to fulfil in these contexts.
-
-Following the Scenario-based approach, (see~\ref{sec:senarbasedapp}), we propose a scenario that incorporates all of the above problem/situations while highlighting the interactions between the companion agents and the child. 
-It should be noted that a social role, for example that of a Teacher, can be deployed via one or many forms (e.g. virtual agents and/or robotic agents) that will collaborate and cooperate in order to accomplish the tasks and to reply to the needs of a specific problem/situation.
-An example of a scenario written in natural language can be found in the the Annex~\ref{annex:scenarMOCA}.
 
 
-
-
-\subsection{Personalisation with Styles}
 On top of the roles, behavioural styles, as previously mentioned, will affect the non-verbal expressibility within the role.
 
 The notion of style is in this model: a set of behavioural changes that can be applied to any motion of a role repertoire and that leads to a meaningful interpretation of the way the motion is executed. 
-A styles filter is used to generate behaviours according to the role and to the user's preferences. 
+A style filter is used to generate behaviours according to the role and to the user's preferences. 
 Only a few styles have been implemented for our experiments but the solution that we propose can be extended.
 The aim is that users could choose the styles from a catalogue and set the one they prefer, providing hence the adaptability of the companion within the social role. 
 
 As for CSS, the aim in the style framework for design of social behaviour for robots is to make them \textbf{reusable }and \textbf{flexible}.
 We intent then to show that styles can be applied to various gestures and pre-defined behaviour but also used for various robotic platforms. 
-
 The style model acts similarly to a filter. 
 It is fed by neutral gestures that are contained in the role repertoire and applied at run-time on the pre-selected gesture. 
 The stylized gesture is then sent to the scheduler in order to perform it.
 
 The figure \ref{fig:workflowstyle} shows the general data work-flow for the runtime generation of stylistic motion.
-
 Our system takes as input a pre-defined motion that has been selected to be performed. 
 This motion belongs to a motion repertoire that is associated to the current role played by the robot.
 The input \textbf{motion} is defined by a series of key-frames.
 A motion is hence a tuple containing : 
 the names of the joints active during this motion,
-for each joint the list of relative \textit{time} when a key-frames appends and
-for each joint and each time the associated \textit{key-frame} value (either angular or relative activation of the joint).
+for each joint the list of relative \textit{time} when a key-frames appends and for each joint and each time the associated \textit{key-frame} value (either angular or relative activation of the joint).
 
 The styles are defined within the \textbf{Behavioural Style Sheet} (BSS) format. 
 The style is set before run-time. 
 It defines the modification that will be applied to the original motion.
-The BSS is divided in two main parts, the hearer and the speaker parts.
+The BSS is divided in two main parts, according to the previously mentioned situational inter-relation, the hearer and the speaker parts.
 Indeed,  according to the fact that the robot is reacting to someone speaking or speaking itself, the style parameters may vary.
 The BSS is further discussed in the section \ref{ssec:bss}.
 
-The \textbf{Style filter} is the core program written in Python. 
-It contains some transformation algorithms inspired from works in 3D animation allowing the interpretation of the BSS and the generation of new motion.
+The \textbf{Style filter} is the core program. 
+Written in Python, it contains some transformation algorithms inspired from works in 3D animation allowing the interpretation of the BSS and the generation of new motion.
 Some examples of algorithms implemented in the current version of our system are presented in section \ref{sec:examples-of-stylized-motions}.
 The generated motion can be however out-passing the physical constraints of the robot's motor. 
 
 The \textbf{Post-Processing} module takes as input the platform's limits (speed and angular limits of each joints) and the generated motion and ensures that the computed styled motion is within these limits.
 If not, the generated motion is modified to fit within the joints' constraints
 
-
-%%todo \cite{Ruttkay1998} contraint based key-framinig As used in web-design to implement style, we propose a similar syntax to define styles within what we call Behavioural Style Sheet.
 
 \subsection{Style filter}
 \label{ssec:bss}
@@ -502,22 +480,17 @@ In this algorithm, we first compute the duration between the time of the current
 \section{Model Validation}
 Prior to this experiment, a first online study was performed. 
 This online study aimed to ensure that generated styles were perceptible by end-users. 
-93 parents watched videos of robots with 
+93 parents watched videos of robots with 2 styles. 
+We 
 
 
 \section{Research Questions and Scenario}\label{sec:research-questions-and-scenario}
-After the on-line study (Chapter \ref{cha:evalonline}), this experiment aimed to do a real user experiment in an ecological environment in order to test the credibility and the acceptability of styles by children. 
+After the on-line study, this experiment aimed to do a real user experiment in an ecological environment in order to test the credibility and the acceptability of styles by children. 
 
-One of the research questions behind the experiment was to test the style model and the plasticity model of the companion proposed in Chapter \ref{cha:stylemode} and \ref{cha:caio}. 
-In a social relationship, the perceived signals are encoded, and each of the partners influence the thinking and the actions of the other.
-This influence can be subconscious and very tricky to identify. 
-Phenomena such as synchrony and imitation can be observed. 
+One of the research questions behind the experiment was to test the style model and the plasticity model of the companion proposed. 
 
-%This experiment as to not rely only on subjective data but also tried to measure objectively the change of behaviour of the children according to the style or versatility of the robots.
-In this experiment, the same styles - Authoritative and Permissive -  as the ones were applied to the robots previously (Chapter~\ref{cha:evalonline}) were used.
-From these previous results, Authoritative and Permissive styles seemed to be identifiable by parents and applicable on the two robots Nao and Reeti. 
-These styles were also in line with the psychological dimensions of parenting styles. 
-The results on credibility also showed that styles could be an interesting factor to take into account. 
+In this experiment, the same styles - Authoritative and Permissive -  as the ones were applied to the robots were used.
+From these previous results, Authoritative and Permissive styles seemed to be identifiable by parents and applicable to the Nao robot \cite{Johal2014}. 
 
 With this experiment, we wanted to verify our plasticity framework applied to HRI in a more general manner. 
 In that sense, this experiment was also questioning versatile vs specialist robots. 
@@ -659,7 +632,8 @@ From these researches the Uncanny Valley\footnote{Uncanny Valley:} is not at the
 \section{Acknowledgements}
 
 
-\section{Biblography}
+\small
+\bibliographystyle{apalike}
 \bibliography{jsoro16.bib}
 
 
