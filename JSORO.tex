@@ -9,12 +9,34 @@
 \usepackage{graphicx}  
 \usepackage{subfigure} 
 
+
+% % % %flowcharts % % % % % % % % % % % % % % % % % %
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+
+
+\tikzstyle{io} =[text centered, draw=black]
+\tikzstyle{process} = [text centered, text width=1cm, draw=black]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{darrow} = [thick,<->,>=stealth] 
+\tikzstyle{io2} =[ text centered, draw=black]
+\tikzstyle{process2} = [text width=2cm, draw=black]
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+
+
+
+
+
 \begin{document}
 \title{Behavioural Styles for Child-Robot Interaction%\thanks{Grants or other notes
 %about the article that should go on the front page should be
 %placed here. General acknowledgments should be placed at the end of the article.}
 }
-\subtitle{Do you have a subtitle?\\ If so, write it here}
+\subtitle{Towards variation in robot's motion}
 
 %\titlerunning{Short form of title}        % if too long for running head
 
@@ -29,7 +51,7 @@
               first address \\
               Tel.: +123-45-678910\\
               Fax: +123-45-678910\\
-              \email{fauthor@example.com}           %  \\
+              \email{wafa.johal@epfl.ch}           %  \\
 %             \emph{Present address:} of F. Author  %  if needed
            \and
            S. Author \at
@@ -48,7 +70,7 @@
 	interviews of children, questionnaires, task performances, parents observation and confrontation, and postural analysis. 
 	We show that postural analysis gave the best measure to predict the style of the robot from the child's point of view.
 	These results illustrate recent tendencies in HRI to go away from self-assessment measures with young children.
-\keywords{First keyword \and Second keyword \and More}	
+\keywords{Social Human-Robot Interaction, Child, Behavioural Style, Expression}	
 \end{abstract}
 
 %*****************************************************************************************************
@@ -80,9 +102,9 @@ The interest in the personalisation of companion robots comes from the assumptio
 It is also assumed that social robots should display comprehensive behaviours for the user - in its decision and expressions.
 For this, its reasoning processes should be made explicit to the user providing a level of understanding. 
 Customisation of the behaviours on the other hand can improve the user's feedback as well as the controllability of his companion robot.
-The perspective taken in this thesis is to propose a way for the user to chose the manner their companion robot would behave. 
+Our goal is to propose a way for the user to chose the manner their companion robot would behave. 
 This aims to contribute in both acceptability of the companion and to make the relationship and social bounding easier with the companion. 
-In particular, the goal for this thesis is to investigate how the personalisation of the social robot's behaviour in context based on \textit{style} can be designed and evaluated in a realistic context and can contribute to \textit{social adaptability} of the companion robot's behaviour.
+In particular, we investigate how the personalisation of the social robot's behaviour in context based on \textit{style} can be designed and evaluated in a realistic context and can contribute to \textit{social adaptability} of the companion robot's behaviour.
 
 The challenge of the social adaptability of a robot's behaviour can be approached from different perspectives. 
 The design of companion robots requires an understanding and a model of the \textit{plasticity} as well as reasoning and developing communicating vector of this adaptation. 
@@ -90,13 +112,13 @@ Our work takes concepts from several disciplines, aiming to benefit from various
 As the research went along, this work used notions from socio-psychology, cognitive sciences, artificial intelligence and affective reasoning, human-machine interaction, computer sciences and human-robot interaction.
 
 From a more technical point of view, the variations in the ways social roles that a social robot  has to play can be seen as styles applied to a predefined script.
-The notion of style and social role are important in this thesis: the robot plays a social role with a particular style in order to fit  the social expectations of the user better.
+The notion of style and social role are important in our project: the robot plays a social role with a particular style in order to fit  the social expectations of the user better.
 A social role is understood as a set of abilities, goals and beliefs of the robot and the style as a way of performing the social role.
 
 %could ...
 
 %research questions
-\paragraph{research questions}
+\paragraph{Research Questions}
 \begin{itemize}[noitemsep,nolistsep]
 	\item Why should companion robots have styles ? (Section \ref{sec:soa_styles} )
 	\item What distinguishes our approach from existing approaches for personalisation? (Section \ref{sec:soa_styles})
@@ -107,14 +129,14 @@ A social role is understood as a set of abilities, goals and beliefs of the robo
 	\end{itemize}
 
 %paragraph 2 others, .... last sentence but pb
-
+%todo fininsh intro
 %paragraph 3 : In this paper we propose ...
-contrary to prior work we propse a role specific way to customize nv behaviour of robots called behavioural style
-we then evaluate the expressibility of these styles on two different plateform 
-we then introduce a way to measure the attitude of the user
+In this paper we propose a role specific way to customize the non-verbal behaviour of robots called \emph{behavioural style}.
+We then evaluate the expressibility of these styles on two different robotic platforms.
+We introduce a way to measure the attitude of the children users.
 we compare attitudes of user according to behavioural style
 we show that styles have an effect on the user
-we also present resulst from experimental analysis indicating that 
+we also present results from experimental analysis indicating that 
 findings from ... test indicate  statistically significant differences un 
 
 additionally
@@ -151,12 +173,12 @@ We can imagine how robots will be useful to humans in the future, but how they w
 In order to accommodate the user, many research projects have attempted to enable the robot to display social behaviours.
 The adaptation to the user is also called \textbf{personalisation}.
 This section gives a review of some works on personalisation in HRI.
-The customisation of the robot's appearance will not be reviewed because it is out of the scope of our research eventhought 3D printed robots such as Poppy\footnote{Poppy is an open source 3D printed robot created within the Flowers research team at INRIA Bordeaux\url{https://www.poppy-project.org/technologies/}} make appearance customisation now possible.  
+The customisation of the robot's appearance will not be reviewed because it is out of the scope of our research eventhough 3D printed robots such as Poppy\footnote{Poppy is an open source 3D printed robot created within the Flowers research team at INRIA Bordeaux\url{https://www.poppy-project.org/technologies/}} make appearance customisation now possible.  
 
 In Human-Computer Interaction, two kinds of personalisation systems are distinguished \cite{Fischer2001,Oppermann1997}, the ones that automatically and dynamically change according to the user, also called \textbf{user adaptive systems}, and the ones that can be changed by the user himself, also called \textbf{user adaptable systems}. 
 
 The term personalisation is also used in other types of research projects in which robots are given a social presence - a name, a story, a past, for example. 
-We won't consider these works in this classification as we believe that a better term to qualify these works would be personification and not personalisation. 
+We won't consider these last works in this classification as we believe that a better term to qualify these works would be \emph{personification} and not \emph{personalisation}. 
 
 
 The main difference between the two types of personalisation - \textbf{adaptive} and \textbf{adaptable} - is the control on the adaptation process. 
@@ -183,8 +205,7 @@ For instance a teacher robot could first ask user's input to set his social pref
 In the following part, we will present examples of works on personalisation in HRI. 
 
 \subsection{Personalized systems in HRI}
-There have been various works on personalisation in HRI. 
-Individual differences are often observed in user studies in HRI. 
+There have been various works on personalisation in HRI, as individual differences are often observed in user studies in HRI. 
 Personalisation can be a tool to adapt to the user's own ability and to his social preferences.
 Personalisation plays a role for long-term relationship credibility, social competences and persuasion. 
 
@@ -213,7 +234,7 @@ Some works on proxemics\footnote{Proxemics are a subcategory of non-verbal commu
 These non-verbal cues of communication are worth being taken into account by the robot in order to show social competence. 
 
 
-Based on works on the "Theory of Companions" \cite{Kramer2011}, we choose to model companion behaviours within the social roles and to work on personalisation as a function of context. 
+Based on works on the ``Theory of Companions'' \cite{Kramer2011}, we choose to model companion behaviours within the social roles and to work on personalisation as a function of context. 
 Section~\ref{sec:stylemode} offers a style model for socially adaptable robots' behaviours.
 Hence, variability is not only the roles that the robot is expected to have, but also the way the robot will play these roles.
 
@@ -245,16 +266,28 @@ Automatic social personalisation - \textbf{socially adaptive system} - have the 
 Hence they are dynamic and will build on as the user interacts with the system. 
 This poses questions on memory and privacy when dealing with personal data collected by a system. 
 
-Since users often praise controllability as one of the most import criteria for acceptability, the presented approach in this thesis will follow a framework allowing \textbf{socially adaptable} behaviours by the robot.
+Since users often praise controllability as one of the most import criteria for acceptability, the presented approach will follow a framework allowing \textbf{socially adaptable} behaviours by the robot.
 We propose to use \textbf{styles} as tools for adaptability of the companion's behaviour within the role it has to play.
 
 %generation or modification of motion
 \subsection{Motion Generation and Modification}
-BML, 
-ACE, DESIRE
+Variability in motion has been investigated in the past in robotics. 
+
+With the Behavioural Modeling Language used by \cite{} authors aimed to design reusable set of behaviours. 
+
+In ACE \cite{} 
+
+Cite dautheuhan and her styles pupetting
+
+The DESIRE model of \cite{}
+
+Some other research have also tried to use Laban Effort to characterize motion. 
 
 These systems were dedicated to programmers. 
-We aim to provide a social understanding of the modified behaviiour and hence to allow the user to pick a style.
+We aim to provide a social understanding of the modified behaviour and hence to allow the user to pick a style.
+The behavioural styles would enable us to characterize motions in an socially understandable way. 
+
+The next section introduces the notion of styles in other domains in order to frame our definition of behavioural styles. 
 
 \subsection{A Quick Overview of styles in Other Domain}
 \label{sec:soa_styles}
@@ -264,7 +297,9 @@ In general,  styles refer to variations or ways  \textit{in doing something }, o
 In this review, we consider the first sense of style as a\textit{ manner or a way of doing something that would be recognisable}.
 Some research domains related to ours dealing with style are reviewed in the following paragraphs: in psychology, computer sciences, computer animation and  human-robot interaction. 
 
-\paragraph{In Psychology}:\textit{Styles} describe different ways to behave in a particular context. 
+\paragraph{In Psychology}:
+\label{par:psycho}
+\textit{Styles} describe different ways to behave in a particular context. 
 Some \textit{styles} are associated to specific social roles: management styles, teaching styles, learning styles, parenting styles. 
 And there are some others such as cognitive styles that aim to classify wider preferences.
 We also use the term non-role-specific styles to qualify Cognitive Styles, in opposition to role-specific styles such as  Learning, Teaching, Leadership and Parenting styles that are related to specific social roles. 
@@ -275,24 +310,25 @@ The most well-known model is Baurmind's parenting styles (\cite{baumrind1991infl
 Maccoby and Martin updated and arranged  the parenting styles on two axis (from \cite{Darling1993}). 
 The figure~\ref{fig:fpareting_style} shows these four parenting styles placed on the \textit{ dominance} and \textit{responsiveness} axes.
 \begin{figure}[h]
+	%todo maybe use tizk to do this figure
 	\centering
-	%\includegraphics[width=0.7\linewidth]{../Figures/illustrate/fpareting_style}
+	\includegraphics[width=0.7\linewidth]{Figures/illustrate/fpareting_style}
 	\caption{Parenting Styles according to two dimensions}
 	\label{fig:fpareting_style}
 \end{figure}
 
 
-Theories of Personality aim to characterise affective and motivational invariants in the attitudes of individuals.
-According to \cite{Huteau}, behaviours of individuals are characterised both by their plasticity and their consistency.
-Behaviours are sensitive to situational and social contexts. 
-However, there exists a singularity of behaviour in a particular situation.
+%Theories of Personality aim to characterise affective and motivational invariants in the attitudes of individuals.
+%According to \cite{Huteau}, behaviours of individuals are characterised both by their plasticity and their consistency.
+%Behaviours are sensitive to situational and social contexts. 
+%However, there exists a singularity of behaviour in a particular situation.
 
-To summarise the different styles that were reviewed in psychology, styles characterise intra-individual consistency in context (in the same context people tend to adopt the same style) and inter-individual differences in context (in the same context, people act differently). 
+To summarise the different styles that were reviewed in psychology, styles characterise intra-individual consistency in context (in the same context people tend to adopt the same style) and inter-individual differences in context (in the same context, people can act differently). 
 One can notice two perspectives in the way psychologists treat styles. 
 It is either seen as a reflection of personality, as preferred ways. 
 Or, it is seen as a strategy, a method that would suit the context in a better way. 
 
-The link between personality and style \cite{Sternberg1997,Hayes} can be justified by the fact that styles express a preference and a continuum in the same context which can also be the expression of personality.
+The link between personality and style \cite{Sternberg1997,Hayes} can be seen as the fact that styles express a preference and a continuum in the same context which can also be the expression of personality.
 Some researchers in psychology even use the term Identity Styles to qualify the different kinds of personalities \cite{Berzonsky2011}.
 
 However, unlike personalities, styles do not characterise across context consistency since the palette of styles varies according to the role played by the individual.
@@ -305,7 +341,7 @@ The magnitude of these correlations confirms that personality and style are rela
 
 We choose to argue for a separation of these concepts in order to let the user choose the strategy of their companion in its roles. 
 Indeed, personality traits will be displayed in the behaviour of the companion when it is self-centred (for instance, when speaking about it preferences, it mood, it hobbies) but when playing a social role, one can consider that the behaviour displayed is mainly context-centred (the task, and the way the task should be performed matter more). 
-We propose the figure ~\ref{fig:personality-style} to illustrate this distinction between style and personality in the expressed behaviour. 
+%We propose the figure ~\ref{fig:personality-style} to illustrate this distinction between style and personality in the expressed behaviour. 
 This distinction is in line with \cite{Huteau}, who says that behaviours are characterised by consistency (referring to self-consistency and to personality) and plasticity (referring to styles and context adaptation).
 Besides, apart from the cognitive styles, other styles in psychology are anchored to social roles.
 
@@ -319,7 +355,7 @@ Hence, the role will be the basis on which styles can be designed to depict vari
 Traditionally animators used key-framing techniques defining each pose of the animation and then using some interpolation technique to go from one frame(pose) to another. 
 This technique is know to be expressive but less realistic than physically-based technique in which a physical model of the character drives the animation.
 
-In order to give more expressibility to physically-based techniques, recent research in animation has been focusing in designing styles of motion. 
+In order to give more expressibility to physically-based techniques, recent research in animation has been focusing in designing \emph{styles of motion}. 
 These styles use motion parameters in order to provide a \textbf{flexible} and \textbf{reusable} way to give expressiveness to simple motions.
 
 In \cite{Liu2005}, authors used styles as a physically-based representation of character motion. 
@@ -334,7 +370,7 @@ The authors also show how styles can be used for interactive analysis and editin
 \cite{Noot2004} proposed the GESTYLE language to define variation in gestures for Embodied Conversational Agents (ECA). 
 This language is written in the XML format and describes gestures by their meaning allowing the usage of different gestures to express the same thing.
 GESTYLE proposes style dictionaries that specify different styles containing profession, culture, age, gender or personality informations.
-In that sense, styles defined in GESTYLE are mainly self-centred (personality) rather than role/context-centred (see our distinction between style and personality - Figure~\ref{fig:personality-style}). 
+In that sense, styles defined in GESTYLE are mainly self-centred (personality) rather than role/context-centred (see our distinction between style and personality in the section \textit{In Psychology}). 
 The separation between content (action) and style in not clear within GESTYLE as styles are associated to specific behaviour repertoires.
 For \cite{Noot2004}, behavioural style influences the choice of certain gestures, which can limit the reusability and the flexibility of the styles.
 This work is interesting in the choice of annotating language and meaningful utterance with nonverbal modalities to display variations in the usage of gestures.
@@ -356,7 +392,7 @@ For instance, one would register several people doing the same gesture while rec
 They would then extract the inter-individual specificity of the motion.
 This can produce a lot of motion styles, but they can be semantically weak.
 However, works in psychology suggests that styles have a strong link to the social role in which they are expressed. 
-This thesis contributes by proposing a meaningful way to express style based on social roles and style descriptions in psychology.
+This paper contributes by proposing a meaningful way to express style based on social roles and style descriptions in psychology.
 
 \section{Style model}
 Several expressibility parameters exist to characterise motion. 
@@ -364,42 +400,65 @@ We used some of these parameters to filter pre-designed motions and to generate 
 
 Our definition of \emph{Behavioural Styles} is in line with psychological role-dependent styles, and hence takes into account the role played by the robot.
 Before giving details in the model and the generation process of \textit{styled} behaviour, let us clarify the properties of our behavioural styles:
-\begin{itemize}[noitemsep]
-	\item described by a list of parameters
-	\item expressed in non-verbal cues of communication
-	\item associated to a meaningful concept in psychology in order to be understandable by the end-user
+\begin{itemize}[noitemsep,nolistsep]
+	\item[\bullet] described by a list of parameters
+	\item[\bullet]  expressed in non-verbal cues of communication
+	\item[\bullet]  associated to a meaningful concept in psychology in order to be understandable by the end-user
+	\item[\bullet]  associated to a role
 \end{itemize}
 
 
 \subsection{Design Approach}
 In this section, the different modules involved in the style model are described. 
-Then, we detail on the implementation and give some examples of style sheet and application on the Nao  and Reeti robots are given.
+Then, we detail on the implementation and give some examples of style sheet and application on the Nao\footnote{Nao is a humanoid robot developed by Aldebaran}  and Reeti\footnote{Reeti is a PC-bot with doted with facial expression capabilities developed by Robopec} robots are given.
 
 
-As presented previously, the \textbf{Plasticity} perspective is taken in order to render an adaptable companion robot.
 Styles characterise the plasticity of the behaviour (variability in the same context) as opposed to the personality that characterises the behaviour consistency (consistency across contexts).
-Our approach aims to apply plasticity concepts to HRI as it was applied in HCI. 
+%Our approach aims to apply plasticity concepts to HRI as it was applied in HCI. 
+%
+%As described by \cite{Coutaz2012}, the context of use modelling, in which different styles can be applied is presented by the presence of three concepts :
+%\begin{itemize}[noitemsep,nolistsep]
+%\item the \emph{role}: which corresponds to the social role for the companion robot.
+%\item the \emph{entities involved}: corresponding to the number of robots involved and their competencies (role they can play).
+%\item the \emph{situational inter-relation}: the listener, the speaker (one can also specify here the spatial position of the agents).
+%\end{itemize}
 
-As described by \cite{Coutaz2012}, the context of use modelling, in which different styles can be applied is presented by the presence of three concepts :
-\begin{itemize}[noitemsep,nolistsep]
-\item the role: which corresponds to the social role for the companion robot.
-\item the entities involved: corresponding to the number of robots involved and their competencies (role they can play).
-\item the situational inter-relation: the listener, the speaker (one can also specify here the spatial position of the agents).
-\end{itemize}
 
-
-On top of the roles, behavioural styles, as previously mentioned, will affect the non-verbal expressibility within the role.
+On top of the roles, behavioural styles will affect the non-verbal expressibility within the role.
 
 The notion of style is in this model: a set of behavioural changes that can be applied to any motion of a role repertoire and that leads to a meaningful interpretation of the way the motion is executed. 
-A style filter is used to generate behaviours according to the role and to the user's preferences. 
+A style filter is used to generate behaviours according to the role and to some preferences. 
 Only a few styles have been implemented for our experiments but the solution that we propose can be extended.
 The aim is that users could choose the styles from a catalogue and set the one they prefer, providing hence the adaptability of the companion within the social role. 
 
-As for CSS, the aim in the style framework for design of social behaviour for robots is to make them \textbf{reusable }and \textbf{flexible}.
+As for CSS, the objective in the style framework for design of social behaviour for robots is to make them \textbf{reusable }and \textbf{flexible}.
 We intent then to show that styles can be applied to various gestures and pre-defined behaviour but also used for various robotic platforms. 
+
+
 The style model acts similarly to a filter. 
 It is fed by neutral gestures that are contained in the role repertoire and applied at run-time on the pre-selected gesture. 
 The stylized gesture is then sent to the scheduler in order to perform it.
+
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}[node distance=2cm]
+	\node (motion) [io2] {\scriptsize Role's Motion repertoire};
+	\node (style) [io2, below of=motion] {\scriptsize BSS};
+	\node (filter) [io2, right of=style] {\scriptsize Style filter};
+	\node (postpross) [io2, right of=filter] {\scriptsize Post-Processing};
+	\node (limits) [io2, above of =postpross] { \scriptsize Platform limits};
+	\node (smotion) [io, right of=postpross] {\scriptsize Styled Motion};
+	\draw [arrow] (style) -- (filter);
+	%	\draw [arrow] (context) -- (filter);
+	\draw [arrow] (motion) -- (filter);
+	\draw [arrow] (filter) -- (postpross);
+	\draw [arrow] (limits) -- (postpross);
+	\draw [arrow] (postpross) -- (smotion);
+	\end{tikzpicture}
+	\caption{Pipeline of Stylistic treatment of data}
+	\label{fig:workflowstyle}
+\end{figure}
 
 The figure \ref{fig:workflowstyle} shows the general data work-flow for the runtime generation of stylistic motion.
 Our system takes as input a pre-defined motion that has been selected to be performed. 
@@ -418,7 +477,6 @@ The BSS is further discussed in the section \ref{ssec:bss}.
 
 The \textbf{Style filter} is the core program. 
 Written in Python, it contains some transformation algorithms inspired from works in 3D animation allowing the interpretation of the BSS and the generation of new motion.
-Some examples of algorithms implemented in the current version of our system are presented in section \ref{sec:examples-of-stylized-motions}.
 The generated motion can be however out-passing the physical constraints of the robot's motor. 
 
 The \textbf{Post-Processing} module takes as input the platform's limits (speed and angular limits of each joints) and the generated motion and ensures that the computed styled motion is within these limits.
@@ -432,7 +490,7 @@ These parameters allow us to depict variation of execution of motions.
 The values taken by these parameters are referred to psychological models of style and are used as a percentage of the total value in order to be applicable to several platforms or the frequency rate.
 \begin{figure}
 	\centering
-	%\includegraphics[width=0.8\linewidth]{style_graph}
+	\includegraphics[width=0.8\linewidth]{Figures/illustrate/style_graph}
 	\caption{Style parameters for Head Yaw(green is stylized motion, black is original, the P0 pose is in pink)}
 	\label{fig:styles_parameters}
 \end{figure}
@@ -470,15 +528,16 @@ These parameters are set for each style, and for each of them, an algorithm take
 For instance, one can double the amplitude, change the tempo to 10Hz, add noise to the motion or slow down the motion.
 
 \section{Model Validation}
-Prior to this experiment, a first online study was performed. 
+Prior to this experiment, a first online study was performed \cite{Johal2014}. 
 This online study aimed to ensure that generated styles were perceptible by end-users. 
-93 parents watched videos of robots with 2 styles. 
-We 
+93 parents watched videos of robots with one of the two parenting styles, Permissive or Authoritative. 
+This study showed that styles where expressible by both humanoid and facial expressive robots. 
+We also found that preferred styles by parents did not match their own styles, which confirmed the fact that styles should stay a user controlled variable. 
 
-
-\section{Research Questions and Scenario}\label{sec:research-questions-and-scenario}
 After the on-line study, this experiment aimed to do a real user experiment in an ecological environment in order to test the credibility and the acceptability of styles by children. 
 
+\section{Research Questions and Scenario}
+\label{sec:research-questions-and-scenario}
 One of the research questions behind the experiment was to test the style model and the plasticity model of the companion proposed. 
 
 In this experiment, the same styles - Authoritative and Permissive -  as the ones were applied to the robots were used.
@@ -497,7 +556,7 @@ However, some more questions of the math quiz have to be answered by the child a
 Following are a list of our principal hypothesis :
 \begin{itemize}[noitemsep,nolistsep]
 	\item[H0] Authoritative robots are perceived to be more dominant than permissive by children.
-	\item[H1] Styles influence children's engagement in an interactive task.
+	\item[H1] Styles influence children's attitude in an interactive task.
 	\item[H2] Styles influence the perceived competence and credibility of the robot in an interactive task.
 	\item[H3] Styles influence the complicity with the robot in an interactive task.
 	%\item[H4] Versatility of a companion increases the attachment and engagement of the children in interaction with it.
@@ -507,23 +566,24 @@ Following are a list of our principal hypothesis :
 %todo sentence for expe
 Within subjects with put the conditions
 \subsection{Subjects/Participants}
-16 children and their their relatives participated to the experiment. 
+16 children and their relatives participated to the experiment. 
 Most often, the relatives were parents, but 3 children came with their grand-parents.
-16 children participated to the experiment with ages from  
+16 children participated to the experiment with ages from 7 to 11 y.o (M:\dots, SD \dots).
+There was \dots girls and \dots boys. 
 %todo boy and girl, and age and sd of age
 
 \subsection{Apparatus/Materials}
-The experiment took place in an ecological environment at Domus.
-\footnote{Domus is an experimental platform of the LIG Laboratory.
+The experiment took place in an ecological environment in the Domus apartment.
+\footnote{Domus is an experimental platform of the LIG Laboratory of Grenoble-Alps in France.
 	It contains a fully equipped and functional apartment with a kitchen, an office/living-room (where the experiment took place) and  a bedroom (where the interviews of the children took place)
 	A sound and video direction room, from where the parents and another experimenter accessed audio and video capture in the apartment and record from the control PCs}
-We added a Kinect sensor and a wooden board on the floor to avoid the robot falling. 
+We added a Kinect sensor in order to record data. 
 The Domus apartment is controllable by the OpenHab\footnote{\url{http://www.openhab.org}} middle-ware. 
 OpenHab is a home control middle-ware that supports various sensors, protocols and operating systems. 
-We were able, for instance, to launch music playback on the speaker of the apartment directly form the robot, by doing a simple HTTP\_REQUEST. 
+We were able, for instance, to launch music on the speaker of the apartment directly form the robot, by doing a simple HTTP\_REQUEST. 
 
 Each interaction with the Nao robot(s) lasted about 15 minutes. 
-Every child passed two sessions. 
+Every child passed two sessions in a counterbalanced manner. 
 For every child, we had about 30 minutes of recording of the interaction itself (a bit more because we also recorded explanations of the experimentalist). 
 Every session was about 250Gb of recorded data on the disk. 
 In total, we have collected about 8To of data. 
@@ -531,25 +591,24 @@ In total, we have collected about 8To of data.
 
 \section{Measures}
 \subsection{Self-Assessment Measures}
-The parents and the children are interviewed to collect data on acceptability, trust and  credibility of all the robots' performances and behaviors after each session. 
-This evaluation allows us to do a comparison between conditions and between parents and children.
+The parents and the children were interviewed to collect data on acceptability, trust and  credibility of all the robots' performances and behaviours after each session. 
+This evaluation allowed us to do a comparison between conditions and between parents and children.
 
-In order to collect the parents' and children's opinions on the interaction, we conducted interviews after each session.
-These interviews aimed to collect the parents' and children's perception of the robot.
+In order to collect the parents' and children's opinions on the interaction, we conducted interviews after each session 
 Building an interview that would suit both parents and children was a hard task\footnote{Interviews and Questionnaire used are available online: }.%todo put online
 
-The first part of the interview is composed of very generic questions about the experiment. 
-We then have more specific questions, and we finish by opening to other context of use of the robots.
-The last questionnaire used after the second session is based on the Godspeed\cite{Bartneck2008b} items about Credibility, Likeability and Complicity. 
+
+The last part questionnaire, after the second session, is based on the Godspeed\cite{Bartneck2008b} items about Credibility, Likeability and Complicity. 
 We also used the COIRS~\cite{Robert2014} questionnaire and adapted it for the parents.
 After each session, the parents and the children would reply to the interview; and after the second a final interview would deal with explicit comparison of the two sessions by the participants.
 
-\subsection{Quantitative Measures}
 In addition to these qualitative evaluations at the end of the last session, the participants are asked to reply to a final survey in which they compare the conditions directly. 
-This allows us to obtain the participants' preferences and to see if it is correlated to other measures. 
-Objective measures are also collected to evaluate variations in the performance of children at the math test, and the engagement in the different tasks using the Kinect Sensor.
+This allows us to obtain the participants' preferences and to see if it is correlated to other measures.
 
-The engagement analysis is computed from skeleton data.
+\subsection{Quantitative Measures}
+Objective measures are also collected to evaluate variations in the performance of children at the math test, and the attitude in the different tasks using the Kinect Sensor.
+
+The attitude analysis is computed from skeleton data.
 We base our quantitative analysis body measures defined in the Psychology literature.
 This analysis will allow us to compare behaviour of the child according to the robot's style in front of him and to the versatility of the robot.
 
@@ -586,7 +645,7 @@ The recorded data is summarised in table \ref{tab:dataset}
 \begin{table}[h]
 	\centering
 	\caption{Data recorded during the interaction with the robots}
-	\begin{tabular}{l p{1cm} p{1.5cm} p{2.5cm}}
+	\begin{tabular}{p{1cm} p{1.5cm} p{1.5cm} p{2.5cm}}
 		\hline
 		Data  & Sensor & Frequency & \\ \hline
 		RGB Video & Microsoft Kinect 2 & 30 Hz max & Resolution 1900*1080p \\
@@ -595,8 +654,7 @@ The recorded data is summarised in table \ref{tab:dataset}
 		Infrared & Microsoft Kinect 2 & 30 Hz & Resolution 512*424p \\ 
 		Audio & Microsoft Kinect 2 &  &  \\
 		\hline
-		Video & Ceiling Office 1 & less than 30 Hz & Resolution 640*480 \\
-		Video & Ceiling Office 2 & less than 30 Hz & Resolution 640*480 \\
+		Video & Ceiling Office 1 \& 2 & $<$ 30 Hz & Resolution 640*480 \\
 		\hline
 		Video & Nao Robot 1 & 15 Hz & Resolution 320*480 \\
 		Video & Nao Robot 2 & 15 Hz & Resolution 320*480 \\
@@ -614,10 +672,6 @@ In total, we have collected about 8To of data.
 
 %\subsection{Samples of recorded data}
 %todo maybe add samples
-
-
-
-
 
 
 \subsection{Measures Extracted from Body Analysis}
