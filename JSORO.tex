@@ -9,6 +9,7 @@
 \usepackage{graphicx}  
 \usepackage{subfigure} 
 
+\interfootnotelinepenalty=10000
 
 % % % %flowcharts % % % % % % % % % % % % % % % % % %
 \usepackage{tikz}
@@ -92,8 +93,9 @@ Several research fields, from human-computer interaction, affective computing, s
 Researchers in HRI~\cite{Tapus2007,Dautenhahn2007} have also noted that robots need not only to be competent in the task but also socially intelligent.
 
 %traditionally
-Researchers in Human-Robot Interaction (HRI) have agreed that acceptability in home environments will come only via sociability\footnote{\textit{\textbf{Sociability} is the ability to perceive, understand and express social cues of communication in a human-understandable way.
-It is also the ability to create and maintain social relationships; the ability to learn and develop social competencies }\cite{Dautenhahn2007}.} of the robots.
+Researchers in Human-Robot Interaction (HRI) have agreed that acceptability in home environments will come only via sociability %\footnote{\textit{\textbf{Sociability} is the ability to perceive, understand and express social cues of communication in a human-understandable way.
+%It is also the ability to create and maintain social relationships; the ability to learn and develop social competencies }\cite{Dautenhahn2007}.} 
+of the robots.
 
 
 %our vision
@@ -215,7 +217,7 @@ This study showed that personalisation was beneficial for HRI but they do not pr
 
 From the results of the study of \cite{Jones2013} within the LIREC project on teachers perspective to have a robotic tutor to assist them, personalisation turned out to be a very important requirement. 
 Other research projects have highlighted this need for personalisation - the SERA\footnote{SERA: \url{http://cordis.europa.eu/project/rcn/89259_en.html}} project for instance, keen for personalisation, user or task tailoring. 
-Some research works have shown that personalisation can improve the user's engagement in the task (\cite{Corrigan2013}) and the robot's competencies as perceived  by the user \cite{Fasola2012a}.
+Some research works have shown that personalisation can improve the user's engagement in the task (\cite{Corrigan2013}) and the robot's competencies as perceived  by the user \cite{Fasola2012}.
 
 
 In \cite{Francois2007a}, authors proposed a \textbf{socially adaptive} robot that adapts its behaviour to the user's interaction styles. Authors collect data during the interaction and infer an interaction style. 
@@ -309,13 +311,8 @@ Parenting Styles have been studied in socio-psychology.
 The most well-known model is Baurmind's parenting styles (\cite{baumrind1991influence}).
 Maccoby and Martin updated and arranged  the parenting styles on two axis (from \cite{Darling1993}). 
 The figure~\ref{fig:fpareting_style} shows these four parenting styles placed on the \textit{ dominance} and \textit{responsiveness} axes.
-\begin{figure}[h]
-	%todo maybe use tizk to do this figure
-	\centering
-	\includegraphics[width=0.7\linewidth]{Figures/illustrate/fpareting_style}
-	\caption{Parenting Styles according to two dimensions}
-	\label{fig:fpareting_style}
-\end{figure}
+
+\input{figures/parenting_styles.tex}
 
 
 %Theories of Personality aim to characterise affective and motivational invariants in the attitudes of individuals.
@@ -401,10 +398,10 @@ We used some of these parameters to filter pre-designed motions and to generate 
 Our definition of \emph{Behavioural Styles} is in line with psychological role-dependent styles, and hence takes into account the role played by the robot.
 Before giving details in the model and the generation process of \textit{styled} behaviour, let us clarify the properties of our behavioural styles:
 \begin{itemize}[noitemsep,nolistsep]
-	\item[\bullet] described by a list of parameters
-	\item[\bullet]  expressed in non-verbal cues of communication
-	\item[\bullet]  associated to a meaningful concept in psychology in order to be understandable by the end-user
-	\item[\bullet]  associated to a role
+	\item[$\bullet$] described by a list of parameters
+	\item[$\bullet$]  expressed in non-verbal cues of communication
+	\item[$\bullet$]  associated to a meaningful concept in psychology in order to be understandable by the end-user
+	\item[$\bullet$]  associated to a role
 \end{itemize}
 
 
@@ -414,16 +411,6 @@ Then, we detail on the implementation and give some examples of style sheet and 
 
 
 Styles characterise the plasticity of the behaviour (variability in the same context) as opposed to the personality that characterises the behaviour consistency (consistency across contexts).
-%Our approach aims to apply plasticity concepts to HRI as it was applied in HCI. 
-%
-%As described by \cite{Coutaz2012}, the context of use modelling, in which different styles can be applied is presented by the presence of three concepts :
-%\begin{itemize}[noitemsep,nolistsep]
-%\item the \emph{role}: which corresponds to the social role for the companion robot.
-%\item the \emph{entities involved}: corresponding to the number of robots involved and their competencies (role they can play).
-%\item the \emph{situational inter-relation}: the listener, the speaker (one can also specify here the spatial position of the agents).
-%\end{itemize}
-
-
 On top of the roles, behavioural styles will affect the non-verbal expressibility within the role.
 
 The notion of style is in this model: a set of behavioural changes that can be applied to any motion of a role repertoire and that leads to a meaningful interpretation of the way the motion is executed. 
@@ -563,8 +550,7 @@ Following are a list of our principal hypothesis :
 	\item[H4] Role-Specialist robots are perceived to be more competent and trustworthy than versatile robots.
 	%\item[H6] There is an influence of the style during the math quiz during the dance on the child's behaviour.
 \end{itemize}
-%todo sentence for expe
-Within subjects with put the conditions
+%todo sentence for expe Within subjects with put the conditions
 \subsection{Subjects/Participants}
 16 children and their relatives participated to the experiment. 
 Most often, the relatives were parents, but 3 children came with their grand-parents.
@@ -585,28 +571,12 @@ We were able, for instance, to launch music on the speaker of the apartment dire
 Each interaction with the Nao robot(s) lasted about 15 minutes. 
 Every child passed two sessions in a counterbalanced manner. 
 For every child, we had about 30 minutes of recording of the interaction itself (a bit more because we also recorded explanations of the experimentalist). 
-Every session was about 250Gb of recorded data on the disk. 
-In total, we have collected about 8To of data. 
+ 
 
 
 \section{Measures}
-\subsection{Self-Assessment Measures}
-<<<<<<< HEAD
-The parents and the children are interviewed to collect data on acceptability, trust and  credibility of all the robots' performances and behaviors after each session. 
-This evaluation allows us to do a comparison between conditions and between parents and children.
-
-In order to collect the parents' and children's opinions on the interaction, we conducted interviews after each session.
-These interviews aimed to collect the parents' and children's perception of the robot.
-Building an interview that would suit both parents and children was a hard task\footnote{Interviews and Questionnaire used are available online: }.%todo put online
-
-The first part of the interview is composed of very generic questions about the experiment. 
-We then have more specific questions, and we finish by opening to other context of use of the robots.
-The last questionnaire used after the second session is based on the Godspeed\cite{Bartneck2008b} items about Credibility, Likeability and Complicity. 
-We also used the COIRS~\cite{Robert2014} questionnaire and adapted it for the parents.
-After each session, the parents and the children would reply to the interview; and after the second a final interview would deal with explicit comparison of the two sessions by the participants.
-
 \subsection{Quantitative Measures}
-=======
+
 The parents and the children were interviewed to collect data on acceptability, trust and  credibility of all the robots' performances and behaviours after each session. 
 This evaluation allowed us to do a comparison between conditions and between parents and children.
 
@@ -618,7 +588,7 @@ The last part questionnaire, after the second session, is based on the Godspeed\
 We also used the COIRS~\cite{Robert2014} questionnaire and adapted it for the parents.
 After each session, the parents and the children would reply to the interview; and after the second a final interview would deal with explicit comparison of the two sessions by the participants.
 
->>>>>>> master
+
 In addition to these qualitative evaluations at the end of the last session, the participants are asked to reply to a final survey in which they compare the conditions directly. 
 This allows us to obtain the participants' preferences and to see if it is correlated to other measures.
 
@@ -657,73 +627,66 @@ For one of the children, a GoPro camera was also used to have images of the chil
 
 
 
+%
+%The recorded data is summarised in table \ref{tab:dataset}
+%\begin{table}[h]
+%	\centering
+%	\caption{Data recorded during the interaction with the robots}
+%
+%	\begin{tabular}{p{1cm} p{1.5cm} p{1.5cm} p{2.5cm}}
+%		\hline
+%		Data  & Sensor & Frequency & \\ \hline
+%		RGB Video & Microsoft Kinect 2 & 30 Hz max & Resolution 1900*1080p \\
+%		Depth & Microsoft Kinect 2 & 30 Hz max & Resolution 512*424p from 40cm to 4.5m \\
+%		Body & Microsoft Kinect 2 & 30 Hz max & 6 bodies maximum with 25 joints (3D positions and 3D orientations as quaternions)\\
+%		Infrared & Microsoft Kinect 2 & 30 Hz & Resolution 512*424p \\ 
+%		Audio & Microsoft Kinect 2 &  &  \\
+%		\hline
+%		Video & Ceiling Office 1 \& 2 & $<$ 30 Hz & Resolution 640*480 \\
+%		\hline
+%		Video & Nao Robot 1 & 15 Hz & Resolution 320*480 \\
+%		Video & Nao Robot 2 & 15 Hz & Resolution 320*480 \\
+%		\hline
+%	\end{tabular}
+%	\label{tab:dataset}
+%\end{table}
 
-The recorded data is summarised in table \ref{tab:dataset}
-\begin{table}[h]
-	\centering
-	\caption{Data recorded during the interaction with the robots}
-<<<<<<< HEAD
-	\begin{tabular}{l p{1cm} p{1.5cm} p{2.5cm}}
-=======
-	\begin{tabular}{p{1cm} p{1.5cm} p{1.5cm} p{2.5cm}}
->>>>>>> master
-		\hline
-		Data  & Sensor & Frequency & \\ \hline
-		RGB Video & Microsoft Kinect 2 & 30 Hz max & Resolution 1900*1080p \\
-		Depth & Microsoft Kinect 2 & 30 Hz max & Resolution 512*424p from 40cm to 4.5m \\
-		Body & Microsoft Kinect 2 & 30 Hz max & 6 bodies maximum with 25 joints (3D positions and 3D orientations as quaternions)\\
-		Infrared & Microsoft Kinect 2 & 30 Hz & Resolution 512*424p \\ 
-		Audio & Microsoft Kinect 2 &  &  \\
-		\hline
-		Video & Ceiling Office 1 \& 2 & $<$ 30 Hz & Resolution 640*480 \\
-		\hline
-		Video & Nao Robot 1 & 15 Hz & Resolution 320*480 \\
-		Video & Nao Robot 2 & 15 Hz & Resolution 320*480 \\
-		\hline
-	\end{tabular}
-	\label{tab:dataset}
-\end{table}
-
-
-Each session lasted about 15 minutes. 
-Every child passed two sessions. 
-For every child, we had about 30 minutes of recording of the interaction itself (a bit more because we also recorded explanations of the experimentalist). 
+ 
 Every session was about 250Gb of recorded data on the disk. 
 In total, we have collected about 8To of data. 
-
-%\subsection{Samples of recorded data}
-%todo maybe add samples
+We present in this paper only the body analysis data that constitute one of our contribution.
 
 
-<<<<<<< HEAD
-
-
-
-
-=======
->>>>>>> master
 \subsection{Measures Extracted from Body Analysis}
 We used the skeleton data to measure variation on the child's attitude between the sessions.
 Several features form the literature of body communication have been implemented and applied for the Body Kinect data \cite{Labourette}.
 
 \subsubsection{Static Features}
-volume - bounding  box
-com
-com displacement
-distance covered
-hand relationship
-shoulder angle
-elbow flexion
-feet relationship
-torso neck orientation
-hand stautus
+We first extracted static body features at every frame:
+\begin{itemize}[noitemsep,nolistsep]
+\item \textbf{Body Volume}: Bounding box of the skeleton data
+\item \textbf{Center of Mass}: Position in 3D coordinates of the centre of mass 
+\item \textbf{Center of Mass Displacement}: Variation of Position in 3D coordinates of the centre of mass from one frame to the next
+\item \textbf{Distance Covered}: 
+\item \textbf{Hand Relationship}: 
+\item \textbf{Shoulder Angle}: 
+\item \textbf{Elbow Flexion}: aperture angle of the elbow joints
+\item \textbf{Feet Relationship}: 
+\item \textbf{Torso Neck Orientation}: 
+\item \textbf{Hands Status}: open or closed 
+\end{itemize}
+
 
 
 \subsubsection{Dynamic Features}
-Velocity
-Accelerations
-jerks
-qom
+Dynamic features include:
+\begin{itemize}[noitemsep,nolistsep]
+\item \textbf{Velocity}: Average velocity of all joints displacement in time
+\item \textbf{Acceleration}: Average acceleration of all joints displacement in time 
+\item \textbf{Jerks}: 
+\item \textbf{Quantity Of Motion}: 
+\end{itemize}
+
 
 
 
@@ -737,7 +700,7 @@ Figure \ref{fig:neckrelax} shows the neck relaxation angle.
 Leaning left and right corresponds sideways lean (see Fig. \ref{fig:sideways_lean}), while leaning forward and back corresponds to frontal leaning angle (see Fig. \ref{fig:BLA}). 
 The values range between $-1$ and $1$ in both directions, where 1 roughly corresponds to $45\deg$ of lean.
 
-In addition to the given angles from the Kinect sensor for the leaning angles, we computed a body lean angle in line with the work of \cite{Castellano} and \cite{Schegloff}. This angle, was computed by the dot product of the vertical vector from the hip centre joint and the vector from the hip centre to the shoulder centre of each collected body data frame. 
+In addition to the given angles from the Kinect sensor for the leaning angles, we computed a body lean angle in line with the work of \cite{Castellano2009} and \cite{Schegloff}. This angle, was computed by the dot product of the vertical vector from the hip centre joint and the vector from the hip centre to the shoulder centre of each collected body data frame. 
 
 \paragraph{Volume}
 For each frame, the volume is computed by going through the joints and recording the min and max in all three dimensions (X,Y,Z). 
@@ -745,7 +708,7 @@ We also use as feature the joint's name at the minimum and the maximum for all t
 
 \paragraph{Status of Hands}
 The status of hands IS given by the Kinect Sensor with values ranging among Open, Closed, Lasso, NotTracked and Unknown. 
-This feature is considered to be a good candidate for Hand Relaxation, advocated by Meharbian~\cite{Meharbian} as a sign of relaxation. 
+This feature is considered to be a good candidate for Hand Relaxation, advocated by Meharbian~\cite{Mehrabian1968} as a sign of relaxation. 
 Only the Open and Closed recognition are exploited. 
 
 
@@ -764,6 +727,19 @@ In order to compute the asymmetrical rate of the members, we computed the dot pr
 
 
 \section{Results}
+In order to analyse these various measures we decided to group them according to the style factors as defined by Gallaher \cite{Gallaher1992}. 
+Gallaher propose four style factors: 
+\begin{itemize}
+\item Expressiveness: that describe how \dots
+\item Animation :
+\item Expansiveness : 
+\item Coordination : 
+\end{itemize}
+Eventhough Gallaher presents these dimension has highly correlated to the personality, we decide to compare these dimension for each individual and between our two conditions. 
+Thereby, we would be able to see the comparative effect on these dimensions on the user of our conditions. 
+
+
+
 %Statistics
 %ANOVA results are cited using the F test (e.g., $F (1, 38) = 4.94$, $p = .04$). F and p are italicized. Give the exact $p$ value to two decimal places except when greater better than $p < .01$. Try to avoid more than two decimal places, as readers are not very interested in exact values; comparisons are more important. The $F$ value is followed by the degrees of freedom in the numerator and denominator. Here is how one author of a mobile phone study (Author, 2010) reported an interaction effect:
 %\begin{quotation}
@@ -777,6 +753,29 @@ In order to compute the asymmetrical rate of the members, we computed the dot pr
 
 
 \section{Discussion}
+In interviews, perception from parents
+
+Many parents noticed auto and permissive ("shy and expressive")
+Some children also noticed behavioural differences between the robots, severe nice 
+Auto robot is sec 
+
+About authority, children were doing what the robot was saying, but robots needs to vary its expressibility in order to be credible and since entertaining
+
+
+Roles for future (game with difficult rules etc)
+Parents say it cold be a help to make homework more ludique
+
+Playing with the child good for social bounding, parents like the fact that event if it is a root for homework it can be un also nd create bounding
+
+Important that the robot learns from the child (to create link for instance)
+
+Polyrole (just like parents is better, one robot for all, otherwise peut en prendre un en grippe)
+
+Authoritarian has more severe voice
+
+Styles can be a good way to introduce variability
+
+arbitre ou partenaire de jeu de societé
 \section{Conclusion}
 %original hypothesis:
 The need for social customization of companion's robot behaviour led us to propose behavioural styles and to assume that it was possible for users to distinguish between styles and, and that they were impacting the robot-user interaction.
@@ -797,6 +796,7 @@ However, the model contains
 In the future, even the appearance should be customizable by the user since some studies have shown that there exist systematic individual differences in terms of preference of the companion's appearance \cite{Walters2008}. 
 They have highlighted individual differences in the preference of the robot's dynamic which could suggest and emphasise the need for the social adaptation of robots. 
 From these researches the Uncanny Valley\footnote{Uncanny Valley:} is not at the same location for each individual and the creepiness threshold might also be varying. 
+
 
 
 
