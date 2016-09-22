@@ -59,6 +59,9 @@ scale_fill_discrete_list <- function(...){
       library(scales)
       discrete_scale("fill","Publications",manual_pal(values = c("#5f0f40","#f49f0a","#9a031e","#00a6a6","#e36414","#242f40","#008148","#15b097","#ef2917","#034732","#80ced7","#d5d6aa","#9dbbae")), ...)}
 
+low_level = "#80b240"
+high_level = "#293a13"
+scale_fill_continous_list = scale_fill_gradient(low = low_level, high = high_level)
 
 ##### TOOLS FUNCTIONS
 ## Gives count, mean, standard deviation, standard error of the mean, and confidence interval (default 95%).
@@ -103,7 +106,14 @@ summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
     return(datac)
 }
 
-
+remove_outliers <- function(x, na.rm = TRUE, ...) {
+  qnt <- quantile(x, probs=c(.25, .75), na.rm = na.rm, ...)
+  H <- 1.5 * IQR(x, na.rm = na.rm)
+  y <- x
+  y[x < (qnt[1] - H)] <- NA
+  y[x > (qnt[2] + H)] <- NA
+  y
+}
 
 @
 
@@ -272,42 +282,148 @@ ggplot(dfobject, aes(x=e_webbrowser, y=p_webbrowser,colour=sujett))+ geom_point(
 features <- read.csv("~/Dropbox/DATA/STYLEBOT/features_fulls.csv")
 features$child = as.factor(features$child)
 features$session = as.factor(features$session)
+features$age = all_interviews[match(features$child, all_interviews$ordre),"age"]
+features$gender = all_interviews[match(features$child, all_interviews$ordre),"genre"]
 attach(features)
 stargazer(features, title = 'Summary statistics of metadata')
+quiz1<-subset(features, activity == "quiz1")
+quiz2<-subset(features, activity == "quiz2")
+dances<-subset(features, activity == "dance")
+explanations<-subset(features, activity == "explain")
+quiz_features <-rbind(quiz1,quiz2)
 @
+
+
 
 \subsection{Static Features}
 \subsubsection{Body Volume}
+We filtered the data as follow
+
 <<results=tex,echo=F>>=
 ### cleanning the data 
-features$MaxY <- ifelse(MaxY<2.5 | MaxY>0,MaxY, NA)
-features$MinY <- ifelse(MinY<2.5 | MinY>0,MinY, NA)
-features$MaxZ <- ifelse(MaxZ<2.5 | MaxZ>0,MaxZ, NA)
-features$MinZ <- ifelse(MinZ<2.5 | MinZ>0,MinZ, NA)
-features$MaxX <- ifelse(MaxX<2.5 | MaxX>0,MaxX, NA)
-features$MinX <- ifelse(MinX<2.5 | MinX>0,MinX, NA)
+features$MaxY <- remove_outliers(features$MaxY)
+features$MinY <- remove_outliers(features$MinY)
+features$MaxZ <- remove_outliers(features$MaxZ)
+features$MinZ <- remove_outliers(features$MinZ)
+features$MaxX <- remove_outliers(features$MaxX)
+features$MinX <- remove_outliers(features$MinX)
 
-attach(features)
+quiz_features$MaxY <- remove_outliers(quiz_features$MaxY)
+quiz_features$MinY <- remove_outliers(quiz_features$MinY)
+quiz_features$MaxZ <- remove_outliers(quiz_features$MaxZ)
+quiz_features$MinZ <- remove_outliers(quiz_features$MinZ)
+quiz_features$MaxX <- remove_outliers(quiz_features$MaxX)
+quiz_features$MinX <- remove_outliers(quiz_features$MinX)
+
+dances$MaxY <- remove_outliers(dances$MaxY)
+dances$MinY <- remove_outliers(dances$MinY)
+dances$MaxZ <- remove_outliers(dances$MaxZ)
+dances$MinZ <- remove_outliers(dances$MinZ)
+dances$MaxX <- remove_outliers(dances$MaxX)
+dances$MinX <- remove_outliers(dances$MinX)
+
+explanations$MaxY <- remove_outliers(explanations$MaxY)
+explanations$MinY <- remove_outliers(explanations$MinY)
+explanations$MaxZ <- remove_outliers(explanations$MaxZ)
+explanations$MinZ <- remove_outliers(explanations$MinZ)
+explanations$MaxX <- remove_outliers(explanations$MaxX)
+explanations$MinX <- remove_outliers(explanations$MinX)
+
+
 ### computing the volume
-features$height =  abs(MaxY - MinY)
-features$depth =  abs(MaxZ- MinZ)
-features$large =  abs(MaxX - MinX)
-features$bvol = volumes$depth * volumes$height *  volumes$large
-attach(features)
+features$height =  abs(features$MaxX - features$MinX)
+features$depth =  abs(features$MaxZ - features$MinZ)
+features$large =  abs(features$MaxY -features$MinY)
+features$body_volume <- features$depth * features$height *  features$large
+features$body_volume <- remove_outliers(features$body_volume)
+
+quiz_features$height =  abs(quiz_features$MaxX - quiz_features$MinX)
+quiz_features$depth =  abs(quiz_features$MaxZ - quiz_features$MinZ)
+quiz_features$large =  abs(quiz_features$MaxY -quiz_features$MinY)
+quiz_features$body_volume <- quiz_features$depth * quiz_features$height *  quiz_features$large
+quiz_features$body_volume <- remove_outliers(quiz_features$body_volume)
+
+dances$height =  abs(dances$MaxX - dances$MinX)
+dances$depth =  abs(dances$MaxZ - dances$MinZ)
+dances$large =  abs(dances$MaxY -dances$MinY)
+dances$body_volume <- dances$depth * dances$height *  dances$large
+dances$body_volume <- remove_outliers(dances$body_volume)
+
+explanations$height =  abs(explanations$MaxX - explanations$MinX)
+explanations$depth =  abs(explanations$MaxZ - explanations$MinZ)
+explanations$large =  abs(explanations$MaxY -explanations$MinY)
+explanations$body_volume <- explanations$depth * explanations$height *  explanations$large
+explanations$body_volume <- remove_outliers(explanations$body_volume)
 
 @
 
-
-<<plot_body_volume_child,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(features, aes(x=as.factor(child), y=bvol,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+\subsubsubsection{Child}
+<<plot_body_volume_child_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
-<<plot_body_volume_child_session,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(features, aes(x=as.factor(child), y=bvol,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+<<eval=T, echo=F>>=
+aov.quiz.child.volume = aov(body_volume ~ factor(child) +Error(session*style), data=quiz_features)
+summary(aov.quiz.child.volume)
 @
 
-<<plot_body_volume_child_style,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(features, aes(x=as.factor(child), y=bvol,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+\subsubsubsection{Age}
+<<plot_body_volume_child_age_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<plot_body_volume_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=age, y=body_volume,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.age.volume = aov(body_volume ~ factor(age), data=quiz_features)
+summary(aov.quiz.age.volume)
+@
+
+\subsubsubsection{Gender}
+<<plot_body_volume_child_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<plot_body_volume_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(gender), y=body_volume,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.gender.volume = aov(body_volume ~ factor(gender), data=quiz_features)
+summary(aov.quiz.gender.volume)
+@
+
+
+\subsubsubsection{Versatility}
+
+\subsubsubsection{Session}
+<<plot_body_volume_child_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_body_volume_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(session), y=body_volume,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.session.volume = aov(body_volume ~ factor(session) +Error(child), data=quiz_features)
+summary(aov.quiz.session.volume)
+@
+
+\subsubsubsection{Style}
+<<plot_body_volume_child_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_body_volume_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(style), y=body_volume,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.style.volume = aov(body_volume ~ factor(style) +Error(child), data=quiz_features)
+summary(aov.quiz.style.volume)
 @
 
 \subsubsection{Center of Mass}
