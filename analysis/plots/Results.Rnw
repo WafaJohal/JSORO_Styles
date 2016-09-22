@@ -285,7 +285,7 @@ features$session = as.factor(features$session)
 features$age = all_interviews[match(features$child, all_interviews$ordre),"age"]
 features$gender = all_interviews[match(features$child, all_interviews$ordre),"genre"]
 attach(features)
-stargazer(features, title = 'Summary statistics of metadata')
+#stargazer(features, title = 'Summary statistics of metadata')
 quiz1<-subset(features, activity == "quiz1")
 quiz2<-subset(features, activity == "quiz2")
 dances<-subset(features, activity == "dance")
@@ -357,7 +357,7 @@ explanations$body_volume <- remove_outliers(explanations$body_volume)
 
 @
 
-\subsubsubsection{Child}
+\textbf{Child}
 <<plot_body_volume_child_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
 ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
@@ -367,7 +367,7 @@ aov.quiz.child.volume = aov(body_volume ~ factor(child) +Error(session*style), d
 summary(aov.quiz.child.volume)
 @
 
-\subsubsubsection{Age}
+\textbf{Age}
 <<plot_body_volume_child_age_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
 ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
 @
@@ -381,7 +381,7 @@ aov.quiz.age.volume = aov(body_volume ~ factor(age), data=quiz_features)
 summary(aov.quiz.age.volume)
 @
 
-\subsubsubsection{Gender}
+\textbf{Gender}
 <<plot_body_volume_child_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
 ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
 @
@@ -396,9 +396,22 @@ summary(aov.quiz.gender.volume)
 @
 
 
-\subsubsubsection{Versatility}
+\textbf{Versatility}
+<<plot_body_volume_child_versatility_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
 
-\subsubsubsection{Session}
+<<plot_body_volume_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(versatility), y=body_volume,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.versatility.volume = aov(body_volume ~ factor(versatility), data=quiz_features)
+summary(aov.quiz.versatility.volume)
+@
+
+
+\textbf{Session}
 <<plot_body_volume_child_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
 ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
@@ -412,7 +425,7 @@ aov.quiz.session.volume = aov(body_volume ~ factor(session) +Error(child), data=
 summary(aov.quiz.session.volume)
 @
 
-\subsubsubsection{Style}
+\textbf{Style}
 <<plot_body_volume_child_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
 ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
@@ -442,7 +455,7 @@ summary(aov.quiz.style.volume)
 
 \subsubsection{Torso Neck Orientation}
 
-\subsubsection{Body lean angle
+\subsubsection{Body lean angle}
 
 \subsubsection{Hands Status}
 

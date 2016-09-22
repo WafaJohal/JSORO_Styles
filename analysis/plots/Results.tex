@@ -13,7 +13,7 @@
 
 \section{Interviews}
 % Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
-% Date and time: jeu, sep 22, 2016 - 14:11:38
+% Date and time: jeu, sep 22, 2016 - 18:16:14
 \begin{table}[!htbp] \centering 
   \caption{Summary statistics of activities metadata} 
   \label{} 
@@ -64,7 +64,6 @@ e\_webbrowser & 13 & 2.500 & 0.957 & 1.000 & 4.000 \\
 \subsubsection{order}
 \includegraphics{interviews-plot_order}
 
-
 \subsubsection{Preferred style parent}
 \includegraphics{interviews-plot_preferred_style_parent}
 
@@ -99,11 +98,8 @@ Next graphs show the correlation between parent and children ranking for each of
 The following plot shows the average preference of children for each functionality (4: very preferred, 1: not preferred)
 \includegraphics{interviews-plot_functionality_child}
 
-
 The following plot shows the average preference of parents for each functionality (4: very preferred, 1: not preferred)
 \includegraphics{interviews-plot_functionality_parent}
-
-
 
 \includegraphics{interviews-plot_functionality_parent_enfant}
 
@@ -124,6 +120,197 @@ Next graphs show the correlation between parent and children ranking for each of
 \section{Features}
 
 
+
+\subsection{Static Features}
+\subsubsection{Body Volume}
+We filtered the data as follow
+
+
+\textbf{Child}
+\includegraphics{features-plot_body_volume_child_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+Error: session
+              Df Sum Sq Mean Sq
+factor(child)  1  49.97   49.97
+
+Error: style
+              Df Sum Sq Mean Sq
+factor(child)  1 0.5028  0.5028
+
+Error: session:style
+              Df Sum Sq Mean Sq
+factor(child)  1  91.12   91.12
+
+Error: Within
+                  Df Sum Sq Mean Sq F value Pr(>F)    
+factor(child)      9  152.5  16.941    7978 <2e-16 ***
+Residuals     138529  294.2   0.002                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Age}
+\includegraphics{features-plot_body_volume_child_age_quiz}
+
+\includegraphics{features-plot_body_volume_style_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+                Df Sum Sq Mean Sq F value Pr(>F)    
+factor(age)      4  185.0   46.24   15883 <2e-16 ***
+Residuals   138537  403.3    0.00                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+15181 observations deleted due to missingness
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Gender}
+\includegraphics{features-plot_body_volume_child_gender_quiz}
+
+\includegraphics{features-plot_body_volume_gender_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+                   Df Sum Sq Mean Sq F value Pr(>F)    
+factor(gender)      1   22.5  22.472    5503 <2e-16 ***
+Residuals      138540  565.8   0.004                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+15181 observations deleted due to missingness
+\end{Soutput}
+\end{Schunk}
+
+
+\textbf{Versatility}
+\includegraphics{features-plot_body_volume_child_versatility_quiz}
+
+\includegraphics{features-plot_body_volume_gender_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+                        Df Sum Sq Mean Sq F value Pr(>F)    
+factor(versatility)      1   56.2   56.19   14631 <2e-16 ***
+Residuals           138540  532.1    0.00                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+15181 observations deleted due to missingness
+\end{Soutput}
+\end{Schunk}
+
+
+\textbf{Session}
+\includegraphics{features-plot_body_volume_child_session_quiz}
+
+\includegraphics{features-plot_body_volume_session_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+Error: child
+                Df Sum Sq Mean Sq F value Pr(>F)  
+factor(session)  1  124.1   124.1   7.131 0.0256 *
+Residuals        9  156.6    17.4                 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Error: Within
+                    Df Sum Sq Mean Sq F value Pr(>F)    
+factor(session)      1  13.29  13.287    6256 <2e-16 ***
+Residuals       138530 294.22   0.002                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Style}
+\includegraphics{features-plot_body_volume_child_style_quiz}
+
+\includegraphics{features-plot_body_volume_style_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+Error: child
+              Df Sum Sq Mean Sq F value Pr(>F)
+factor(style)  1   0.47   0.473   0.015  0.905
+Residuals      9 280.26  31.140               
+
+Error: Within
+                  Df Sum Sq Mean Sq F value  Pr(>F)   
+factor(style)      1   0.02 0.02324   10.47 0.00121 **
+Residuals     138530 307.48 0.00222                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\subsubsection{Center of Mass}
+
+\subsubsection{Center of Mass Displacement}
+
+\subsubsection{Distance Covered}
+
+\subsubsection{Hand Relationship}
+
+\subsubsection{Shoulder Angle}
+
+\subsubsection{Elbow Flexion}
+
+\subsubsection{Feet Relationship}
+
+\subsubsection{Torso Neck Orientation}
+
+\subsubsection{Body lean angle}
+
+\subsubsection{Hands Status}
+
+\subsection{Dynamic Features}
+
+
 \section{Postures}
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: jeu, sep 22, 2016 - 18:19:43
+\begin{table}[!htbp] \centering 
+  \caption{Summary statistics of activities metadata} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Max} \\ 
+\hline \\[-1.8ex] 
+ordre & 16 & 8.500 & 4.761 & 1 & 16 \\ 
+age & 16 & 8.688 & 1.014 & 7 & 11 \\ 
+p\_robot & 16 & 3.125 & 1.258 & 1 & 5 \\ 
+p\_videogame & 16 & 3.500 & 1.414 & 1 & 5 \\ 
+p\_bike & 16 & 2.375 & 1.310 & 1 & 5 \\ 
+p\_book & 16 & 2.312 & 1.138 & 1 & 4 \\ 
+p\_clothes & 16 & 3.688 & 1.537 & 1 & 5 \\ 
+p\_homeworks & 16 & 3.375 & 1.147 & 1 & 4 \\ 
+p\_play & 16 & 3.562 & 0.892 & 1 & 4 \\ 
+p\_teach & 16 & 3.938 & 0.250 & 3 & 4 \\ 
+p\_phone & 15 & 1.867 & 1.302 & 1 & 4 \\ 
+p\_webbrowser & 15 & 2.067 & 1.335 & 1 & 4 \\ 
+prefered\_session & 14 & 1.643 & 0.497 & 1 & 2 \\ 
+e\_robot & 13 & 1.077 & 0.277 & 1 & 2 \\ 
+e\_videogame & 13 & 2.615 & 1.193 & 1 & 5 \\ 
+e\_bike & 12 & 3.250 & 0.965 & 2 & 5 \\ 
+e\_book & 12 & 3.417 & 1.379 & 1 & 5 \\ 
+e\_clothes & 13 & 4.308 & 0.751 & 3 & 5 \\ 
+e\_homeworks & 13 & 3.115 & 0.650 & 2.000 & 4.000 \\ 
+e\_play & 13 & 3.115 & 0.618 & 2.000 & 4.000 \\ 
+e\_rules & 12 & 3.167 & 0.577 & 2 & 4 \\ 
+e\_learn & 13 & 3.500 & 0.577 & 2.500 & 4.000 \\ 
+e\_sport & 12 & 3.000 & 0.603 & 2 & 4 \\ 
+e\_teach & 12 & 3.500 & 0.674 & 2 & 4 \\ 
+e\_outside & 12 & 2.917 & 0.900 & 1 & 4 \\ 
+e\_mood & 12 & 3.375 & 0.569 & 2.500 & 4.000 \\ 
+e\_phone & 13 & 2.308 & 1.109 & 1 & 4 \\ 
+e\_webbrowser & 13 & 2.500 & 0.957 & 1.000 & 4.000 \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table} 
+
 
 \end{document}
