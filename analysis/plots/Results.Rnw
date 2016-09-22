@@ -270,12 +270,45 @@ ggplot(dfobject, aes(x=e_webbrowser, y=p_webbrowser,colour=sujett))+ geom_point(
 \section{Features}
 <<results=tex,echo=F>>=
 features <- read.csv("~/Dropbox/DATA/STYLEBOT/features_fulls.csv")
+features$child = as.factor(features$child)
+features$session = as.factor(features$session)
 attach(features)
-stargazer(features, title = 'Summary statistics of features metadata')
+stargazer(features, title = 'Summary statistics of metadata')
 @
 
 \subsection{Static Features}
 \subsubsection{Body Volume}
+<<results=tex,echo=F>>=
+### cleanning the data 
+features$MaxY <- ifelse(MaxY<2.5 | MaxY>0,MaxY, NA)
+features$MinY <- ifelse(MinY<2.5 | MinY>0,MinY, NA)
+features$MaxZ <- ifelse(MaxZ<2.5 | MaxZ>0,MaxZ, NA)
+features$MinZ <- ifelse(MinZ<2.5 | MinZ>0,MinZ, NA)
+features$MaxX <- ifelse(MaxX<2.5 | MaxX>0,MaxX, NA)
+features$MinX <- ifelse(MinX<2.5 | MinX>0,MinX, NA)
+
+attach(features)
+### computing the volume
+features$height =  abs(MaxY - MinY)
+features$depth =  abs(MaxZ- MinZ)
+features$large =  abs(MaxX - MinX)
+features$bvol = volumes$depth * volumes$height *  volumes$large
+attach(features)
+
+@
+
+
+<<plot_body_volume_child,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(features, aes(x=as.factor(child), y=bvol,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_body_volume_child_session,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(features, aes(x=as.factor(child), y=bvol,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_body_volume_child_style,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(features, aes(x=as.factor(child), y=bvol,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
 
 \subsubsection{Center of Mass}
 
