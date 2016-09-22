@@ -133,7 +133,6 @@ ggplot(all_interviews, aes(x=genre, y=age, fill=genre))+ geom_boxplot() +scale_f
 ggplot(all_interviews, aes(x=Ordre, fill=Ordre))+ geom_bar() +scale_fill_discrete_binary()+ theme_Publication()
 @
 
-
 \subsubsection{Preferred style parent}
 <<plot_preferred_style_parent,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
 ggplot(all_interviews, aes(x=prefered_style, fill=prefered_style))+ geom_bar() +scale_fill_discrete_list()+ theme_Publication()
@@ -230,13 +229,10 @@ dfenfant_bis = rename(dfenfant_bis, c("variable"="objet"))
 ggplot(dfenfant_bis, aes(x=objet, y=value,fill=objet))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
-
 The following plot shows the average preference of parents for each functionality (4: very preferred, 1: not preferred)
 <<plot_functionality_parent,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
 ggplot(dfparent, aes(x=objet, y=value,fill=objet))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
-
-
 
 <<plot_functionality_parent_enfant,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
 ggplot(df, aes(x=objet, y=value, fill=individu))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
@@ -244,36 +240,73 @@ ggplot(df, aes(x=objet, y=value, fill=individu))+ geom_boxplot() +scale_fill_dis
 
 \subsubsection{Child-parent correlation in functionality preferrence} 
 Next graphs show the correlation between parent and children ranking for each of the child subject\newline
-<<plot_coirs_parent_enfant_robot,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-dfrobot = (all_interviews[,c("sujett","age","genre","Ordre","p_robot","e_robot")])
-ggplot(dfrobot, aes(x=e_robot, y=p_robot,colour=sujett))+ geom_point(size=8) + theme_Publication()+ xlim(1,5)+ ylim(1,5)
+<<plot_coirs_parent_enfant_hmk,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfrobot = (all_interviews[,c("sujett","age","genre","Ordre","p_homeworks","e_homeworks")])
+ggplot(dfrobot, aes(x=e_homeworks, y=p_homeworks,colour=sujett))+ geom_point(size=8) + theme_Publication()+ xlim(1,5)+ ylim(1,5)
 @
 
-<<plot_coirs_parent_enfant_clothes,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_clothes","e_clothes")])
-ggplot(dfobject, aes(x=e_clothes, y=p_clothes,colour=sujett))+  geom_point(size = 8)+ theme_Publication()+ xlim(1,5)+ ylim(1,5)
+<<plot_coirs_parent_enfant_teach,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_teach","e_teach")])
+ggplot(dfobject, aes(x=e_teach, y=p_teach,colour=sujett))+  geom_point(size = 8)+ theme_Publication()+ xlim(1,5)+ ylim(1,5)
 @
 
-<<plot_coirs_parent_enfant_book,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_book","e_book")])
-ggplot(dfobject, aes(x=e_book, y=p_book,colour=sujett))+  geom_point(size = 8)+ theme_Publication()+ xlim(1,5)+ ylim(1,5)
+<<plot_coirs_parent_enfant_play,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_play","e_play")])
+ggplot(dfobject, aes(x=e_play, y=p_play,colour=sujett))+  geom_point(size = 8)+ theme_Publication()+ xlim(1,5)+ ylim(1,5)
 @
 
-<<plot_coirs_parent_enfant_bike,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_bike","e_bike")])
-ggplot(dfobject, aes(x=e_bike, y=p_bike,colour=sujett))+  geom_point(size = 8) + theme_Publication()+ xlim(1,5)+ ylim(1,5)
+<<plot_coirs_parent_enfant_phone,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_phone","e_phone")])
+ggplot(dfobject, aes(x=e_phone, y=p_phone,colour=sujett))+  geom_point(size = 8) + theme_Publication()+ xlim(1,5)+ ylim(1,5)
 @
 
-<<plot_coirs_parent_enfant_videogame,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_videogame","e_videogame")])
-ggplot(dfobject, aes(x=e_videogame, y=p_videogame,colour=sujett))+ geom_point(size = 8) + theme_Publication()+ xlim(1,5)+ ylim(1,5)
+<<plot_coirs_parent_enfant_webbrowser,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_webbrowser","e_webbrowser")])
+ggplot(dfobject, aes(x=e_webbrowser, y=p_webbrowser,colour=sujett))+ geom_point(size = 8) + theme_Publication()+ xlim(1,5)+ ylim(1,5)
 @
 
 
 \SweaveOpts{engine=R,eps=FALSE,echo=TRUE,prefix.string=features}
 \section{Features}
+<<results=tex,echo=F>>=
+features <- read.csv("~/Dropbox/DATA/STYLEBOT/features_fulls.csv")
+attach(features)
+stargazer(features, title = 'Summary statistics of features metadata')
+@
+
+\subsection{Static Features}
+\subsubsection{Body Volume}
+
+\subsubsection{Center of Mass}
+
+\subsubsection{Center of Mass Displacement}
+
+\subsubsection{Distance Covered}
+
+\subsubsection{Hand Relationship}
+
+\subsubsection{Shoulder Angle}
+
+\subsubsection{Elbow Flexion}
+
+\subsubsection{Feet Relationship}
+
+\subsubsection{Torso Neck Orientation}
+
+\subsubsection{Body lean angle
+
+\subsubsection{Hands Status}
+
+\subsection{Dynamic Features}
 
 \SweaveOpts{engine=R,eps=FALSE,echo=TRUE,prefix.string=postures}
 \section{Postures}
+<<results=tex,echo=F>>=
+postures <- read.csv("~/Dropbox/DATA/STYLEBOT/postures_fulls.csv") ### bodies
+attach(all_interviews)
+stargazer(all_interviews, title = 'Summary statistics of activities metadata')
+@
+
+
 
 \end{document}
