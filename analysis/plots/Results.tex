@@ -13,7 +13,7 @@
 
 \section{Interviews}
 % Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
-% Date and time: jeu, sep 22, 2016 - 18:16:14
+% Date and time: ven, oct 07, 2016 - 10:39:05
 \begin{table}[!htbp] \centering 
   \caption{Summary statistics of activities metadata} 
   \label{} 
@@ -246,6 +246,123 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 \end{Soutput}
 \end{Schunk}
 
+\subsubsection{Distance}
+\textbf{Child}
+\includegraphics{features-plot_distance_child_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+Error: session
+              Df Sum Sq Mean Sq
+factor(child)  1  60.39   60.39
+
+Error: style
+              Df Sum Sq Mean Sq
+factor(child)  1  35.92   35.92
+
+Error: session:style
+              Df Sum Sq Mean Sq
+factor(child)  1  626.8   626.8
+
+Error: Within
+                  Df Sum Sq Mean Sq F value Pr(>F)    
+factor(child)      9  882.9   98.10    9457 <2e-16 ***
+Residuals     153710 1594.5    0.01                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Age}
+\includegraphics{features-plot_distance_child_age_quiz}
+
+\includegraphics{features-plot_distance_style_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+                Df Sum Sq Mean Sq F value Pr(>F)    
+factor(age)      4  665.1  166.27   10080 <2e-16 ***
+Residuals   153718 2535.4    0.02                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Gender}
+\includegraphics{features-plot_distance_child_gender_quiz}
+
+\includegraphics{features-plot_distance_gender_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+                   Df Sum Sq Mean Sq F value Pr(>F)    
+factor(gender)      1      5   5.478   263.6 <2e-16 ***
+Residuals      153721   3195   0.021                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+
+\textbf{Versatility}
+\includegraphics{features-plot_distance_child_versatility_quiz}
+
+\includegraphics{features-plot_distance_gender_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+                        Df Sum Sq Mean Sq F value Pr(>F)    
+factor(versatility)      1  155.9  155.91    7872 <2e-16 ***
+Residuals           153721 3044.6    0.02                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+
+\textbf{Session}
+\includegraphics{features-plot_distance_child_session_quiz}
+
+\includegraphics{features-plot_distance_session_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+Error: child
+                Df Sum Sq Mean Sq F value Pr(>F)
+factor(session)  1   59.1   59.08   0.368  0.559
+Residuals        9 1446.0  160.67               
+
+Error: Within
+                    Df Sum Sq Mean Sq F value Pr(>F)    
+factor(session)      1   33.3   33.33    3082 <2e-16 ***
+Residuals       153711 1662.1    0.01                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Style}
+\includegraphics{features-plot_distance_child_style_quiz}
+
+\includegraphics{features-plot_distance_style_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+Error: child
+              Df Sum Sq Mean Sq F value Pr(>F)
+factor(style)  1   64.1   64.12     0.4  0.543
+Residuals      9 1441.0  160.11               
+
+Error: Within
+                  Df Sum Sq Mean Sq F value Pr(>F)    
+factor(style)      1   52.5   52.47    4909 <2e-16 ***
+Residuals     153711 1642.9    0.01                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+
 \subsubsection{Center of Mass}
 
 \subsubsection{Center of Mass Displacement}
@@ -262,7 +379,115 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 \subsubsection{Torso Neck Orientation}
 
-\subsubsection{Body lean angle}
+\subsubsection{Body lean angle - Frontal}
+\textbf{Child}
+\includegraphics{features-plot_leanx_child_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+Error: session
+              Df Sum Sq Mean Sq
+factor(child)  1   1307    1307
+
+Error: style
+              Df Sum Sq Mean Sq
+factor(child)  1  6.239   6.239
+
+Error: session:style
+              Df Sum Sq Mean Sq
+factor(child)  1  343.9   343.9
+
+Error: Within
+                  Df Sum Sq Mean Sq F value Pr(>F)    
+factor(child)      9   1728  192.03    3762 <2e-16 ***
+Residuals     153710   7845    0.05                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Age}
+\includegraphics{features-plot_leanx_style_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+                Df Sum Sq Mean Sq F value Pr(>F)    
+factor(age)      4    743  185.85    2724 <2e-16 ***
+Residuals   153718  10487    0.07                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Gender}
+\includegraphics{features-plot_leanx_gender_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+                   Df Sum Sq Mean Sq F value Pr(>F)    
+factor(gender)      1     40   40.39   554.9 <2e-16 ***
+Residuals      153721  11190    0.07                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+
+\textbf{Versatility}
+\includegraphics{features-plot_leanx_gender_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+                        Df Sum Sq Mean Sq F value Pr(>F)    
+factor(versatility)      1    258  258.37    3620 <2e-16 ***
+Residuals           153721  10972    0.07                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+
+\textbf{Session}
+\includegraphics{features-plot_leanx_session_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+Error: child
+                Df Sum Sq Mean Sq F value Pr(>F)
+factor(session)  1  166.6   166.6   0.727  0.416
+Residuals        9 2061.7   229.1               
+
+Error: Within
+                    Df Sum Sq Mean Sq F value Pr(>F)    
+factor(session)      1   1146  1145.9   22420 <2e-16 ***
+Residuals       153711   7856     0.1                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Style}
+\includegraphics{features-plot_leanx_child_style_quiz}
+
+\includegraphics{features-plot_leanx_style_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+Error: child
+              Df Sum Sq Mean Sq F value Pr(>F)
+factor(style)  1   64.1   64.12     0.4  0.543
+Residuals      9 1441.0  160.11               
+
+Error: Within
+                  Df Sum Sq Mean Sq F value Pr(>F)    
+factor(style)      1   52.5   52.47    4909 <2e-16 ***
+Residuals     153711 1642.9    0.01                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+
 
 \subsubsection{Hands Status}
 
@@ -271,7 +496,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 \section{Postures}
 % Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
-% Date and time: jeu, sep 22, 2016 - 18:19:43
+% Date and time: ven, oct 07, 2016 - 10:44:21
 \begin{table}[!htbp] \centering 
   \caption{Summary statistics of activities metadata} 
   \label{} 

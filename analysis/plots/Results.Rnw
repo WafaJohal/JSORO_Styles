@@ -245,7 +245,37 @@ ggplot(dfparent, aes(x=objet, y=value,fill=objet))+ geom_boxplot() +scale_fill_d
 @
 
 <<plot_functionality_parent_enfant,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(df, aes(x=objet, y=value, fill=individu))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(df, aes(x=objet, y=value, fill=individu))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()+
+  scale_y_continuous(name = "",
+                    breaks =c(1,2,3,4),
+                    labels = c("Strongly disagree","Disagree", "Agree", "Stongly agree"))+
+   scale_x_discrete(name = "Roles/Tasks",
+                    breaks =c("homeworks","teach","play","phone","webbrowser"),
+                    labels = c("Homeworks","Teach it","Play","Phone","Web-browser"))
+  
+  
+@
+
+
+<<plot_functionality_parent_enfant_bar,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfbis = df[complete.cases(df),]
+df_se = summarySE(dfbis, measurevar="value", groupvars=c("objet","individu"))
+df_se
+ggplot(df_se, aes(x=objet, y=value, fill=individu))+ geom_bar(position=position_dodge(), stat="identity")+scale_fill_discrete_binary()+ theme_Publication()+ geom_errorbar(aes(ymin=value-ci, ymax=value+ci),
+                  width=.2,                    # Width of the error bars
+                  position=position_dodge(.9)) +
+  scale_y_continuous(name = "",
+                    breaks =c(1,2,3,4),
+                    labels = c("Strongly disagree","Disagree", "Agree", "Stongly agree"))+
+   scale_x_discrete(name = "Roles/Tasks",
+                    breaks =c("homeworks","teach","play","phone","webbrowser"),
+                    labels = c("Homeworks","Teach it","Play","Phone","Web-browser"))
+  
+@
+<<>>=
+attach(df)
+summary(df)
+summary(aov(df$value~df$objet*df$individu))
 @
 
 \subsubsection{Child-parent correlation in functionality preferrence} 
@@ -439,6 +469,90 @@ aov.quiz.style.volume = aov(body_volume ~ factor(style) +Error(child), data=quiz
 summary(aov.quiz.style.volume)
 @
 
+\subsubsection{Distance}
+\textbf{Child}
+<<plot_distance_child_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=JointDistance,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.child.distance = aov(JointDistance ~ factor(child) +Error(session*style), data=quiz_features)
+summary(aov.quiz.child.distance)
+@
+
+\textbf{Age}
+<<plot_distance_child_age_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=JointDistance,fill=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<plot_distance_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=age, y=JointDistance,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.age.volume = aov(JointDistance ~ factor(age), data=quiz_features)
+summary(aov.quiz.age.volume)
+@
+
+\textbf{Gender}
+<<plot_distance_child_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=JointDistance,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<plot_distance_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(gender), y=JointDistance,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.gender.volume = aov(JointDistance ~ factor(gender), data=quiz_features)
+summary(aov.quiz.gender.volume)
+@
+
+
+\textbf{Versatility}
+<<plot_distance_child_versatility_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=JointDistance,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<plot_distance_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(versatility), y=JointDistance,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.versatility.volume = aov(JointDistance ~ factor(versatility), data=quiz_features)
+summary(aov.quiz.versatility.volume)
+@
+
+
+\textbf{Session}
+<<plot_distance_child_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=JointDistance,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_distance_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(session), y=JointDistance,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.session.volume = aov(JointDistance ~ factor(session) +Error(child), data=quiz_features)
+summary(aov.quiz.session.volume)
+@
+
+\textbf{Style}
+<<plot_distance_child_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=JointDistance,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_distance_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(style), y=JointDistance,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.style.volume = aov(JointDistance ~ factor(style) +Error(child), data=quiz_features)
+summary(aov.quiz.style.volume)
+@
+
+
 \subsubsection{Center of Mass}
 
 \subsubsection{Center of Mass Displacement}
@@ -455,7 +569,74 @@ summary(aov.quiz.style.volume)
 
 \subsubsection{Torso Neck Orientation}
 
-\subsubsection{Body lean angle}
+\subsubsection{Body lean angle - Frontal}
+\textbf{Child}
+<<plot_leanx_child_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=KinectLeanX,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.child.distance = aov(KinectLeanX ~ factor(child) +Error(session*style), data=quiz_features)
+summary(aov.quiz.child.distance)
+@
+
+\textbf{Age}
+<<plot_leanx_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=age, y=KinectLeanX,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.age.volume = aov(KinectLeanX ~ factor(age), data=quiz_features)
+summary(aov.quiz.age.volume)
+@
+
+\textbf{Gender}
+<<plot_leanx_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(gender), y=KinectLeanX,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.gender.volume = aov(KinectLeanX ~ factor(gender), data=quiz_features)
+summary(aov.quiz.gender.volume)
+@
+
+
+\textbf{Versatility}
+<<plot_leanx_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(versatility), y=KinectLeanX,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.versatility.volume = aov(KinectLeanX ~ factor(versatility), data=quiz_features)
+summary(aov.quiz.versatility.volume)
+@
+
+
+\textbf{Session}
+<<plot_leanx_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(session), y=KinectLeanX,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.session.volume = aov(KinectLeanX ~ factor(session) +Error(child), data=quiz_features)
+summary(aov.quiz.session.volume)
+@
+
+\textbf{Style}
+<<plot_leanx_child_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(child), y=KinectLeanX,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_leanx_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(quiz_features, aes(x=as.factor(style), y=KinectLeanX,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.style.volume = aov(JointDistance ~ factor(style) +Error(child), data=quiz_features)
+summary(aov.quiz.style.volume)
+@
+
+
 
 \subsubsection{Hands Status}
 
