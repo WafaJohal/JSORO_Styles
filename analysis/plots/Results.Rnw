@@ -670,7 +670,7 @@ ggplot(current_df, aes(x=as.factor(style), y=handDist,fill=style))+ geom_boxplot
 
 <<eval=T, echo=F>>=
 aov.quiz.style.handDist= aov(handDist ~ factor(style) +Error(child), data=current_df)
-summary(aov.all.style.handDist)
+summary(aov.quiz.style.handDist)
 @
 
 

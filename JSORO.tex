@@ -676,25 +676,11 @@ We first extracted static body features at every frame:
 \item \textbf{Hands Status}: open or closed 
 \end{itemize}
 
+\paragraph{Volume}
+For each frame, the volume is computed by going through the joints and recording the min and max in all three dimensions (X,Y,Z). 
+We also use as feature the joint's name at the minimum and the maximum for all three dimensions.
 
-
-\subsubsection{Dynamic Features}
-Dynamic features include:
-\begin{itemize}[noitemsep,nolistsep]
-\item \textbf{Velocity}: Average velocity of all joints displacement in time
-\item \textbf{Acceleration}: Average acceleration of all joints displacement in time 
-\item \textbf{Jerks}: 
-\item \textbf{Quantity Of Motion}: 
-\end{itemize}
-
-
-
-
-\paragraph{Torso and Neck Orientations}
-TorsoQ and NeckQ are given by the Kinect sensor to be respectively the mid-spine joint and the neck orientations. 
-These features are formalised as in the form of quaternions. 
-In order to illustrate  these angles clearly, we converted the quaternions to euclidean angles in the graphs.
-Figure \ref{fig:neckrelax} shows the neck relaxation angle.
+\paragraph{Center of Mass}
 
 \paragraph{Leaning angle}
 Leaning left and right corresponds sideways lean (see Fig. \ref{fig:sideways_lean}), while leaning forward and back corresponds to frontal leaning angle (see Fig. \ref{fig:BLA}). 
@@ -702,14 +688,37 @@ The values range between $-1$ and $1$ in both directions, where 1 roughly corres
 
 In addition to the given angles from the Kinect sensor for the leaning angles, we computed a body lean angle in line with the work of \cite{Castellano2009} and \cite{Schegloff}. This angle, was computed by the dot product of the vertical vector from the hip centre joint and the vector from the hip centre to the shoulder centre of each collected body data frame. 
 
-\paragraph{Volume}
-For each frame, the volume is computed by going through the joints and recording the min and max in all three dimensions (X,Y,Z). 
-We also use as feature the joint's name at the minimum and the maximum for all three dimensions.
+\paragraph{Torso and Neck Orientations}
+TorsoQ and NeckQ are given by the Kinect sensor to be respectively the mid-spine joint and the neck orientations. 
+These features are formalised as in the form of quaternions. 
+In order to illustrate  these angles clearly, we converted the quaternions to euclidean angles in the graphs.
+Figure \ref{fig:neckrelax} shows the neck relaxation angle.
+
 
 \paragraph{Status of Hands}
 The status of hands IS given by the Kinect Sensor with values ranging among Open, Closed, Lasso, NotTracked and Unknown. 
 This feature is considered to be a good candidate for Hand Relaxation, advocated by Meharbian~\cite{Mehrabian1968} as a sign of relaxation. 
 Only the Open and Closed recognition are exploited. 
+
+\subsubsection{Dynamic Features}
+Dynamic features include:
+\begin{itemize}[noitemsep,nolistsep]
+\item \textbf{Velocity}: Average velocity of all joints displacement in time
+\item \textbf{Acceleration}: Average acceleration of all joints displacement in time 
+\item \textbf{Jerks}: describes motion smoothness
+\item \textbf{Quantity Of Motion}: weighted average of speeds of several joints
+\end{itemize}
+
+
+
+
+
+BEHAVE-II: The Revised Set of Measures to Assess Users’
+Attitudinal and Behavioral Responses to a Social Robot
+DOI 10.1007/s12369-013-0191-1
+
+Body Movement Analysis of Human-Robot Interaction
+
 
 
 \paragraph{Asymmetry Values}

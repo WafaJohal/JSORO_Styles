@@ -17,7 +17,7 @@
 
 \section{Interviews}
 % Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
-% Date and time: ven, oct 07, 2016 - 17:33:58
+% Date and time: lun, oct 10, 2016 - 16:58:30
 \begin{table}[!htbp] \centering 
   \caption{Summary statistics of activities metadata} 
   \label{} 
@@ -428,64 +428,71 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 \subsubsection{Distance Covered}
 
-\subsubsection{Hand Relationship}
+\subsubsection{Hand Relationship - Distance}
+\begin{Schunk}
+\begin{Soutput}
+group: auto
+   vars     n mean   sd median trimmed mad  min max range skew kurtosis se
+X1    1 86873 0.44 0.11   0.45    0.44 0.1 0.12 2.2  2.08 0.26     2.42  0
+------------------------------------------------------------ 
+group: perm
+   vars     n mean   sd median trimmed  mad  min  max range skew kurtosis se
+X1    1 94625 0.46 0.13   0.45    0.45 0.08 0.12 1.44  1.31 0.76     2.09  0
+\end{Soutput}
+\end{Schunk}
 
-\subsubsection{Shoulder Angle}
 
-\subsubsection{Elbow Flexion}
-
-\subsubsection{Feet Relationship}
-
-\subsubsection{Torso Neck Orientation}
-
-\subsubsection{Body lean angle - Frontal}
 \textbf{Child}
-\includegraphics{features-plot_leanx_child_quiz}
+\includegraphics{features-plot_handdistance_child_quiz}
 
 \begin{Schunk}
 \begin{Soutput}
 Error: session
               Df Sum Sq Mean Sq
-factor(child)  1   1307    1307
+factor(child)  1  4.369   4.369
 
 Error: style
               Df Sum Sq Mean Sq
-factor(child)  1  6.239   6.239
+factor(child)  1  10.65   10.65
 
 Error: session:style
               Df Sum Sq Mean Sq
-factor(child)  1  343.9   343.9
+factor(child)  1  218.6   218.6
 
 Error: Within
                   Df Sum Sq Mean Sq F value Pr(>F)    
-factor(child)      9   1728  192.03    3762 <2e-16 ***
-Residuals     153710   7845    0.05                   
+factor(child)      9  423.6   47.06    4645 <2e-16 ***
+Residuals     181485 1839.0    0.01                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 \end{Soutput}
 \end{Schunk}
 
 \textbf{Age}
-\includegraphics{features-plot_leanx_style_quiz}
+\includegraphics{features-plot_handdistance_child_age_quiz}
+
+\includegraphics{features-plot_handdistance_style_quiz}
 
 \begin{Schunk}
 \begin{Soutput}
                 Df Sum Sq Mean Sq F value Pr(>F)    
-factor(age)      4    743  185.85    2724 <2e-16 ***
-Residuals   153718  10487    0.07                   
+factor(age)      4  115.2  28.788    2194 <2e-16 ***
+Residuals   181493 2381.0   0.013                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 \end{Soutput}
 \end{Schunk}
 
 \textbf{Gender}
-\includegraphics{features-plot_leanx_gender_quiz}
+\includegraphics{features-plot_handdistance_child_gender_quiz}
+
+\includegraphics{features-plot_handdistance_gender_quiz}
 
 \begin{Schunk}
 \begin{Soutput}
-                   Df Sum Sq Mean Sq F value Pr(>F)    
-factor(gender)      1     40   40.39   554.9 <2e-16 ***
-Residuals      153721  11190    0.07                   
+                   Df Sum Sq Mean Sq F value  Pr(>F)   
+factor(gender)      1    0.1 0.11017   8.011 0.00465 **
+Residuals      181496 2496.1 0.01375                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 \end{Soutput}
@@ -493,13 +500,15 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 
 \textbf{Versatility}
-\includegraphics{features-plot_leanx_gender_quiz}
+\includegraphics{features-plot_handdistance_child_versatility_quiz}
+
+\includegraphics{features-plot_handdistance_gender_quiz}
 
 \begin{Schunk}
 \begin{Soutput}
                         Df Sum Sq Mean Sq F value Pr(>F)    
-factor(versatility)      1    258  258.37    3620 <2e-16 ***
-Residuals           153721  10972    0.07                   
+factor(versatility)      1     26  25.990    1910 <2e-16 ***
+Residuals           181496   2470   0.014                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 \end{Soutput}
@@ -507,40 +516,42 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 
 \textbf{Session}
-\includegraphics{features-plot_leanx_session_quiz}
+\includegraphics{features-plot_handdistance_child_session_quiz}
+
+\includegraphics{features-plot_handdistance_session_quiz}
 
 \begin{Schunk}
 \begin{Soutput}
 Error: child
                 Df Sum Sq Mean Sq F value Pr(>F)
-factor(session)  1  166.6   166.6   0.727  0.416
-Residuals        9 2061.7   229.1               
+factor(session)  1    8.2    8.25   0.117   0.74
+Residuals        9  636.1   70.68               
 
 Error: Within
                     Df Sum Sq Mean Sq F value Pr(>F)    
-factor(session)      1   1146  1145.9   22420 <2e-16 ***
-Residuals       153711   7856     0.1                   
+factor(session)      1      7    7.01   689.6 <2e-16 ***
+Residuals       181486   1845    0.01                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 \end{Soutput}
 \end{Schunk}
 
 \textbf{Style}
-\includegraphics{features-plot_leanx_child_style_quiz}
+\includegraphics{features-plot_handdistance_child_style_quiz}
 
-\includegraphics{features-plot_leanx_style_quiz}
+\includegraphics{features-plot_handdistance_style_quiz}
 
 \begin{Schunk}
 \begin{Soutput}
 Error: child
               Df Sum Sq Mean Sq F value Pr(>F)
-factor(style)  1   64.1   64.12     0.4  0.543
-Residuals      9 1441.0  160.11               
+factor(style)  1   13.6   13.61   0.194   0.67
+Residuals      9  630.7   70.08               
 
 Error: Within
                   Df Sum Sq Mean Sq F value Pr(>F)    
-factor(style)      1   52.5   52.47    4909 <2e-16 ***
-Residuals     153711 1642.9    0.01                   
+factor(style)      1    9.9   9.943   979.7 <2e-16 ***
+Residuals     181486 1841.9   0.010                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 \end{Soutput}
@@ -548,53 +559,116 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 
 
-\subsubsection{Hands Status}
 
-\subsection{Dynamic Features}
+\subsubsection{Hand Relationship - Displacement}
+\begin{Schunk}
+\begin{Soutput}
+group: auto
+   vars     n mean   sd median trimmed  mad  min  max range skew kurtosis se
+X1    1 86873 0.29 0.05   0.28    0.28 0.04 0.07 0.55  0.49 0.93     1.92  0
+------------------------------------------------------------ 
+group: perm
+   vars     n mean   sd median trimmed  mad  min  max range skew kurtosis se
+X1    1 94625 0.29 0.07   0.28    0.28 0.05 0.09 0.68  0.59 0.96     1.05  0
+\end{Soutput}
+\end{Schunk}
 
+\textbf{Child}
+\includegraphics{features-plot_handdisplacement_child_quiz}
 
-\section{Postures}
-% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
-% Date and time: ven, oct 07, 2016 - 17:39:35
-\begin{table}[!htbp] \centering 
-  \caption{Summary statistics of activities metadata} 
-  \label{} 
-\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
-\\[-1.8ex]\hline 
-\hline \\[-1.8ex] 
-Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Max} \\ 
-\hline \\[-1.8ex] 
-ordre & 16 & 8.500 & 4.761 & 1 & 16 \\ 
-age & 16 & 8.688 & 1.014 & 7 & 11 \\ 
-p\_robot & 16 & 3.125 & 1.258 & 1 & 5 \\ 
-p\_videogame & 16 & 3.500 & 1.414 & 1 & 5 \\ 
-p\_bike & 16 & 2.375 & 1.310 & 1 & 5 \\ 
-p\_book & 16 & 2.312 & 1.138 & 1 & 4 \\ 
-p\_clothes & 16 & 3.688 & 1.537 & 1 & 5 \\ 
-p\_homeworks & 16 & 3.375 & 1.147 & 1 & 4 \\ 
-p\_play & 16 & 3.562 & 0.892 & 1 & 4 \\ 
-p\_teach & 16 & 3.938 & 0.250 & 3 & 4 \\ 
-p\_phone & 15 & 1.867 & 1.302 & 1 & 4 \\ 
-p\_webbrowser & 15 & 2.067 & 1.335 & 1 & 4 \\ 
-prefered\_session & 14 & 1.643 & 0.497 & 1 & 2 \\ 
-e\_robot & 13 & 1.077 & 0.277 & 1 & 2 \\ 
-e\_videogame & 13 & 2.615 & 1.193 & 1 & 5 \\ 
-e\_bike & 12 & 3.250 & 0.965 & 2 & 5 \\ 
-e\_book & 12 & 3.417 & 1.379 & 1 & 5 \\ 
-e\_clothes & 13 & 4.308 & 0.751 & 3 & 5 \\ 
-e\_homeworks & 13 & 3.115 & 0.650 & 2.000 & 4.000 \\ 
-e\_play & 13 & 3.115 & 0.618 & 2.000 & 4.000 \\ 
-e\_rules & 12 & 3.167 & 0.577 & 2 & 4 \\ 
-e\_learn & 13 & 3.500 & 0.577 & 2.500 & 4.000 \\ 
-e\_sport & 12 & 3.000 & 0.603 & 2 & 4 \\ 
-e\_teach & 12 & 3.500 & 0.674 & 2 & 4 \\ 
-e\_outside & 12 & 2.917 & 0.900 & 1 & 4 \\ 
-e\_mood & 12 & 3.375 & 0.569 & 2.500 & 4.000 \\ 
-e\_phone & 13 & 2.308 & 1.109 & 1 & 4 \\ 
-e\_webbrowser & 13 & 2.500 & 0.957 & 1.000 & 4.000 \\ 
-\hline \\[-1.8ex] 
-\end{tabular} 
-\end{table} 
+\begin{Schunk}
+\begin{Soutput}
+Error: session
+              Df Sum Sq Mean Sq
+factor(child)  1  3.475   3.475
 
+Error: style
+              Df  Sum Sq Mean Sq
+factor(child)  1 0.07948 0.07948
 
-\end{document}
+Error: session:style
+              Df Sum Sq Mean Sq
+factor(child)  1  33.14   33.14
+
+Error: Within
+                  Df Sum Sq Mean Sq F value Pr(>F)    
+factor(child)      9   70.9   7.876    2309 <2e-16 ***
+Residuals     181485  619.1   0.003                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Age}
+\includegraphics{features-plot_handdisplacement_child_age_quiz}
+
+\includegraphics{features-plot_handdisplacement_style_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+                Df Sum Sq Mean Sq F value Pr(>F)    
+factor(age)      4   65.8  16.441    4515 <2e-16 ***
+Residuals   181493  660.9   0.004                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Gender}
+\includegraphics{features-plot_handdisplacement_child_gender_quiz}
+
+\includegraphics{features-plot_handdisplacement_gender_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+                   Df Sum Sq Mean Sq F value Pr(>F)    
+factor(gender)      1   11.8  11.834    3005 <2e-16 ***
+Residuals      181496  714.8   0.004                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Versatility}
+\includegraphics{features-plot_handdisplacement_child_versatility_quiz}
+
+\includegraphics{features-plot_handdisplacement_gender_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+                        Df Sum Sq Mean Sq F value Pr(>F)    
+factor(versatility)      1   16.0  16.007    4088 <2e-16 ***
+Residuals           181496  710.6   0.004                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Session}
+\includegraphics{features-plot_handdisplacement_child_session_quiz}
+
+\includegraphics{features-plot_handdisplacement_session_quiz}
+
+\begin{Schunk}
+\begin{Soutput}
+Error: child
+                Df Sum Sq Mean Sq F value Pr(>F)  
+factor(session)  1  55.97   55.97   9.977 0.0116 *
+Residuals        9  50.49    5.61                 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Error: Within
+                    Df Sum Sq Mean Sq F value Pr(>F)    
+factor(session)      1    0.3 0.28293   82.83 <2e-16 ***
+Residuals       181486  619.9 0.00342                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{Soutput}
+\end{Schunk}
+
+\textbf{Style}
+\includegraphics{features-plot_handdisplacement_child_style_quiz}
+
+\includegraphics{features-plot_handdisplacement_style_quiz}
+
