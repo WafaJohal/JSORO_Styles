@@ -63,10 +63,10 @@
 % The correct dates will be entered by the editor
 \maketitle
 \begin{abstract}
-	In this paper we present the concept of behavioural style as a tool for personalisation of robot's behaviour in specific roles. 
+	In this paper we present the concept of \emph{behavioural style} as a tool for personalisation of robot's behaviour in specific roles. 
 	We propose a study for which we have employed various kind of metrics to evaluate the perception and the influence of a robot's behavioural style on children. 
-	This within subjects experiment took place in a smart apartment equipped with cameras, microphones and Kinect sensor. 16 children from 7 to 11 participated to the experiment.
-	In the experiment the robot would either have an authoritative attitude or a permissive attitude. 
+	This within subjects experiment took place in a smart apartment equipped with cameras, microphones and a Kinect sensor. 16 children from 7 to 11 y.o. participated to the experiment.
+	In the experiment the robot would either have an \emph{authoritative} attitude or a \emph{permissive} style. 
 	We measured the influence of this attitude via various medium:
 	interviews of children, questionnaires, task performances, parents observation and confrontation, and postural analysis. 
 	We show that postural analysis gave the best measure to predict the style of the robot from the child's point of view.
@@ -659,7 +659,7 @@ We present in this paper only the body analysis data that constitute one of our 
 
 \subsection{Measures Extracted from Body Analysis}
 We used the skeleton data to measure variation on the child's attitude between the sessions.
-Several features form the literature of body communication have been implemented and applied for the Body Kinect data \cite{Labourette}.
+Several features form the literature of body communication have been implemented and applied for the Body Kinect data \cite{larboulette2015review}.
 
 \subsubsection{Static Features}
 We first extracted static body features at every frame:
@@ -667,12 +667,12 @@ We first extracted static body features at every frame:
 \item \textbf{Body Volume}: Bounding box of the skeleton data
 \item \textbf{Center of Mass}: Position in 3D coordinates of the centre of mass 
 \item \textbf{Center of Mass Displacement}: Variation of Position in 3D coordinates of the centre of mass from one frame to the next
-\item \textbf{Distance Covered}: 
-\item \textbf{Hand Relationship}: 
-\item \textbf{Shoulder Angle}: 
+\item \textbf{Distance/area Covered}: measures the area covered by the projection of the COM on the floor over a time period
+\item \textbf{Hand Relationship}: 3D distance between hands
+\item \textbf{Shoulder Angle}: rotation angle of shoulders according to the torso vertical axis
 \item \textbf{Elbow Flexion}: aperture angle of the elbow joints
-\item \textbf{Feet Relationship}: 
-\item \textbf{Torso Neck Orientation}: 
+\item \textbf{Feet Relationship}: 3D distance between feet
+\item \textbf{Torso Neck Orientation}: %todo
 \item \textbf{Hands Status}: open or closed 
 \end{itemize}
 

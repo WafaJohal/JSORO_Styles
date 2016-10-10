@@ -5,6 +5,10 @@
 
 \usepackage{Sweave}
 \begin{document}
+
+\tableofcontents
+
+
 \input{Results-concordance}
 \maketitle
 
@@ -13,7 +17,7 @@
 
 \section{Interviews}
 % Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
-% Date and time: ven, oct 07, 2016 - 10:39:05
+% Date and time: ven, oct 07, 2016 - 17:33:58
 \begin{table}[!htbp] \centering 
   \caption{Summary statistics of activities metadata} 
   \label{} 
@@ -102,6 +106,61 @@ The following plot shows the average preference of parents for each functionalit
 \includegraphics{interviews-plot_functionality_parent}
 
 \includegraphics{interviews-plot_functionality_parent_enfant}
+
+
+\begin{Schunk}
+\begin{Soutput}
+        objet individu  N    value        sd        se        ci
+1   homeworks    child 13 3.115385 0.6504436 0.1804006 0.3930592
+2   homeworks   parent 16 3.375000 1.1474610 0.2868652 0.6114388
+3       teach    child 12 3.500000 0.6741999 0.1946247 0.4283662
+4       teach   parent 16 3.937500 0.2500000 0.0625000 0.1332156
+5        play    child 13 3.115385 0.6175842 0.1712870 0.3732024
+6        play   parent 16 3.562500 0.8920949 0.2230237 0.4753638
+7       phone    child 13 2.307692 1.1094004 0.3076923 0.6704039
+8       phone   parent 15 1.866667 1.3020131 0.3361783 0.7210308
+9  webbrowser    child 13 2.500000 0.9574271 0.2655425 0.5785674
+10 webbrowser   parent 15 2.066667 1.3345233 0.3445724 0.7390344
+\end{Soutput}
+\end{Schunk}
+\includegraphics{interviews-plot_functionality_parent_enfant_bar}
+\begin{Schunk}
+\begin{Sinput}
+> attach(df)
+> summary(df)
+\end{Sinput}
+\begin{Soutput}
+     sujett         age          genre             Ordre      individu        
+ A1102  : 10   Min.   : 7.000   Boy :90   autoritaire1:90   Length:160        
+ A2002  : 10   1st Qu.: 8.000   Girl:70   permissif1  :70   Class :character  
+ A2502  : 10   Median : 8.500                               Mode  :character  
+ C1702  : 10   Mean   : 8.688                                                 
+ E1802  : 10   3rd Qu.: 9.000                                                 
+ H1902  : 10   Max.   :11.000                                                 
+ (Other):100                                                                  
+        objet        value      
+ homeworks :32   Min.   :1.000  
+ teach     :32   1st Qu.:2.000  
+ play      :32   Median :3.000  
+ phone     :32   Mean   :2.947  
+ webbrowser:32   3rd Qu.:4.000  
+                 Max.   :4.000  
+                 NA's   :18     
+\end{Soutput}
+\begin{Sinput}
+> summary(aov(df$value~df$objet*df$individu))
+\end{Sinput}
+\begin{Soutput}
+                      Df Sum Sq Mean Sq F value   Pr(>F)    
+df$objet               4  60.25  15.062  16.335 6.81e-11 ***
+df$individu            1   0.11   0.112   0.121    0.729    
+df$objet:df$individu   4   5.78   1.445   1.567    0.187    
+Residuals            132 121.71   0.922                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+18 observations deleted due to missingness
+\end{Soutput}
+\end{Schunk}
 
 \subsubsection{Child-parent correlation in functionality preferrence} 
 Next graphs show the correlation between parent and children ranking for each of the child subject\newline
@@ -496,7 +555,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 \section{Postures}
 % Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
-% Date and time: ven, oct 07, 2016 - 10:44:21
+% Date and time: ven, oct 07, 2016 - 17:39:35
 \begin{table}[!htbp] \centering 
   \caption{Summary statistics of activities metadata} 
   \label{} 

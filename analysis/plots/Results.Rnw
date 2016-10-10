@@ -4,6 +4,10 @@
 \author{Wafa Johal}
 
 \begin{document}
+
+\tableofcontents
+
+
 \SweaveOpts{concordance=TRUE}
 \maketitle
 <<eval=T,echo=F>>=
@@ -310,6 +314,7 @@ ggplot(dfobject, aes(x=e_webbrowser, y=p_webbrowser,colour=sujett))+ geom_point(
 \section{Features}
 <<results=tex,echo=F>>=
 features <- read.csv("~/Dropbox/DATA/STYLEBOT/features_fulls.csv")
+
 features$child = as.factor(features$child)
 features$session = as.factor(features$session)
 features$age = all_interviews[match(features$child, all_interviews$ordre),"age"]
@@ -321,6 +326,23 @@ quiz2<-subset(features, activity == "quiz2")
 dances<-subset(features, activity == "dance")
 explanations<-subset(features, activity == "explain")
 quiz_features <-rbind(quiz1,quiz2)
+
+
+allchild_feat <- read.csv("~/Dropbox/DATA/STYLEBOT/stylebot/features/allchild_feat.csv")
+allchild_feat$child = as.factor(allchild_feat$child)
+allchild_feat$session = as.factor(allchild_feat$session)
+allchild_feat$age = all_interviews[match(allchild_feat$child, all_interviews$ordre),"age"]
+allchild_feat$gender = all_interviews[match(allchild_feat$child, all_interviews$ordre),"genre"]
+attach(allchild_feat)
+
+quiz1a<-subset(allchild_feat, activity == "quiz1")
+quiz2a<-subset(allchild_feat, activity == "quiz2")
+dancesa<-subset(allchild_feat, activity == "dance")
+explanationsa<-subset(allchild_feat, activity == "explain")
+quiz_featuresa <-rbind(quiz1a,quiz2a)
+attach(allchild_feat)
+current_df = quiz_featuresa
+attach(current_df)
 @
 
 
@@ -554,12 +576,282 @@ summary(aov.quiz.style.volume)
 
 
 \subsubsection{Center of Mass}
+<<eval=T, echo=F>>=
+#postures <- read.csv("~/Dropbox/DATA/STYLEBOT/postures_fulls.csv")
+
+@
 
 \subsubsection{Center of Mass Displacement}
 
 \subsubsection{Distance Covered}
 
-\subsubsection{Hand Relationship}
+\subsubsection{Hand Relationship - Distance}
+<<eval=T, echo=F>>=
+describeBy(current_df$handDist, style)
+@
+
+
+\textbf{Child}
+<<plot_handdistance_child_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handDist,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.all.child.handdist = aov(handDist ~ factor(child) +Error(session*style), data=current_df)
+summary(aov.all.child.handdist)
+@
+
+\textbf{Age}
+<<plot_handdistance_child_age_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handDist,fill=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<plot_handdistance_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=age, y=handDist,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.age.handdist = aov(handDist ~ factor(age), data=current_df)
+summary(aov.quiz.age.handdist)
+@
+
+\textbf{Gender}
+<<plot_handdistance_child_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handDist,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<plot_handdistance_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(gender), y=handDist,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.gender.handdist = aov(handDist ~ factor(gender), data=current_df)
+summary(aov.quiz.gender.handdist)
+@
+
+
+\textbf{Versatility}
+<<plot_handdistance_child_versatility_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handDist,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<plot_handdistance_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(versatility), y=handDist,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.versatility.handdist = aov(handDist ~ factor(versatility), data=current_df)
+summary(aov.quiz.versatility.handdist)
+@
+
+
+\textbf{Session}
+<<plot_handdistance_child_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handDist,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_handdistance_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(session), y=handDist,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.session.handdist = aov(handDist ~ factor(session) +Error(child), data=current_df)
+summary(aov.quiz.session.handdist)
+@
+
+\textbf{Style}
+<<plot_handdistance_child_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handDist,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_handdistance_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(style), y=handDist,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.style.handDist= aov(handDist ~ factor(style) +Error(child), data=current_df)
+summary(aov.all.style.handDist)
+@
+
+
+
+
+\subsubsection{Hand Relationship - Displacement}
+<<eval=T, echo=F>>=
+describeBy(current_df$handDispl, style)
+@
+
+\textbf{Child}
+<<plot_handdisplacement_child_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handDispl,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.all.child.handDispl = aov(handDispl ~ factor(child) +Error(session*style), data=current_df)
+summary(aov.all.child.handDispl)
+@
+
+\textbf{Age}
+<<plot_handdisplacement_child_age_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handDispl,fill=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<plot_handdisplacement_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=age, y=handDispl,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.age.handDispl = aov(handDispl ~ factor(age), data=current_df)
+summary(aov.quiz.age.handDispl)
+@
+
+\textbf{Gender}
+<<plot_handdisplacement_child_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handDispl,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<plot_handdisplacement_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(gender), y=handDispl,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.gender.handDispl = aov(handDispl ~ factor(gender), data=current_df)
+summary(aov.quiz.gender.handDispl)
+@
+
+\textbf{Versatility}
+<<plot_handdisplacement_child_versatility_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handDispl,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<plot_handdisplacement_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(versatility), y=handDispl,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.versatility.handDispl = aov(handDispl ~ factor(versatility), data=current_df)
+summary(aov.quiz.versatility.handDispl)
+@
+
+\textbf{Session}
+<<plot_handdisplacement_child_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handDispl,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_handdisplacement_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(session), y=handDispl,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.session.handDispl = aov(handDispl ~ factor(session) +Error(child), data=current_df)
+summary(aov.quiz.session.handDispl)
+@
+
+\textbf{Style}
+<<plot_handdisplacement_child_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handDispl,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_handdisplacement_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(style), y=handDispl,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.style.handDispl= aov(handDispl ~ factor(style) +Error(child), data=current_df)
+summary(aov.all.style.handDispl)
+@
+
+
+
+\subsubsection{Hand Relationship - Asymmetry}
+<<eval=T, echo=F>>=
+describeBy(current_df$handAsym, style)
+@
+
+\textbf{Child}
+<<plot_handAsymmetry_child_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handAsym,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.all.child.handAsym = aov(handAsym ~ factor(child) +Error(session*style), data=current_df)
+summary(aov.all.child.handAsym)
+@
+
+\textbf{Age}
+<<plot_handAsymmetry_child_age_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handAsym,fill=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<plot_handAsymmetry_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=age, y=handAsym,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.age.handAsym = aov(handAsym ~ factor(age), data=current_df)
+summary(aov.quiz.age.handAsym)
+@
+
+\textbf{Gender}
+<<plot_handAsymmetry_child_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handAsym,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<plot_handAsymmetry_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(gender), y=handAsym,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.gender.handAsym = aov(handAsym ~ factor(gender), data=current_df)
+summary(aov.quiz.gender.handAsym)
+@
+
+\textbf{Versatility}
+<<plot_handAsymmetry_child_versatility_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handAsym,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<plot_handAsymmetry_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(versatility), y=handAsym,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.versatility.handAsym = aov(handAsym ~ factor(versatility), data=current_df)
+summary(aov.quiz.versatility.handAsym)
+@
+
+\textbf{Session}
+<<plot_handAsymmetry_child_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handAsym,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_handAsymmetry_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(session), y=handAsym,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.session.handAsym = aov(handAsym ~ factor(session) +Error(child), data=current_df)
+summary(aov.quiz.session.handAsym)
+@
+
+\textbf{Style}
+<<plot_handAsymmetry_child_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=handAsym,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_handAsymmetry_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(style), y=handAsym,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.style.handAsym= aov(handAsym ~ factor(style) +Error(child), data=current_df)
+summary(aov.all.style.handAsym)
+@
+
+
+
+
+
 
 \subsubsection{Shoulder Angle}
 
