@@ -766,4 +766,29 @@ stargazer(all_interviews, title = 'Summary statistics of activities metadata')
 
 
 
+
+\section{Prediction Analysis}
+<<>>=
+install.packages("e1071")
+library("e1071")
+attach(current_df)
+x <- subset(current_df, select=-c(child,age,session,versatility,style))
+y <- style
+
+svm_model <- svm(style ~ ., data=current_df)
+summary(svm_model)
+
+pred <- predict(svm_model1,x)
+system.time(pred <- predict(svm_model1,x))
+@
+
+library(caret)
+library(doMC)
+registerDoMC()
+model <-  train(style ~ ., data = current_df, method="svmRadial", 
+    trControl=trainControl(method='cv', number=10))
+
+confusionMatrix(model)
+
+%%%%todo
 \end{document}
