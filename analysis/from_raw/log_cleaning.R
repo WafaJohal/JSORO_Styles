@@ -12,9 +12,9 @@ for (e in all_childess){
   ids = subset(t, t$Freq!=0 & (t$Var2 == 'dance' | t$Var2 == 'quiz1' | t$Var2 == 'quiz2'))
   ids = unique(ids$Var1)
   print(ids)
-  subdoy = subset(body_joints_labelized, is.element(body_joints_labelized$id, ids$Var1))
-  ggplot(subdoy, aes(x=as.factor(subdoy$time), y=subdoy$JointP_SpineMid_X, colour=subdoy$activity,group=subdoy$id))+ geom_line() +
-    scale_colour_discrete_list()+ theme_Publication()
+  subdoy = subset(body_joints_labelized, is.element(body_joints_labelized$id, ids))
+  table(as.factor(subdoy$id),subdoy$activity)
+  ggplot(subdoy, aes(x=as.factor(subdoy$time), y=subdoy$JointP_SpineMid_X, colour=as.factor(subdoy$id),group=as.factor(subdoy$id)))+ geom_line() 
   cat ("Press [enter] to continue")
   line <- readline()
   
@@ -22,3 +22,4 @@ for (e in all_childess){
 
 
 
+ggplot(subdoy, aes(x=as.factor(subdoy$time), y=subdoy$JointP_SpineMid_X, colour=as.factor(subdoy$activity),group=as.factor(subdoy$id)))+ geom_line() 
