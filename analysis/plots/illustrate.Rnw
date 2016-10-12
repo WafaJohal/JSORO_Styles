@@ -171,6 +171,12 @@ ch12<-subset(allchild_feat, child == "12")
 ggplot(ch12, aes(x=as.factor(ch12$time_rel), y=QoM, colour=activity,group=1))+ geom_line() +scale_colour_discrete_list()+ theme_Publication()
 @
 
+<<>>=
+require(data.table)
+attach(body_joints_labelized)
+table(as.factor(id),activity)
+
+@
 
 
 
