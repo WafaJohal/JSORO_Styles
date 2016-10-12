@@ -14,12 +14,16 @@ for (e in all_childess){
   print(ids)
   subdoy = subset(body_joints_labelized, is.element(body_joints_labelized$id, ids))
   table(as.factor(subdoy$id),subdoy$activity)
-  ggplot(subdoy, aes(x=as.factor(subdoy$time), y=subdoy$JointP_SpineMid_X, colour=as.factor(subdoy$id),group=as.factor(subdoy$id)))+ geom_line() 
+  p = ggplot(subdoy, aes(x=as.factor(subdoy$time), y=subdoy$JointP_SpineMid_X, colour=as.factor(subdoy$activity),
+                     group=as.factor(subdoy$id)))+ geom_line() + scale_colour_levels_discrete()
+  print(p)
   cat ("Press [enter] to continue")
   line <- readline()
   
 }
 
-
+#e4
+ids1 = '72057594037928448'
+ids2 = '72057594037935776'
 
 ggplot(subdoy, aes(x=as.factor(subdoy$time), y=subdoy$JointP_SpineMid_X, colour=as.factor(subdoy$activity),group=as.factor(subdoy$id)))+ geom_line() 
