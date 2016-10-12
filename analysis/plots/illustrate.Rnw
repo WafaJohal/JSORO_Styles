@@ -1,0 +1,177 @@
+\documentclass{article}
+
+
+\begin{document}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\usepackage[a4paper, margin=1.5cm]{geometry}
+
+\SweaveOpts{concordance=TRUE}
+\title{Stylebot Experiment -illustration}
+\author{Wafa Johal}
+
+
+\SweaveOpts{concordance=TRUE}
+\maketitle
+\tableofcontents
+
+<<eval=T,echo=F>>=
+library(psych)
+library(ggplot2)
+library(stargazer)
+library(scales)
+library(plyr)
+library(reshape2)
+@
+
+<<eval=true,echo=false>>=
+prefix = "~/Documents/WRITING/2016/JSORO_Styles/analysis/plots/"
+
+##### THEME
+theme_Publication <- function(base_size=14, base_family="Helvetica") {
+      library(grid)
+      library(ggthemes)
+      (theme_foundation(base_size=base_size, base_family=base_family)
+       + theme(plot.title = element_text(face = "bold",
+                                         size = rel(1.2), hjust = 0.5),
+               text = element_text(),
+               panel.background = element_rect(colour = NA),
+               plot.background = element_rect(colour = NA),
+               panel.border = element_rect(colour = NA),
+               axis.title = element_text(face = "bold",size = rel(1)),
+               axis.title.y = element_text(angle=90,vjust =2),
+               axis.title.x = element_text(vjust = -0.2),
+               axis.text = element_text(), 
+               axis.line = element_line(colour="black"),
+               axis.ticks = element_line(),
+               panel.grid.major = element_line(colour="#f0f0f0"),
+               panel.grid.minor = element_blank(),
+               legend.key = element_rect(colour = NA),
+               legend.position = "bottom",
+               legend.direction = "horizontal",
+               legend.key.size= unit(0.2, "cm"),
+               legend.margin = unit(0, "cm"),
+               legend.title = element_text(face="italic"),
+               plot.margin=unit(c(10,5,5,5),"mm"),
+               strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"),
+               strip.text = element_text(face="bold")
+          ))
+      
+}
+
+#### COLORS
+scale_fill_discrete_binary <- function(...){
+      library(scales)
+      discrete_scale("fill","Publications",manual_pal(values = c("#00a6a6","#f49f0a")), ...)}
+
+scale_fill_discrete_list <- function(...){
+      library(scales)
+      discrete_scale("fill","Publications",manual_pal(values = c("#5f0f40","#f49f0a","#9a031e","#00a6a6","#e36414","#242f40","#008148","#15b097","#ef2917","#034732","#80ced7","#d5d6aa","#9dbbae")), ...)}
+
+scale_colour_discrete_list <- function(...){
+      library(scales)
+      discrete_scale("colour","Publications",manual_pal(values = c("#5f0f40","#f49f0a","#9a031e","#00a6a6","#e36414","#242f40","#008148","#15b097","#ef2917","#034732","#80ced7","#d5d6aa","#9dbbae")), ...)}
+
+low_level = "#80b240"
+high_level = "#293a13"
+scale_fill_continous_list = scale_fill_gradient(low = low_level, high = high_level)
+
+##### TOOLS FUNCTIONS
+## Gives count, mean, standard deviation, standard error of the mean, and confidence interval (default 95%).
+##   data: a data frame.
+##   measurevar: the name of a column that contains the variable to be summariezed
+##   groupvars: a vector containing names of columns that contain grouping variables
+##   na.rm: a boolean that indicates whether to ignore NA's
+##   conf.interval: the percent range of the confidence interval (default is 95%)
+summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
+                      conf.interval=.95, .drop=TRUE) {
+    library(plyr)
+
+    # New version of length which can handle NA's: if na.rm==T, don't count them
+    length2 <- function (x, na.rm=FALSE) {
+        if (na.rm) sum(!is.na(x))
+        else       length(x)
+    }
+
+    # This does the summary. For each group's data frame, return a vector with
+    # N, mean, and sd
+    datac <- ddply(data, groupvars, .drop=.drop,
+      .fun = function(xx, col) {
+        c(N    = length2(xx[[col]], na.rm=na.rm),
+          mean = mean   (xx[[col]], na.rm=na.rm),
+          sd   = sd     (xx[[col]], na.rm=na.rm)
+        )
+      },
+      measurevar
+    )
+
+    # Rename the "mean" column    
+    datac <- rename(datac, c("mean" = measurevar))
+
+    datac$se <- datac$sd / sqrt(datac$N)  # Calculate standard error of the mean
+
+    # Confidence interval multiplier for standard error
+    # Calculate t-statistic for confidence interval: 
+    # e.g., if conf.interval is .95, use .975 (above/below), and use df=N-1
+    ciMult <- qt(conf.interval/2 + .5, datac$N-1)
+    datac$ci <- datac$se * ciMult
+
+    return(datac)
+}
+
+remove_outliers <- function(x, na.rm = TRUE, ...) {
+  qnt <- quantile(x, probs=c(.25, .75), na.rm = na.rm, ...)
+  H <- 1.5 * IQR(x, na.rm = na.rm)
+  y <- x
+  y[x < (qnt[1] - H)] <- NA
+  y[x > (qnt[2] + H)] <- NA
+  y
+}
+
+@
+
+
+<<eval=T,echo=F>>=
+all_interviews <- read.csv("~/Documents/CODING/Data_Analysis/JSORO/Stylebot_ExpeDATA - all_interviews.csv")
+attach(all_interviews)
+stargazer(all_interviews, title = 'Summary statistics of activities metadata')
+@
+
+<<eval=T,echo=F>>=
+allchild_feat <- read.csv("~/Dropbox/DATA/STYLEBOT/stylebot/features/allchild_feat.csv")
+allchild_feat$child = as.factor(allchild_feat$child)
+allchild_feat$session = as.factor(allchild_feat$session)
+allchild_feat$age = all_interviews[match(allchild_feat$child, all_interviews$ordre),"age"]
+allchild_feat$gender = all_interviews[match(allchild_feat$child, all_interviews$ordre),"genre"]
+attach(allchild_feat)
+
+quiz1a<-subset(allchild_feat, activity == "quiz1")
+quiz2a<-subset(allchild_feat, activity == "quiz2")
+dancesa<-subset(allchild_feat, activity == "dance")
+explanationsa<-subset(allchild_feat, activity == "explain")
+quiz_featuresa <-rbind(quiz1a,quiz2a)
+attach(allchild_feat)
+current_df = quiz_featuresa
+attach(current_df)
+@
+
+
+\SweaveOpts{engine=R,eps=FALSE,echo=TRUE,prefix.string=illustrations/illustrate}
+<<>>=
+ch12<-subset(allchild_feat, child == "12")
+@
+
+<<plot_QOMexample,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(ch12, aes(x=as.factor(ch12$time_rel), y=QoM, colour=activity,group=1))+ geom_line() +scale_colour_discrete_list()+ theme_Publication()
+@
+
+
+
+
+\end{document}

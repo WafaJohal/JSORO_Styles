@@ -1,0 +1,326 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\usepackage[a4paper, margin=1.5cm]{geometry}
+\title{Stylebot Experiment}
+\author{Wafa Johal}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+\SweaveOpts{concordance=TRUE}
+
+<<eval=T,echo=F>>=
+library(psych)
+library(ggplot2)
+library(stargazer)
+library(scales)
+library(plyr)
+library(reshape2)
+@
+
+<<eval=true,echo=false>>=
+prefix = "~/Documents/WRITING/2016/JSORO_Styles/analysis/plots/"
+
+##### THEME
+theme_Publication <- function(base_size=14, base_family="Helvetica") {
+      library(grid)
+      library(ggthemes)
+      (theme_foundation(base_size=base_size, base_family=base_family)
+       + theme(plot.title = element_text(face = "bold",
+                                         size = rel(1.2), hjust = 0.5),
+               text = element_text(),
+               panel.background = element_rect(colour = NA),
+               plot.background = element_rect(colour = NA),
+               panel.border = element_rect(colour = NA),
+               axis.title = element_text(face = "bold",size = rel(1)),
+               axis.title.y = element_text(angle=90,vjust =2),
+               axis.title.x = element_text(vjust = -0.2),
+               axis.text = element_text(), 
+               axis.line = element_line(colour="black"),
+               axis.ticks = element_line(),
+               panel.grid.major = element_line(colour="#f0f0f0"),
+               panel.grid.minor = element_blank(),
+               legend.key = element_rect(colour = NA),
+               legend.position = "bottom",
+               legend.direction = "horizontal",
+               legend.key.size= unit(0.2, "cm"),
+               legend.margin = unit(0, "cm"),
+               legend.title = element_text(face="italic"),
+               plot.margin=unit(c(10,5,5,5),"mm"),
+               strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"),
+               strip.text = element_text(face="bold")
+          ))
+      
+}
+
+#### COLORS
+scale_fill_discrete_binary <- function(...){
+      library(scales)
+      discrete_scale("fill","Publications",manual_pal(values = c("#00a6a6","#f49f0a")), ...)}
+
+scale_fill_discrete_list <- function(...){
+      library(scales)
+      discrete_scale("fill","Publications",manual_pal(values = c("#5f0f40","#f49f0a","#9a031e","#00a6a6","#e36414","#242f40","#008148","#15b097","#ef2917","#034732","#80ced7","#d5d6aa","#9dbbae")), ...)}
+
+low_level = "#80b240"
+high_level = "#293a13"
+scale_fill_continous_list = scale_fill_gradient(low = low_level, high = high_level)
+
+##### TOOLS FUNCTIONS
+## Gives count, mean, standard deviation, standard error of the mean, and confidence interval (default 95%).
+##   data: a data frame.
+##   measurevar: the name of a column that contains the variable to be summariezed
+##   groupvars: a vector containing names of columns that contain grouping variables
+##   na.rm: a boolean that indicates whether to ignore NA's
+##   conf.interval: the percent range of the confidence interval (default is 95%)
+summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
+                      conf.interval=.95, .drop=TRUE) {
+    library(plyr)
+
+    # New version of length which can handle NA's: if na.rm==T, don't count them
+    length2 <- function (x, na.rm=FALSE) {
+        if (na.rm) sum(!is.na(x))
+        else       length(x)
+    }
+
+    # This does the summary. For each group's data frame, return a vector with
+    # N, mean, and sd
+    datac <- ddply(data, groupvars, .drop=.drop,
+      .fun = function(xx, col) {
+        c(N    = length2(xx[[col]], na.rm=na.rm),
+          mean = mean   (xx[[col]], na.rm=na.rm),
+          sd   = sd     (xx[[col]], na.rm=na.rm)
+        )
+      },
+      measurevar
+    )
+
+    # Rename the "mean" column    
+    datac <- rename(datac, c("mean" = measurevar))
+
+    datac$se <- datac$sd / sqrt(datac$N)  # Calculate standard error of the mean
+
+    # Confidence interval multiplier for standard error
+    # Calculate t-statistic for confidence interval: 
+    # e.g., if conf.interval is .95, use .975 (above/below), and use df=N-1
+    ciMult <- qt(conf.interval/2 + .5, datac$N-1)
+    datac$ci <- datac$se * ciMult
+
+    return(datac)
+}
+
+remove_outliers <- function(x, na.rm = TRUE, ...) {
+  qnt <- quantile(x, probs=c(.25, .75), na.rm = na.rm, ...)
+  H <- 1.5 * IQR(x, na.rm = na.rm)
+  y <- x
+  y[x < (qnt[1] - H)] <- NA
+  y[x > (qnt[2] + H)] <- NA
+  y
+}
+
+@
+
+
+\SweaveOpts{engine=R,eps=FALSE,echo=TRUE,prefix.string=interviews/interviews}
+\section{Interviews}
+<<results=tex,echo=F>>=
+all_interviews <- read.csv("~/Documents/CODING/Data_Analysis/JSORO/Stylebot_ExpeDATA - all_interviews.csv")
+attach(all_interviews)
+stargazer(all_interviews, title = 'Summary statistics of activities metadata')
+@
+
+\subsection{General}
+
+\subsubsection{Gender}
+<<plot_gender,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(all_interviews, aes(x=genre, fill=genre))+ geom_bar() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+\subsubsection{Age}
+<<plot_gender_age,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(all_interviews, aes(x=genre, y=age, fill=genre))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()+ylim(0,12)
+@
+
+\subsubsection{order}
+<<plot_order,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(all_interviews, aes(x=Ordre, fill=Ordre))+ geom_bar() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+\subsubsection{Preferred style parent}
+<<plot_preferred_style_parent,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(all_interviews, aes(x=prefered_style, fill=prefered_style))+ geom_bar() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+\subsubsection{Preferred style children}
+<<plot_preferred_style_child,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(all_interviews, aes(x=e_prefered_style, fill=e_prefered_style))+ geom_bar() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+\subsection{COIRS - CHILD ORIENTAION IN INTERACTING WITH ROBOT}
+<<eval=T,echo=F>>=
+df = data.frame(all_interviews[,c("sujett","age","genre","Ordre","p_robot","p_bike","p_book","p_clothes","p_videogame","e_robot","e_bike","e_book","e_clothes","e_videogame")])
+dfparent =  data.frame(df[,c("sujett","age","genre","Ordre","p_robot","p_bike","p_book","p_clothes","p_videogame")])
+dfparent$individu = "parent"
+dfenfant =  data.frame(df[,c("sujett","age","genre","Ordre","e_robot","e_bike","e_book","e_clothes","e_videogame")])
+dfenfant$individu = "child"
+
+dfparent = rename(dfparent, c("p_bike"="bike", "p_book"="book","p_clothes"="clothes", "p_videogame"="videogame","p_robot"="robot"))
+dfparent <- melt(dfparent, id=c("sujett", "age", "genre","Ordre","individu")) 
+dfenfant = rename(dfenfant, c("e_bike"="bike", "e_book"="book","e_clothes"="clothes", "e_videogame"="videogame","e_robot"="robot"))
+dfenfant <- melt(dfenfant, id=c("sujett", "age", "genre","Ordre","individu")) 
+dfenfant = rename(dfenfant, c("variable"="objet"))
+dfparent = rename(dfparent, c("variable"="objet"))
+df = rbind(dfenfant,dfparent)
+attach(df)
+@
+
+The following plot shows the average ranking for children for each of the object (1: first in the child's wish list)
+
+<<plot_coirs_child,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(dfenfant, aes(x=objet, y=value,fill=objet))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+The following plot shows the average ranking for parents for each of the object (1: first in the parent's wish list as a gift for thei child)
+<<plot_coirs_parent,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(dfparent, aes(x=objet, y=value,fill=objet))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_coirs_parent_enfant,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(df, aes(x=objet, y=value, fill=individu))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+\subsubsection{Child-parent correlation in object ranking} 
+Next graphs show the correlation between parent and children ranking for each of the child subject\newline
+<<plot_coirs_parent_enfant_robot,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfrobot = (all_interviews[,c("sujett","age","genre","Ordre","p_robot","e_robot")])
+ggplot(dfrobot, aes(x=e_robot, y=p_robot,colour=sujett))+ geom_point(size=8) + theme_Publication()+ xlim(1,5)+ ylim(1,5)
+@
+
+<<plot_coirs_parent_enfant_clothes,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_clothes","e_clothes")])
+ggplot(dfobject, aes(x=e_clothes, y=p_clothes,colour=sujett))+  geom_point(size = 8)+ theme_Publication()+ xlim(1,5)+ ylim(1,5)
+@
+
+<<plot_coirs_parent_enfant_book,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_book","e_book")])
+ggplot(dfobject, aes(x=e_book, y=p_book,colour=sujett))+  geom_point(size = 8)+ theme_Publication()+ xlim(1,5)+ ylim(1,5)
+@
+
+<<plot_coirs_parent_enfant_bike,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_bike","e_bike")])
+ggplot(dfobject, aes(x=e_bike, y=p_bike,colour=sujett))+  geom_point(size = 8) + theme_Publication()+ xlim(1,5)+ ylim(1,5)
+@
+
+<<plot_coirs_parent_enfant_videogame,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_videogame","e_videogame")])
+ggplot(dfobject, aes(x=e_videogame, y=p_videogame,colour=sujett))+ geom_point(size = 8) + theme_Publication()+ xlim(1,5)+ ylim(1,5)
+@
+
+\subsection{Functionality preferences}
+<<eval=T,echo=F>>=
+df = data.frame(all_interviews[,c("sujett","age","genre","Ordre","p_homeworks","p_teach","p_play","p_phone","p_webbrowser","e_homeworks","e_play","e_phone","e_teach","e_webbrowser","e_rules","e_learn","e_outside","e_sport","e_mood")])
+dfparent =  data.frame(df[,c("sujett","age","genre","Ordre","p_homeworks","p_teach","p_play","p_phone","p_webbrowser")])
+dfparent$individu = "parent"
+dfenfant =  data.frame(df[,c("sujett","age","genre","Ordre","e_homeworks","e_teach","e_play","e_phone","e_webbrowser")])
+dfenfant$individu = "child"
+
+dfparent = rename(dfparent, c("p_phone"="phone", "p_homeworks"="homeworks","p_play"="play", "p_teach"="teach","p_webbrowser"="webbrowser"))
+dfparent <- melt(dfparent, id=c("sujett", "age", "genre","Ordre","individu")) 
+dfenfant = rename(dfenfant, c("e_phone"="phone", "e_homeworks"="homeworks","e_play"="play", "e_teach"="teach","e_webbrowser"="webbrowser"))
+dfenfant <- melt(dfenfant, id=c("sujett", "age", "genre","Ordre","individu")) 
+dfenfant = rename(dfenfant, c("variable"="objet"))
+dfparent = rename(dfparent, c("variable"="objet"))
+df = rbind(dfenfant,dfparent)
+attach(df)
+@
+
+The following plot shows the average preference of children for each functionality (4: very preferred, 1: not preferred)
+<<plot_functionality_child,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfenfant_bis =  data.frame(all_interviews[,c("sujett","age","genre","Ordre","e_homeworks","e_play","e_phone","e_teach","e_webbrowser","e_rules","e_learn","e_outside","e_sport","e_mood")])
+dfenfant_bis <- melt(dfenfant_bis, id=c("sujett", "age", "genre","Ordre")) 
+dfenfant_bis = rename(dfenfant_bis, c("variable"="objet"))
+ggplot(dfenfant_bis, aes(x=objet, y=value,fill=objet))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+The following plot shows the average preference of parents for each functionality (4: very preferred, 1: not preferred)
+<<plot_functionality_parent,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(dfparent, aes(x=objet, y=value,fill=objet))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_functionality_parent_enfant,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(df, aes(x=objet, y=value, fill=individu))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()+
+  scale_y_continuous(name = "",
+                    breaks =c(1,2,3,4),
+                    labels = c("Strongly disagree","Disagree", "Agree", "Stongly agree"))+
+   scale_x_discrete(name = "Roles/Tasks",
+                    breaks =c("homeworks","teach","play","phone","webbrowser"),
+                    labels = c("Homeworks","Teach it","Play","Phone","Web-browser"))
+  
+  
+@
+
+
+<<plot_functionality_parent_enfant_bar,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfbis = df[complete.cases(df),]
+df_se = summarySE(dfbis, measurevar="value", groupvars=c("objet","individu"))
+df_se
+ggplot(df_se, aes(x=objet, y=value, fill=individu))+ geom_bar(position=position_dodge(), stat="identity")+scale_fill_discrete_binary()+ theme_Publication()+ geom_errorbar(aes(ymin=value-ci, ymax=value+ci),
+                  width=.2,                    # Width of the error bars
+                  position=position_dodge(.9)) +
+  scale_y_continuous(name = "",
+                    breaks =c(1,2,3,4),
+                    labels = c("Strongly disagree","Disagree", "Agree", "Stongly agree"))+
+   scale_x_discrete(name = "Roles/Tasks",
+                    breaks =c("homeworks","teach","play","phone","webbrowser"),
+                    labels = c("Homeworks","Teach it","Play","Phone","Web-browser"))
+  
+@
+<<>>=
+attach(df)
+summary(df)
+summary(aov(df$value~df$objet*df$individu))
+@
+
+\subsubsection{Child-parent correlation in functionality preferrence} 
+Next graphs show the correlation between parent and children ranking for each of the child subject\newline
+<<plot_coirs_parent_enfant_hmk,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfrobot = (all_interviews[,c("sujett","age","genre","Ordre","p_homeworks","e_homeworks")])
+ggplot(dfrobot, aes(x=e_homeworks, y=p_homeworks,colour=sujett))+ geom_point(size=8) + theme_Publication()+ xlim(1,5)+ ylim(1,5)
+@
+
+<<plot_coirs_parent_enfant_teach,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_teach","e_teach")])
+ggplot(dfobject, aes(x=e_teach, y=p_teach,colour=sujett))+  geom_point(size = 8)+ theme_Publication()+ xlim(1,5)+ ylim(1,5)
+@
+
+<<plot_coirs_parent_enfant_play,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_play","e_play")])
+ggplot(dfobject, aes(x=e_play, y=p_play,colour=sujett))+  geom_point(size = 8)+ theme_Publication()+ xlim(1,5)+ ylim(1,5)
+@
+
+<<plot_coirs_parent_enfant_phone,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_phone","e_phone")])
+ggplot(dfobject, aes(x=e_phone, y=p_phone,colour=sujett))+  geom_point(size = 8) + theme_Publication()+ xlim(1,5)+ ylim(1,5)
+@
+
+<<plot_coirs_parent_enfant_webbrowser,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+dfobject = (all_interviews[,c("sujett","age","genre","Ordre","p_webbrowser","e_webbrowser")])
+ggplot(dfobject, aes(x=e_webbrowser, y=p_webbrowser,colour=sujett))+ geom_point(size = 8) + theme_Publication()+ xlim(1,5)+ ylim(1,5)
+@
+
+
+
+
+
+
+\end{document}

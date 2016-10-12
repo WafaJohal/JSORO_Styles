@@ -1,5 +1,15 @@
 \documentclass{article}
 \usepackage[a4paper, margin=1.5cm]{geometry}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+
 \title{Stylebot Experiment}
 \author{Wafa Johal}
 
@@ -122,7 +132,7 @@ remove_outliers <- function(x, na.rm = TRUE, ...) {
 @
 
 
-\SweaveOpts{engine=R,eps=FALSE,echo=TRUE,prefix.string=interviews}
+\SweaveOpts{engine=R,eps=FALSE,echo=TRUE,prefix.string=interviews/interviews}
 \section{Interviews}
 <<results=tex,echo=F>>=
 all_interviews <- read.csv("~/Documents/CODING/Data_Analysis/JSORO/Stylebot_ExpeDATA - all_interviews.csv")
@@ -132,7 +142,7 @@ stargazer(all_interviews, title = 'Summary statistics of activities metadata')
 
 
 
-\SweaveOpts{engine=R,eps=FALSE,echo=TRUE,prefix.string=features}
+\SweaveOpts{engine=R,eps=FALSE,echo=TRUE,prefix.string=features/features}
 \section{Features}
 <<results=tex,echo=F>>=
 features <- read.csv("~/Dropbox/DATA/STYLEBOT/features_fulls.csv")
@@ -755,6 +765,92 @@ summary(aov.quiz.style.volume)
 \subsubsection{Hands Status}
 
 \subsection{Dynamic Features}
+\subsubsection{QoM: Quantity of Motion}
+<<eval=T, echo=F>>=
+describeBy(current_df$QoM, style)
+@
+
+\textbf{Child}
+<<plot_QoM_child_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=QoM,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.all.child.QoM = aov(QoM ~ factor(child) +Error(session*style), data=current_df)
+summary(aov.all.child.QoM)
+@
+
+\textbf{Age}
+<<plot_QoM_child_age_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=QoM,fill=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<plot_QoM_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=age, y=QoM,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.age.QoM = aov(QoM ~ factor(age), data=current_df)
+summary(aov.quiz.age.QoM)
+@
+
+\textbf{Gender}
+<<plot_QoM_child_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=QoM,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<plot_QoM_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(gender), y=QoM,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.gender.QoM = aov(QoM ~ factor(gender), data=current_df)
+summary(aov.quiz.gender.QoM)
+@
+
+\textbf{Versatility}
+<<plot_QoM_child_versatility_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=QoM,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<plot_QoM_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(versatility), y=QoM,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.versatility.QoM = aov(QoM ~ factor(versatility), data=current_df)
+summary(aov.quiz.versatility.QoM)
+@
+
+\textbf{Session}
+<<plot_QoM_child_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=QoM,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_QoM_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(session), y=QoM,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.session.QoM = aov(QoM ~ factor(session) +Error(child), data=current_df)
+summary(aov.quiz.session.QoM)
+@
+
+\textbf{Style}
+<<plot_QoM_child_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(child), y=QoM,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<plot_QoM_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
+ggplot(current_df, aes(x=as.factor(style), y=QoM,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+@
+
+<<eval=T, echo=F>>=
+aov.quiz.style.QoM= aov(QoM ~ factor(style) +Error(child/style), data=current_df)
+summary(aov.quiz.style.QoM)
+@
+
+
 
 \SweaveOpts{engine=R,eps=FALSE,echo=TRUE,prefix.string=postures}
 \section{Postures}
