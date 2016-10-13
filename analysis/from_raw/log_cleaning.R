@@ -15,9 +15,18 @@ for (e in all_childess){
   subdoy = subset(body_joints_labelized, is.element(body_joints_labelized$id, ids))
   table(as.factor(subdoy$id),subdoy$activity)
   if(length(ids)!=1){
-    if (e=='4'){
-      subdoy = subset(subdoy, is.element(subdoy$id,ids_e4)
+    if (e=='4') subdoy = subset(subdoy, is.element(subdoy$id,ids_e4)
+    
+    if (e=='7S2'){
+      subdoy = subset(subdoy, is.element(subdoy$id,ids_e7s2)
     }
+    if (e=='9S1'){
+      subdoy = subset(subdoy, is.element(subdoy$id,ids_e9s1)
+    }
+    if (e=='10S2'){
+      subdoy = subset(subdoy, is.element(subdoy$id,ids_e10s2)
+    }
+    
     
     #p = ggplot(subdoy, aes(x=as.factor(subdoy$time), y=subdoy$JointP_SpineMid_X, colour=as.factor(subdoy$activity),
     #                 group=as.factor(subdoy$id)))+ geom_line() 
