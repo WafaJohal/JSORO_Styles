@@ -2,7 +2,7 @@
 all_childess = c('4','5S1','5S2','6S1','6S2','7S1','7S2','8S1','8S2','9S1','10S2','10S1','11S1',
                  '11S2','12S1','12S2','13S1','13S2','14S1','14S2','15S1','15S2','16S1','16S2')
 for (e in all_childess){
-  fname = paste0(paste0("/media/wafa/Johal1/DATA_ANALYSIS/STYLEBOT/SKELETONS/Enfant",e,sep=""),
+  fname = paste0(paste0("/media/wafa/Johal/DATA_ANALYSIS/STYLEBOT/SKELETONS/Enfant",e,sep=""),
                  "/skeleton/body_joints_labelized.timestamp",sep="")
   print(fname)
   body_joints_labelized <- read.csv(fname)
@@ -15,22 +15,58 @@ for (e in all_childess){
   subdoy = subset(body_joints_labelized, is.element(body_joints_labelized$id, ids))
   table(as.factor(subdoy$id),subdoy$activity)
   if(length(ids)!=1){
+    if (e=='4') subdoy = subset(subdoy, is.element(subdoy$id,ids_e4)
     
-    p = ggplot(subdoy, aes(x=as.factor(subdoy$time), y=subdoy$JointP_SpineMid_X, colour=as.factor(subdoy$id),
-                     group=as.factor(subdoy$id)))+ geom_line() 
-    print(p)
+    if (e=='7S2'){
+      subdoy = subset(subdoy, is.element(subdoy$id,ids_e7s2)
+    }
+    if (e=='9S1'){
+      subdoy = subset(subdoy, is.element(subdoy$id,ids_e9s1)
+    }
+    if (e=='10S2'){
+      subdoy = subset(subdoy, is.element(subdoy$id,ids_e10s2)
+    }
+    
+    
+    #p = ggplot(subdoy, aes(x=as.factor(subdoy$time), y=subdoy$JointP_SpineMid_X, colour=as.factor(subdoy$activity),
+    #                 group=as.factor(subdoy$id)))+ geom_line() 
+    #print(p)
   }
+ 
+    subdoy$child = e
+  foname = paste0(paste0("/media/wafa/Johal/DATA_ANALYSIS/STYLEBOT/SKELETONS/ske_e",e,sep=""),
+                 ".csv",sep="")
+    write(subdoy,foname)
+  
+  
   cat ("Press [enter] to continue")
   line <- readline()
   
 }
 
 #e4
-ids1 = '72057594037928448'
-ids2 = '72057594037935776'
+ids_e4 = c('72057594037928448','72057594037935776')
 
 #e7s2
-id=c('72057594037935424','72057594037937136')
+ids_e7s2=c('72057594037935424','72057594037937136')
+
+# e9s1
+ids_e9s1 =  c('72057594037932704','72057594037932176')
+
+# e10s2
+ids_e10s2 = c(' 72057594037938640', '72057594037943152')
+
+#e11s2
+ids_e11s2 = c('72057594037931328','72057594037932016')
+
+# e13s1
+ids_e13s1=c('72057594037929056','72057594037930080')
+
+#e14s1
+ids_e14s1=c('72057594037935584')
+
+#e16s1
+ids_e16s1 = c('72057594037929600','72057594037930272')
 
 
 
