@@ -1,0 +1,17 @@
+ordre,sujett,age,genre,Ordre,p_robot,p_videogame,p_bike,p_book,p_clothes,p_homeworks,p_play,p_teach,p_phone,p_webbrowser,prefered_style,prefered_session,preferred_versatility,secret,more_auto,p_relationship,e_robot,e_videogame,e_bike,e_book,e_clothes,e_homeworks,e_play,e_rules,e_learn,e_sport,e_teach,e_outside,e_mood,e_phone,e_webbrowser,e_prefered_style,session,e_secret,classer plus autoritaire
+12,E1802,11,Girl,autoritaire1,4,5,3,2,1,4,4,4,1,1,permissif,2,,permissif,inv,mother,1,1,, ,3,3,3,3,4,3,4,2,2.5,1,1,none,none,none,cor
+11,L1802,8,Girl,permissif1,2,4,3,1,5,4,4,4,1,,autoritaire,2,poly,permissif,cor,father,1,2,3,4,5,3,2.5,3,4,3,4,3,4,3,2,,,none,
+1,T902,10,Boy,permissif1,2,3,4,1,5,4,3,3,3,3,autoritaire,2,poly,autoritaire,,,1,1,3,4,5,3.5,3.5,,2.5,,,,,3,2.5,autoritaire,,all,
+16,A2502,8,Boy,autoritaire1,4,5,1,2,3,2,3,4,1,1,permissif,2,,permissif,cor,,1,3,5,2,4,4,2.5,4,3,2,2,1,3,4,3,NA,,all,cor
+15,A2002,8,Boy,permissif1,4,5,1,2,3,4,4,4,1,2,permissif,1,,permissif,,,1,2,3,4,5,3,4,4,4,3,4,4,4,3,2,permissif,,permissif,
+14,M1902,9,Boy,autoritaire1,5,4,2,1,3,2,4,4,1,2,permissif,2,,,,parent,1,4,2,3,5,3,2,3,3,3,4,3,3,2,1,autoritaire,,all,
+13,H1902,9,Boy,autoritaire1,2,1,4,3,5,4,4,4,1,4,permissif,2,,,cor,gran-mother,1,3,2,5,4,3,3,3,4,3,3,3,3,2,3,all,,all,
+10,ML1702,10,Girl,autoritaire1,1,4,3,2,5,4,4,4,1,1,permissif,2,,permissif,,mother,1,5,4,2,3,3,3,3,3,3,3,4,4,1,2,all,,all,none
+9,M1702,8,Girl,permissif1,3,1,5,4,2,4,4,4,1,1,permissif,1,,permissif,,mother,1,2,3,5,4,2,3,4,3,2,4,2,3,2,3,permissif,,all,cor
+8,C1702,9,Girl,autoritaire1,5,4,3,2,1,1,4,4,1,4,permissif,2,,,cor,mother,2,4,3,1,5,4,3,2,4,4,4,3,3,1,3,autoritaire,1,autoritaire,cor
+7,R1602,7,Boy,permissif1,2,3,1,4,5,4,4,4,4,1,permissif,1,,permissif,,mother,,,,,,,,,,,,,,,,,,,
+6,L1302,8,Girl,permissif1,5,3,1,4,2,1,1,4,1,1,neutre,,,,,gran-mother,1,2,3,4,5,4,4,3,4,3,4,4,4,4,4,autoritaire,2,all,
+5,R1302,8,Boy,autoritaire1,2,1,3,4,5,4,4,4,4,1,autoritaire,1,poly,,,gran-mother,1,2,3,5,4,2,4,3,4,4,3,3,4,3,4,autoritaire,1,none,
+4,A1102,9,Girl,autoritaire1,3,5,1,2,4,4,4,4,3,1,permissif,,poly,,,mother,1,3,5,2,4,3,3,3,3,3,3,3,3,1,2,autoritaire,1,,
+3,S0902,9,Boy,permissif1,3,4,2,1,5,4,4,4,4,4,permissif,1,poly,permissif,,mother,,,,,,,,,,,,,,,,,,,
+2,V0902,8,Boy,autoritaire1,3,4,1,2,5,4,2,4,,4,permissif,2,poly,autoritaire,,,,,,,,,,,,,,,,,,,,,

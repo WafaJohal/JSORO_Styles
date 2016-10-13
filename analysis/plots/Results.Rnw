@@ -136,6 +136,8 @@ remove_outliers <- function(x, na.rm = TRUE, ...) {
 \section{Interviews}
 <<results=tex,echo=F>>=
 all_interviews <- read.csv("~/Documents/CODING/Data_Analysis/JSORO/Stylebot_ExpeDATA - all_interviews.csv")
+all_interviews <- read.csv("/home/wafa/Documents/WRITING/2016/JSORO_Styles/analysis/from_raw/Stylebot_ExpeDATA - all_interviews.csv")
+
 attach(all_interviews)
 stargazer(all_interviews, title = 'Summary statistics of activities metadata')
 @
@@ -160,7 +162,10 @@ explanations<-subset(features, activity == "explain")
 quiz_features <-rbind(quiz1,quiz2)
 
 
-allchild_feat <- read.csv("~/Dropbox/DATA/STYLEBOT/stylebot/features/allchild_feat.csv")
+#allchild_feat <- read.csv("~/Dropbox/DATA/STYLEBOT/stylebot/features/allchild_feat.csv")
+all_ske_feat <- read.csv("/media/wafa/Johal/DATA_ANALYSIS/STYLEBOT/SKELETONS/csv_files/all_ske_feat.csv")
+allchild_feat = all_ske_feat
+
 allchild_feat$child = as.factor(allchild_feat$child)
 allchild_feat$session = as.factor(allchild_feat$session)
 allchild_feat$age = all_interviews[match(allchild_feat$child, all_interviews$ordre),"age"]
@@ -173,7 +178,7 @@ dancesa<-subset(allchild_feat, activity == "dance")
 explanationsa<-subset(allchild_feat, activity == "explain")
 quiz_featuresa <-rbind(quiz1a,quiz2a)
 attach(allchild_feat)
-current_df = quiz_featuresa
+current_df = quiz2a
 attach(current_df)
 @
 
@@ -243,166 +248,166 @@ explanations$body_volume <- remove_outliers(explanations$body_volume)
 
 \textbf{Child}
 <<plot_body_volume_child_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=volume,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.child.volume = aov(body_volume ~ factor(child) +Error(session*style), data=quiz_features)
+aov.quiz.child.volume = aov(volume ~ factor(child) +Error(session*style), data=current_df)
 summary(aov.quiz.child.volume)
 @
 
 \textbf{Age}
 <<plot_body_volume_child_age_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=volume,fill=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
 @
 
 <<plot_body_volume_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=age, y=body_volume,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+ggplot(current_df, aes(x=age, y=volume,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.age.volume = aov(body_volume ~ factor(age), data=quiz_features)
+aov.quiz.age.volume = aov(volume ~ factor(age), data=current_df)
 summary(aov.quiz.age.volume)
 @
 
 \textbf{Gender}
 <<plot_body_volume_child_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=volume,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
 @
 
 <<plot_body_volume_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(gender), y=body_volume,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(gender), y=volume,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.gender.volume = aov(body_volume ~ factor(gender), data=quiz_features)
+aov.quiz.gender.volume = aov(volume ~ factor(gender), data=current_df)
 summary(aov.quiz.gender.volume)
 @
 
 
 \textbf{Versatility}
 <<plot_body_volume_child_versatility_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=volume,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
 @
 
 <<plot_body_volume_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(versatility), y=body_volume,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(versatility), y=volume,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.versatility.volume = aov(body_volume ~ factor(versatility), data=quiz_features)
+aov.quiz.versatility.volume = aov(volume ~ factor(versatility), data=current_df)
 summary(aov.quiz.versatility.volume)
 @
 
 
 \textbf{Session}
 <<plot_body_volume_child_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=volume,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<plot_body_volume_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(session), y=body_volume,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(session), y=volume,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.session.volume = aov(body_volume ~ factor(session) +Error(child), data=quiz_features)
+aov.quiz.session.volume = aov(volume ~ factor(session) +Error(child), data=current_df)
 summary(aov.quiz.session.volume)
 @
 
 \textbf{Style}
 <<plot_body_volume_child_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=body_volume,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=volume,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<plot_body_volume_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(style), y=body_volume,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(style), y=volume,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.style.volume = aov(body_volume ~ factor(style) +Error(child), data=quiz_features)
+aov.quiz.style.volume = aov(volume ~ factor(style) +Error(child), data=current_df)
 summary(aov.quiz.style.volume)
 @
 
 \subsubsection{Distance}
 \textbf{Child}
 <<plot_distance_child_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=JointDistance,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=frontalDistance,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.child.distance = aov(JointDistance ~ factor(child) +Error(session*style), data=quiz_features)
+aov.quiz.child.distance = aov(frontalDistance ~ factor(child) +Error(session*style), data=current_df)
 summary(aov.quiz.child.distance)
 @
 
 \textbf{Age}
 <<plot_distance_child_age_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=JointDistance,fill=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=frontalDistance,fill=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
 @
 
 <<plot_distance_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=age, y=JointDistance,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+ggplot(current_df, aes(x=age, y=frontalDistance,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.age.volume = aov(JointDistance ~ factor(age), data=quiz_features)
+aov.quiz.age.volume = aov(frontalDistance ~ factor(age), data=current_df)
 summary(aov.quiz.age.volume)
 @
 
 \textbf{Gender}
 <<plot_distance_child_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=JointDistance,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=frontalDistance,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
 @
 
 <<plot_distance_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(gender), y=JointDistance,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(gender), y=frontalDistance,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.gender.volume = aov(JointDistance ~ factor(gender), data=quiz_features)
+aov.quiz.gender.volume = aov(frontalDistance ~ factor(gender), data=current_df)
 summary(aov.quiz.gender.volume)
 @
 
 
 \textbf{Versatility}
 <<plot_distance_child_versatility_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=JointDistance,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=frontalDistance,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
 @
 
 <<plot_distance_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(versatility), y=JointDistance,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(versatility), y=frontalDistance,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.versatility.volume = aov(JointDistance ~ factor(versatility), data=quiz_features)
+aov.quiz.versatility.volume = aov(frontalDistance ~ factor(versatility), data=current_df)
 summary(aov.quiz.versatility.volume)
 @
 
 
 \textbf{Session}
 <<plot_distance_child_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=JointDistance,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=frontalDistance,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<plot_distance_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(session), y=JointDistance,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(session), y=frontalDistance,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.session.volume = aov(JointDistance ~ factor(session) +Error(child), data=quiz_features)
+aov.quiz.session.volume = aov(frontalDistance ~ factor(session) +Error(child), data=current_df)
 summary(aov.quiz.session.volume)
 @
 
 \textbf{Style}
 <<plot_distance_child_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=JointDistance,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=frontalDistance,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<plot_distance_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(style), y=JointDistance,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(style), y=frontalDistance,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.style.volume = aov(JointDistance ~ factor(style) +Error(child), data=quiz_features)
+aov.quiz.style.volume = aov(frontalDistance ~ factor(style) +Error(child), data=current_df)
 summary(aov.quiz.style.volume)
 @
 
@@ -511,6 +516,7 @@ summary(aov.quiz.style.handDist)
 \subsubsection{Hand Relationship - Displacement}
 <<eval=T, echo=F>>=
 describeBy(current_df$handDispl, style)
+
 @
 
 \textbf{Child}
@@ -598,6 +604,7 @@ summary(aov.quiz.style.handDispl)
 \subsubsection{Hand Relationship - Asymmetry}
 <<eval=T, echo=F>>=
 describeBy(current_df$handAsym, style)
+current_df$handAsym =  remove_outliers(current_df$handAsym)
 @
 
 \textbf{Child}
@@ -696,67 +703,67 @@ summary(aov.quiz.style.handAsym)
 \subsubsection{Body lean angle - Frontal}
 \textbf{Child}
 <<plot_leanx_child_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=KinectLeanX,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=torsoLean,fill=as.factor(child)))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.child.distance = aov(KinectLeanX ~ factor(child) +Error(session*style), data=quiz_features)
+aov.quiz.child.distance = aov(torsoLean ~ factor(child) +Error(session*style), data=current_df)
 summary(aov.quiz.child.distance)
 @
 
 \textbf{Age}
 <<plot_leanx_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=age, y=KinectLeanX,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
+ggplot(current_df, aes(x=age, y=torsoLean,fill=age,group=age))+ geom_boxplot() +scale_fill_continous_list+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.age.volume = aov(KinectLeanX ~ factor(age), data=quiz_features)
+aov.quiz.age.volume = aov(torsoLean ~ factor(age), data=current_df)
 summary(aov.quiz.age.volume)
 @
 
 \textbf{Gender}
 <<plot_leanx_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(gender), y=KinectLeanX,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(gender), y=torsoLean,fill=gender))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.gender.volume = aov(KinectLeanX ~ factor(gender), data=quiz_features)
+aov.quiz.gender.volume = aov(torsoLean ~ factor(gender), data=current_df)
 summary(aov.quiz.gender.volume)
 @
 
 
 \textbf{Versatility}
 <<plot_leanx_gender_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(versatility), y=KinectLeanX,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(versatility), y=torsoLean,fill=versatility))+ geom_boxplot() +scale_fill_discrete_binary()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.versatility.volume = aov(KinectLeanX ~ factor(versatility), data=quiz_features)
+aov.quiz.versatility.volume = aov(torsoLean ~ factor(versatility), data=current_df)
 summary(aov.quiz.versatility.volume)
 @
 
 
 \textbf{Session}
 <<plot_leanx_session_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(session), y=KinectLeanX,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(session), y=torsoLean,fill=session))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.session.volume = aov(KinectLeanX ~ factor(session) +Error(child), data=quiz_features)
+aov.quiz.session.volume = aov(torsoLean ~ factor(session) +Error(child), data=current_df)
 summary(aov.quiz.session.volume)
 @
 
 \textbf{Style}
 <<plot_leanx_child_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(child), y=KinectLeanX,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(child), y=torsoLean,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<plot_leanx_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(quiz_features, aes(x=as.factor(style), y=KinectLeanX,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(style), y=remove_outliers(torsoLean),fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
-aov.quiz.style.volume = aov(JointDistance ~ factor(style) +Error(child), data=quiz_features)
+aov.quiz.style.volume = aov(JointDistance ~ factor(style) +Error(child), data=current_df)
 summary(aov.quiz.style.volume)
 @
 
@@ -842,7 +849,7 @@ ggplot(current_df, aes(x=as.factor(child), y=QoM,fill=style))+ geom_boxplot() +s
 @
 
 <<plot_QoM_style_quiz,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(current_df, aes(x=as.factor(style), y=QoM,fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
+ggplot(current_df, aes(x=as.factor(style), y=remove_outliers(QoM),fill=style))+ geom_boxplot() +scale_fill_discrete_list()+ theme_Publication()
 @
 
 <<eval=T, echo=F>>=
