@@ -99,21 +99,29 @@ foname = paste0(paste0("/media/wafa/Johal/DATA_ANALYSIS/STYLEBOT/SKELETONS/csv_f
                 ".csv",sep="")
 print(foname)  
 posture= read.csv(foname)
-
+attach(posture)
+posture = posture[order(time),]
+posture$time_rel = seq.int(nrow(posture))
 for (e in all_childess){
   foname = paste0(paste0("/media/wafa/Johal/DATA_ANALYSIS/STYLEBOT/SKELETONS/csv_files/ske_e",e,sep=""),
                   ".csv",sep="")
   print(foname)  
   posture_c = read.csv(foname)
- 
+  attach(posture_c)
+  posture_c = posture_c[order(time),]
+  posture_c$time_rel = seq.int(nrow(posture_c))
   posture = rbind(posture,posture_c)
+  attach(posture)
   
 }
 foname = "/media/wafa/Johal/DATA_ANALYSIS/STYLEBOT/SKELETONS/csv_files/ske_all.csv"
 print(foname)  
+posture = posture[order(time, child),]
 write.csv(posture,foname)
 
+head(posture$time_rel)
 
-
+ske_all <- read.csv("/media/wafa/Johal/DATA_ANALYSIS/STYLEBOT/SKELETONS/csv_files/ske_all.csv")
+colnames(ske_all)
 
 ggplot(subdoy, aes(x=as.factor(subdoy$time), y=subdoy$JointP_SpineMid_X, colour=as.factor(subdoy$activity),group=as.factor(subdoy$id)))+ geom_line() 

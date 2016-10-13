@@ -15,7 +15,7 @@ Created on 14 nov. 2015
 '''
 types=["dynamic","static"]
 
-
+print('script big')
 
 
 class BodyAnalysis():
@@ -80,9 +80,12 @@ class BodyAnalysis():
                 ox = float(row[nox])
                 oy = float(row[noy])
                 oz = float(row[noz])
-                ow = float(row[now])
+                if row[now] :
+                    ow = float(row[now])
+                else :
+                    ow = 0
+
                 jointsO.append((ox, oy, oz, ow))
-                print((row['style'], row['child'], row['session'], row['activity'], row['versatility']))
             self.all_data.append(((row['style'], row['child'], row['session'], row['activity'], row['versatility']), float(row['time']), float(row['time_rel']), jointsP, jointsO))
         self.idx=0
         csvfile.close()
@@ -95,8 +98,8 @@ class BodyAnalysis():
 
     def playData(self):
         print("play data")
-        fname='~/allchild_feat.csv'
-        with open(fname, 'wb') as f:  # Just use 'w' mode in 3.x
+        fname='/media/wafa/Johal/DATA_ANALYSIS/STYLEBOT/SKELETONS/csv_files/all_ske_feat.csv'
+        with open(fname, 'w+') as f:  # Just use 'w' mode in 3.x
             (metainfo, tstp, time_rel, jointp, jointo) = self.all_data[0]
             (style, child, session, activity, versatility)  = metainfo
             print(metainfo)
@@ -151,7 +154,7 @@ class BodyAnalysis():
             self.computeWholeQoM(self.all_data[idx -1], self.all_data[idx+1])
             self.computeWholeQoM3D(self.all_data[idx -1], self.all_data[idx+1])
             self.computeheadMotionVel(time_rel0, jointo0[2], time_rel2, jointo2[2])
-            if( idx-2>=0 or idx+2 < len(self.all_data)):
+            if( idx-2>=0 or idx+2 < len(self.all_data)-1):
                 self.computeWholeBodyJerk(self.all_data[idx+2],self.all_data[idx+1],self.all_data[idx-1],self.all_data[idx-2])
 
         else:
@@ -570,11 +573,12 @@ class BodyAnalysis():
 
 
 
-if __name__ == '__main__':
-    print("hello")
-    fname="~/Dropbox/DATA/STYLEBOT/postures_fulls.csv"
-    #fname="/Users/wafajohal/Dropbox/DATA/STYLEBOT/child4_dance.csv"
-    print(fname)
-    boda=BodyAnalysis(fname)
-    boda.idx = 0
-    boda.playData()
+
+print("hello")
+#fname="~/Dropbox/DATA/STYLEBOT/postures_fulls.csv"
+fname="/media/wafa/Johal/DATA_ANALYSIS/STYLEBOT/SKELETONS/csv_files/ske_all.csv"
+#fname="/Users/wafajohal/Dropbox/DATA/STYLEBOT/child4_dance.csv"
+print(fname)
+boda=BodyAnalysis(fname)
+boda.idx = 0
+boda.playData()
