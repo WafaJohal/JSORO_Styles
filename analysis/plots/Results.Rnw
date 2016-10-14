@@ -340,6 +340,43 @@ ggplot(frontalDistanceSE,  aes(x=as.factor(child), y=mean, fill=style)) +
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
     geom_bar(stat="identity", position="dodge")  +theme_Publication() 
 
+
+
+##############JERLK
+cnames = names(current_df)
+namelist = cnames[grepl( "jerk" , names( current_df ) )]
+current_df$jerk =  rowMeans(subset(current_df, select = namelist, na.rm = TRUE))
+
+attach(current_df)
+
+jerkSE = summarySE(current_df, measurevar="jerk", groupvars=c("style","child"))
+jerkSE$member = "jerk"
+jerkSE = rename(jerkSE, c("jerk"="mean"))
+ggplot(jerkSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+jerkSE = summarySE(current_df, measurevar="jerk", groupvars=c("style"))
+jerkSE$member = "jerk"
+jerkSE = rename(jerkSE, c("jerk"="mean"))
+ggplot(jerkSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+j="jerk_JointType_SpineMid"
+for( j in namelist){
+  jerkSE = summarySE(current_df, measurevar=j, groupvars=c("style"))
+  jerkSE$member = j
+  colnames(jerkSE)[colnames(jerkSE)==j] <- "mean"
+  p = ggplot(jerkSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+  print(p)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
+
+
 @
 
 
