@@ -185,50 +185,86 @@ attach(current_df)
 
 
 \subsection{General Analysis}
-<<>>=
+<<QOM>>=
 ## QOM
 qomSE = summarySE(current_df, measurevar="QoM", groupvars=c("style"))
 ggplot(qomSE, aes(x=style, y=QoM, fill=style)) + 
     geom_errorbar(aes(ymin=QoM-sd, ymax=QoM+sd), width=.9) +
     geom_bar(stat="identity") +theme_Publication() 
+@
 
-### Aym
-kneeAsymSE = summarySE(current_df, measurevar="kneeAsym", groupvars=c("style"))
-kneeAsymSE$member = "knee"
-kneeAsymSE = rename(kneeAsymSE, c("kneeAsym"="mean"))
-Aym = kneeAsymSE
-ggplot(kneeAsymSE, aes(x=as.factor(style), y=mean, fill=style)) + 
+
+<<ASYMMETRY>>=
+cnames = names(current_df)
+namelist = cnames[grepl( "Asym" , names( current_df ) )]
+namelist
+current_df$Asym =  rowMeans(subset(current_df, select = namelist, na.rm = TRUE))
+
+attach(current_df)
+
+AsymSE = summarySE(current_df, measurevar="Asym", groupvars=c("style","child"))
+AsymSE$member = "Asym"
+AsymSE = rename(AsymSE, c("Asym"="mean"))
+ggplot(AsymSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity")  +theme_Publication() 
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
 
-footAsymSE = summarySE(current_df, measurevar="footAsym", groupvars=c("style"))
-footAsymSE$member = "feet"
-footAsymSE = rename(footAsymSE, c("footAsym"="mean"))
-Aym =  rbind(Aym,footAsymSE)
-ggplot(footAsymSE, aes(x=as.factor(style), y=mean, fill=style)) + 
+AsymSE = summarySE(current_df, measurevar="Asym", groupvars=c("style"))
+AsymSE$member = "Asym"
+AsymSE = rename(AsymSE, c("Asym"="mean"))
+ggplot(AsymSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity")  +theme_Publication() 
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
 
-elbowAsymSE = summarySE(current_df, measurevar="elbowAsym", groupvars=c("style"))
-elbowAsymSE$member = "elbow"
-elbowAsymSE = rename(elbowAsymSE, c("elbowAsym"="mean"))
-Aym =  rbind(Aym,elbowAsymSE)
-ggplot(elbowAsymSE, aes(x=as.factor(style), y=mean, fill=style)) + 
+AsymSE = summarySE(current_df, measurevar="Asym", groupvars=c("style","session"))
+AsymSE$member = "Asym"
+AsymSE = rename(AsymSE, c("Asym"="mean"))
+ggplot(AsymSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity")  +theme_Publication() 
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
 
-
-handAsymSE = summarySE(current_df, measurevar="handAsym", groupvars=c("style"))
-handAsymSE$member = "hand"
-handAsymSE = rename(handAsymSE, c("handAsym"="mean"))
-Aym =  rbind(Aym,handAsymSE)
-ggplot(handAsymSE, aes(x=as.factor(style), y=mean, fill=style)) + 
+for( j in namelist){
+  AsymSE = summarySE(current_df, measurevar=j, groupvars=c("style"))
+  AsymSE$member = j
+  colnames(AsymSE)[colnames(AsymSE)==j] <- "mean"
+  p = ggplot(AsymSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity")  +theme_Publication() 
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() + ggtitle(j)
+  print(p)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
 
-ggplot(Aym, aes(x=as.factor(style), y=mean, fill=style)) + 
+for( j in namelist){
+  AsymSE = summarySE(current_df, measurevar=j, groupvars=c("style","session"))
+  AsymSE$member = j
+  colnames(AsymSE)[colnames(AsymSE)==j] <- "mean"
+  p = ggplot(AsymSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity")  +theme_Publication() + facet_wrap(~member) 
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() + ggtitle(j)
+  print(p)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
+
+
+for( j in namelist){
+  AsymSE = summarySE(current_df, measurevar=j, groupvars=c("style","child"))
+  AsymSE$member = j
+  colnames(AsymSE)[colnames(AsymSE)==j] <- "mean"
+  p = ggplot(AsymSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() + ggtitle(j)
+  print(p)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
+
+
+@
+
+
+<<VOLUME>>=
 
 ### volume
 volumeSE = summarySE(current_df, measurevar="volume", groupvars=c("style"))
@@ -237,7 +273,10 @@ volumeSE = rename(volumeSE, c("volume"="mean"))
 ggplot(volumeSE, aes(x=as.factor(style), y=mean, fill=style)) + 
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
     geom_bar(stat="identity")  +theme_Publication() 
+@
 
+
+<<DISTANCE>>=
 ### distances
 attach(current_df)
 for( c in levels(current_df$child)){
@@ -257,92 +296,354 @@ lateralDistanceSE$member = "lateralDistance"
 lateralDistanceSE = rename(lateralDistanceSE, c("lateralDistance"="mean"))
 ggplot(lateralDistanceSE, aes(x=as.factor(style), y=mean, fill=style)) + 
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity")  +theme_Publication() 
+    geom_bar(stat="identity")  +theme_Publication() +ggtitle("lat distance")
 
 frontalDistanceSE = summarySE(current_df, measurevar="frontalDistance", groupvars=c("style"))
 frontalDistanceSE$member = "frontalDistance"
 frontalDistanceSE = rename(frontalDistanceSE, c("frontalDistance"="mean"))
 ggplot(frontalDistanceSE, aes(x=as.factor(style), y=mean, fill=style)) + 
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity")  +theme_Publication() 
+    geom_bar(stat="identity")  +theme_Publication() +ggtitle("front distance")
 
 
 @
 
-<<>>=
-## QOM
-qomSE = summarySE(current_df, measurevar="QoM", groupvars=c("child","style"))
-ggplot(qomSE, aes(x=as.factor(child), y=QoM, colour=style, group=style)) + 
-    geom_errorbar(aes(ymin=QoM-sd, ymax=QoM+sd), width=.9) +
-    geom_point(size=1.5) +theme_Publication() 
-ggplot(qomSE, aes(x=child, y=QoM, fill=style, group=style)) + 
-    geom_errorbar(aes(ymin=QoM-sd, ymax=QoM+sd), width=.1) +
-    geom_bar(stat="identity",position="dodge") +theme_Publication() 
 
-### Aym
-kneeAsymSE = summarySE(current_df, measurevar="kneeAsym", groupvars=c("style","child"))
-kneeAsymSE$member = "knee"
-kneeAsymSE = rename(kneeAsymSE, c("kneeAsym"="mean"))
-Aym = kneeAsymSE
-ggplot(kneeAsymSE, aes(x=as.factor(child), y=mean, fill=style)) + 
+<<TORSOLEAN>>=
+### TORSOLEAN
+torsoLeanSE = summarySE(current_df, measurevar="torsoLean", groupvars=c("style","child"))
+torsoLeanSE$member = "torsoLean"
+torsoLeanSE = rename(torsoLeanSE, c("torsoLean"="mean"))
+ggplot(torsoLeanSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() +ggtitle("torso Lean")
+
+torsoLeanSE = summarySE(current_df, measurevar="torsoLean", groupvars=c("style"))
+torsoLeanSE$member = "torsoLean"
+torsoLeanSE = rename(torsoLeanSE, c("torsoLean"="mean"))
+ggplot(torsoLeanSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() +ggtitle("torso Lean")
+
+torsoLeanSE = summarySE(current_df, measurevar="torsoLean", groupvars=c("style","session"))
+torsoLeanSE$member = "torsoLean"
+torsoLeanSE = rename(torsoLeanSE, c("torsoLean"="mean"))
+ggplot(torsoLeanSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() +ggtitle("torso Lean")
+
+@
+
+<<HEADNOD>>=
+######################## heqd nod
+current_df$headNoddeg =  current_df$headNod * 180 / pi
+current_df$headNoddeg = abs(current_df$headNoddeg)
+headNoddegSE = summarySE(current_df, measurevar="headNoddeg", groupvars=c("style","child"))
+headNoddegSE$member = "headNoddeg"
+headNoddegSE = rename(headNoddegSE, c("headNoddeg"="mean"))
+ggplot(headNoddegSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
     geom_bar(stat="identity", position="dodge")  +theme_Publication() 
 
-footAsymSE = summarySE(current_df, measurevar="footAsym", groupvars=c("style","child"))
-footAsymSE$member = "feet"
-footAsymSE = rename(footAsymSE, c("footAsym"="mean"))
-Aym =  rbind(Aym,footAsymSE)
-ggplot(footAsymSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+headNoddegSE = summarySE(current_df, measurevar="headNoddeg", groupvars=c("style"))
+headNoddegSE$member = "headNoddeg"
+headNoddegSE = rename(headNoddegSE, c("headNoddeg"="mean"))
+ggplot(headNoddegSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
     geom_bar(stat="identity", position="dodge")  +theme_Publication() 
 
-elbowAsymSE = summarySE(current_df, measurevar="elbowAsym", groupvars=c("style","child"))
-elbowAsymSE$member = "elbow"
-elbowAsymSE = rename(elbowAsymSE, c("elbowAsym"="mean"))
-Aym =  rbind(Aym,elbowAsymSE)
-ggplot(elbowAsymSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
-    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
-
-handAsymSE = summarySE(current_df, measurevar="handAsym", groupvars=c("style","child"))
-handAsymSE$member = "hand"
-handAsymSE = rename(handAsymSE, c("handAsym"="mean"))
-Aym =  rbind(Aym,handAsymSE)
-ggplot(handAsymSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
-    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
-
-ggplot(Aym,  aes(x=as.factor(child), y=mean, fill=style)) + 
-    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity", position="dodge")  +theme_Publication() +facet_wrap(~member) 
-
-### volume
-volumeSE = summarySE(current_df, measurevar="volume", groupvars=c("style","child"))
-volumeSE$member = "volume"
-volumeSE = rename(volumeSE, c("volume"="mean"))
-ggplot(volumeSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
-    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
-
-### distances
-### lateral
-lateralDistanceSE = summarySE(current_df, measurevar="lateralDistance", groupvars=c("style","child"))
-lateralDistanceSE$member = "lateralDistance"
-lateralDistanceSE = rename(lateralDistanceSE, c("lateralDistance"="mean"))
-ggplot(lateralDistanceSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
-    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
-
-frontalDistanceSE = summarySE(current_df, measurevar="frontalDistance", groupvars=c("style","child"))
-frontalDistanceSE$member = "frontalDistance"
-frontalDistanceSE = rename(frontalDistanceSE, c("frontalDistance"="mean"))
-ggplot(frontalDistanceSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+headNoddegSE = summarySE(current_df, measurevar="headNoddeg", groupvars=c("style","session"))
+headNoddegSE$member = "headNoddeg"
+headNoddegSE = rename(headNoddegSE, c("headNoddeg"="mean"))
+ggplot(headNoddegSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
     geom_bar(stat="identity", position="dodge")  +theme_Publication() 
 
 
+@
 
-##############JERLK
+<<ELBOW DISTANCE>>=
+elbowDistSE = summarySE(current_df, measurevar="elbowDist", groupvars=c("style","child"))
+elbowDistSE$member = "elbowDist"
+elbowDistSE = rename(elbowDistSE, c("elbowDist"="mean"))
+ggplot(elbowDistSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+elbowDistSE = summarySE(current_df, measurevar="elbowDist", groupvars=c("style"))
+elbowDistSE$member = "elbowDist"
+elbowDistSE = rename(elbowDistSE, c("elbowDist"="mean"))
+ggplot(elbowDistSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+elbowDistSE = summarySE(current_df, measurevar="elbowDist", groupvars=c("style","session"))
+elbowDistSE$member = "elbowDist"
+elbowDistSE = rename(elbowDistSE, c("elbowDist"="mean"))
+ggplot(elbowDistSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+@
+
+<<FEET DISPL>>=
+legsExtensiveWSumSE = summarySE(current_df, measurevar="feetDispl", groupvars=c("style","child"))
+feetDisplSE$member = "feetDispl"
+feetDisplSE = rename(feetDisplSE, c("feetDispl"="mean"))
+ggplot(feetDisplSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+feetDisplSE = summarySE(current_df, measurevar="feetDispl", groupvars=c("style"))
+feetDisplSE$member = "feetDispl"
+feetDisplSE = rename(feetDisplSE, c("feetDispl"="mean"))
+ggplot(feetDisplSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+feetDisplSE = summarySE(current_df, measurevar="feetDispl", groupvars=c("style","session"))
+feetDisplSE$member = "feetDispl"
+feetDisplSE = rename(feetDisplSE, c("feetDispl"="mean"))
+ggplot(feetDisplSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+@
+
+<<LEG EXTENSIVE WEIGHTED SUM>>=
+legsExtensiveWSumSE = summarySE(current_df, measurevar="legsExtensiveWSum", groupvars=c("style","child"))
+legsExtensiveWSumSE$member = "legsExtensiveWSum"
+legsExtensiveWSumSE = rename(legsExtensiveWSumSE, c("legsExtensiveWSum"="mean"))
+ggplot(legsExtensiveWSumSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+legsExtensiveWSumSE = summarySE(current_df, measurevar="legsExtensiveWSum", groupvars=c("style"))
+legsExtensiveWSumSE$member = "legsExtensiveWSum"
+legsExtensiveWSumSE = rename(legsExtensiveWSumSE, c("legsExtensiveWSum"="mean"))
+ggplot(legsExtensiveWSumSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+legsExtensiveWSumSE = summarySE(current_df, measurevar="legsExtensiveWSum", groupvars=c("style","session"))
+legsExtensiveWSumSE$member = "legsExtensiveWSum"
+legsExtensiveWSumSE = rename(legsExtensiveWSumSE, c("legsExtensiveWSum"="mean"))
+ggplot(legsExtensiveWSumSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+@
+
+<<LEG EXTENSIVE MAX>>=
+legsExtensiveMaxSE = summarySE(current_df, measurevar="legsExtensiveMax", groupvars=c("style","child"))
+legsExtensiveMaxSE$member = "legsExtensiveMax"
+legsExtensiveMaxSE = rename(legsExtensiveMaxSE, c("legsExtensiveMax"="mean"))
+ggplot(legsExtensiveMaxSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+legsExtensiveMaxSE = summarySE(current_df, measurevar="legsExtensiveMax", groupvars=c("style"))
+legsExtensiveMaxSE$member = "legsExtensiveMax"
+legsExtensiveMaxSE = rename(legsExtensiveMaxSE, c("legsExtensiveMax"="mean"))
+ggplot(legsExtensiveMaxSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+legsExtensiveMaxSE = summarySE(current_df, measurevar="legsExtensiveMax", groupvars=c("style","session"))
+legsExtensiveMaxSE$member = "legsExtensiveMax"
+legsExtensiveMaxSE = rename(legsExtensiveMaxSE, c("legsExtensiveMax"="mean"))
+ggplot(legsExtensiveMaxSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+@
+
+
+<<EXTENSIVE WEIGHTED SUM>>=
+extensiveWSumSE = summarySE(current_df, measurevar="extensiveWSum", groupvars=c("style","child"))
+extensiveWSumSE$member = "extensiveWSum"
+extensiveWSumSE = rename(extensiveWSumSE, c("extensiveWSum"="mean"))
+ggplot(extensiveWSumSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+extensiveWSumSE = summarySE(current_df, measurevar="extensiveWSum", groupvars=c("style"))
+extensiveWSumSE$member = "extensiveWSum"
+extensiveWSumSE = rename(extensiveWSumSE, c("extensiveWSum"="mean"))
+ggplot(extensiveWSumSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+extensiveWSumSE = summarySE(current_df, measurevar="extensiveWSum", groupvars=c("style","session"))
+extensiveWSumSE$member = "extensiveWSum"
+extensiveWSumSE = rename(extensiveWSumSE, c("extensiveWSum"="mean"))
+ggplot(extensiveWSumSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+@
+
+<<EXTENSIVE MAX>>=
+extensiveMaxSE = summarySE(current_df, measurevar="extensiveMax", groupvars=c("style","child"))
+extensiveMaxSE$member = "extensiveMax"
+extensiveMaxSE = rename(extensiveMaxSE, c("extensiveMax"="mean"))
+ggplot(extensiveMaxSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+extensiveMaxSE = summarySE(current_df, measurevar="extensiveMax", groupvars=c("style"))
+extensiveMaxSE$member = "extensiveMax"
+extensiveMaxSE = rename(extensiveMaxSE, c("extensiveMax"="mean"))
+ggplot(extensiveMaxSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+extensiveMaxSE = summarySE(current_df, measurevar="extensiveMax", groupvars=c("style","session"))
+extensiveMaxSE$member = "extensiveMax"
+extensiveMaxSE = rename(extensiveMaxSE, c("extensiveMax"="mean"))
+ggplot(extensiveMaxSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+@
+
+
+
+<<VELOCITY>>=
+############## VELOCITY
+cnames = names(current_df)
+namelist = cnames[grepl( "vel" , names( current_df ) )]
+namelist
+current_df$vel =  rowMeans(subset(current_df, select = namelist, na.rm = TRUE))
+
+attach(current_df)
+
+velSE = summarySE(current_df, measurevar="vel", groupvars=c("style","child"))
+velSE$member = "vel"
+velSE = rename(velSE, c("vel"="mean"))
+ggplot(velSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+velSE = summarySE(current_df, measurevar="vel", groupvars=c("style"))
+velSE$member = "vel"
+velSE = rename(velSE, c("vel"="mean"))
+ggplot(velSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+velSE = summarySE(current_df, measurevar="vel", groupvars=c("style","session"))
+velSE$member = "vel"
+velSE = rename(velSE, c("vel"="mean"))
+ggplot(velSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+for( j in namelist){
+  velSE = summarySE(current_df, measurevar=j, groupvars=c("style"))
+  velSE$member = j
+  colnames(velSE)[colnames(velSE)==j] <- "mean"
+  p = ggplot(velSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() + ggtitle(j)
+  print(p)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
+
+for( j in namelist){
+  velSE = summarySE(current_df, measurevar=j, groupvars=c("style","session"))
+  velSE$member = j
+  colnames(velSE)[colnames(velSE)==j] <- "mean"
+  p = ggplot(velSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() + ggtitle(j)
+  print(p)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
+
+
+for( j in namelist){
+  velSE = summarySE(current_df, measurevar=j, groupvars=c("style","child"))
+  velSE$member = j
+  colnames(velSE)[colnames(velSE)==j] <- "mean"
+  p = ggplot(velSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() + ggtitle(j)
+  print(p)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
+
+
+@
+
+
+<<ACCELERATION>>=
+############## ACC
+cnames = names(current_df)
+namelist = cnames[grepl( "acc" , names( current_df ) )]
+namelist
+current_df$acc =  rowMeans(subset(current_df, select = namelist, na.rm = TRUE))
+
+attach(current_df)
+
+accSE = summarySE(current_df, measurevar="acc", groupvars=c("style","child"))
+accSE$member = "acc"
+accSE = rename(accSE, c("acc"="mean"))
+ggplot(accSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+accSE = summarySE(current_df, measurevar="acc", groupvars=c("style"))
+accSE$member = "acc"
+accSE = rename(accSE, c("acc"="mean"))
+ggplot(accSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+accSE = summarySE(current_df, measurevar="acc", groupvars=c("style","session"))
+accSE$member = "acc"
+accSE = rename(accSE, c("acc"="mean"))
+ggplot(accSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+for( j in namelist){
+  accSE = summarySE(current_df, measurevar=j, groupvars=c("style"))
+  accSE$member = j
+  colnames(accSE)[colnames(accSE)==j] <- "mean"
+  p = ggplot(accSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() + ggtitle(j)
+  print(p)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
+
+for( j in namelist){
+  accSE = summarySE(current_df, measurevar=j, groupvars=c("style","session"))
+  accSE$member = j
+  colnames(accSE)[colnames(accSE)==j] <- "mean"
+  p = ggplot(accSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() + ggtitle(j)
+  print(p)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
+
+for( j in namelist){
+  accSE = summarySE(current_df, measurevar=j, groupvars=c("style","child"))
+  accSE$member = j
+  colnames(accSE)[colnames(accSE)==j] <- "mean"
+  p = ggplot(accSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() + ggtitle(j)
+  print(p)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
+@
+
+
+<<JERK>>=
+##############JERK
 cnames = names(current_df)
 namelist = cnames[grepl( "jerk" , names( current_df ) )]
 current_df$jerk =  rowMeans(subset(current_df, select = namelist, na.rm = TRUE))
@@ -363,14 +664,45 @@ ggplot(jerkSE,  aes(x=as.factor(style), y=mean, fill=style)) +
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
     geom_bar(stat="identity", position="dodge")  +theme_Publication() 
 
-j="jerk_JointType_SpineMid"
+jerkSE = summarySE(current_df, measurevar="jerk", groupvars=c("style","session"))
+jerkSE$member = "jerk"
+jerkSE = rename(jerkSE, c("jerk"="mean"))
+ggplot(jerkSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
 for( j in namelist){
   jerkSE = summarySE(current_df, measurevar=j, groupvars=c("style"))
   jerkSE$member = j
   colnames(jerkSE)[colnames(jerkSE)==j] <- "mean"
   p = ggplot(jerkSE,  aes(x=as.factor(style), y=mean, fill=style)) + 
     geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
-    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() + ggtitle(j)
+  print(p)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
+
+for( j in namelist){
+  jerkSE = summarySE(current_df, measurevar=j, groupvars=c("style","session"))
+  jerkSE$member = j
+  colnames(jerkSE)[colnames(jerkSE)==j] <- "mean"
+  p = ggplot(jerkSE,  aes(x=as.factor(session), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() + ggtitle(j)
+  print(p)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
+
+
+for( j in namelist){
+  jerkSE = summarySE(current_df, measurevar=j, groupvars=c("style","child"))
+  jerkSE$member = j
+  colnames(jerkSE)[colnames(jerkSE)==j] <- "mean"
+  p = ggplot(jerkSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() + ggtitle(j)
   print(p)
   cat ("Press [enter] to continue")
   line <- readline()
@@ -378,6 +710,7 @@ for( j in namelist){
 
 
 @
+
 
 
 

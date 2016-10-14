@@ -164,11 +164,11 @@ attach(current_df)
 
 \SweaveOpts{engine=R,eps=FALSE,echo=TRUE,prefix.string=illustrations/illustrate}
 <<>>=
-ch12<-subset(allchild_feat, child == "8")
+ch12<-subset(allchild_feat, child == "10")
 @
 
 <<plot_QOMexample,fig=T,echo=F,include=T,height=4,tidy=TRUE>>=
-ggplot(ch12, aes(x=as.factor(ch12$time), y=remove_outliers(QoM), colour=activity,group=session))+ geom_line() +scale_colour_discrete_list()+ theme_Publication()
+ggplot(ch12, aes(x=as.factor(ch12$time), y=remove_outliers(ch12$jerk_JointType_SpineMid), colour=activity,group=session))+ geom_line() +scale_colour_discrete_list()+ theme_Publication()
 @
 
 <<>>=
