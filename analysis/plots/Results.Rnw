@@ -30,7 +30,7 @@ library(reshape2)
 @
 
 <<eval=true,echo=false>>=
-prefix = "~/Documents/WRITING/2016/JSORO_Styles/analysis/plots/"
+prefix = "/home/wafa/Documents/WRITING/2016/JSORO_Styles/analysis/plots/"
 
 ##### THEME
 theme_Publication <- function(base_size=14, base_family="Helvetica") {
@@ -135,7 +135,7 @@ remove_outliers <- function(x, na.rm = TRUE, ...) {
 \SweaveOpts{engine=R,eps=FALSE,echo=TRUE,prefix.string=interviews/interviews}
 \section{Interviews}
 <<results=tex,echo=F>>=
-all_interviews <- read.csv("~/Documents/CODING/Data_Analysis/JSORO/Stylebot_ExpeDATA - all_interviews.csv")
+#all_interviews <- read.csv("~/Documents/CODING/Data_Analysis/JSORO/Stylebot_ExpeDATA - all_interviews.csv")
 all_interviews <- read.csv("/home/wafa/Documents/WRITING/2016/JSORO_Styles/analysis/from_raw/Stylebot_ExpeDATA - all_interviews.csv")
 
 attach(all_interviews)
@@ -147,19 +147,19 @@ stargazer(all_interviews, title = 'Summary statistics of activities metadata')
 \SweaveOpts{engine=R,eps=FALSE,echo=TRUE,prefix.string=features/features}
 \section{Features}
 <<results=tex,echo=F>>=
-features <- read.csv("~/Dropbox/DATA/STYLEBOT/features_fulls.csv")
+#features <- read.csv("~/Dropbox/DATA/STYLEBOT/features_fulls.csv")
 
-features$child = as.factor(features$child)
-features$session = as.factor(features$session)
-features$age = all_interviews[match(features$child, all_interviews$ordre),"age"]
-features$gender = all_interviews[match(features$child, all_interviews$ordre),"genre"]
-attach(features)
-#stargazer(features, title = 'Summary statistics of metadata')
-quiz1<-subset(features, activity == "quiz1")
-quiz2<-subset(features, activity == "quiz2")
-dances<-subset(features, activity == "dance")
-explanations<-subset(features, activity == "explain")
-quiz_features <-rbind(quiz1,quiz2)
+# features$child = as.factor(features$child)
+# features$session = as.factor(features$session)
+# features$age = all_interviews[match(features$child, all_interviews$ordre),"age"]
+# features$gender = all_interviews[match(features$child, all_interviews$ordre),"genre"]
+# attach(features)
+# #stargazer(features, title = 'Summary statistics of metadata')
+# quiz1<-subset(features, activity == "quiz1")
+# quiz2<-subset(features, activity == "quiz2")
+# dances<-subset(features, activity == "dance")
+# explanations<-subset(features, activity == "explain")
+# quiz_features <-rbind(quiz1,quiz2)
 
 
 #allchild_feat <- read.csv("~/Dropbox/DATA/STYLEBOT/stylebot/features/allchild_feat.csv")
@@ -177,10 +177,171 @@ quiz2a<-subset(allchild_feat, activity == "quiz2")
 dancesa<-subset(allchild_feat, activity == "dance")
 explanationsa<-subset(allchild_feat, activity == "explain")
 quiz_featuresa <-rbind(quiz1a,quiz2a)
-attach(allchild_feat)
+s2 =  subset(quiz_featuresa, session == 2)
+
 current_df = quiz2a
 attach(current_df)
 @
+
+
+\subsection{General Analysis}
+<<>>=
+## QOM
+qomSE = summarySE(current_df, measurevar="QoM", groupvars=c("style"))
+ggplot(qomSE, aes(x=style, y=QoM, fill=style)) + 
+    geom_errorbar(aes(ymin=QoM-sd, ymax=QoM+sd), width=.9) +
+    geom_bar(stat="identity") +theme_Publication() 
+
+### Aym
+kneeAsymSE = summarySE(current_df, measurevar="kneeAsym", groupvars=c("style"))
+kneeAsymSE$member = "knee"
+kneeAsymSE = rename(kneeAsymSE, c("kneeAsym"="mean"))
+Aym = kneeAsymSE
+ggplot(kneeAsymSE, aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity")  +theme_Publication() 
+
+footAsymSE = summarySE(current_df, measurevar="footAsym", groupvars=c("style"))
+footAsymSE$member = "feet"
+footAsymSE = rename(footAsymSE, c("footAsym"="mean"))
+Aym =  rbind(Aym,footAsymSE)
+ggplot(footAsymSE, aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity")  +theme_Publication() 
+
+elbowAsymSE = summarySE(current_df, measurevar="elbowAsym", groupvars=c("style"))
+elbowAsymSE$member = "elbow"
+elbowAsymSE = rename(elbowAsymSE, c("elbowAsym"="mean"))
+Aym =  rbind(Aym,elbowAsymSE)
+ggplot(elbowAsymSE, aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity")  +theme_Publication() 
+
+
+handAsymSE = summarySE(current_df, measurevar="handAsym", groupvars=c("style"))
+handAsymSE$member = "hand"
+handAsymSE = rename(handAsymSE, c("handAsym"="mean"))
+Aym =  rbind(Aym,handAsymSE)
+ggplot(handAsymSE, aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity")  +theme_Publication() 
+
+ggplot(Aym, aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity")  +theme_Publication() + facet_wrap(~member) 
+
+### volume
+volumeSE = summarySE(current_df, measurevar="volume", groupvars=c("style"))
+volumeSE$member = "volume"
+volumeSE = rename(volumeSE, c("volume"="mean"))
+ggplot(volumeSE, aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity")  +theme_Publication() 
+
+### distances
+attach(current_df)
+for( c in levels(current_df$child)){
+  grdf =  subset(current_df, current_df$child == c)
+  attach(grdf)
+  p <- ggplot(grdf, aes(lateralDistance,frontalDistance))
+  h3 <- p + stat_bin2d(bins = 100)  + facet_wrap(~style) +
+  scale_y_continuous(expand=c(0,0))  +scale_x_continuous(expand=c(0,0))
+  print(h3)
+  cat ("Press [enter] to continue")
+  line <- readline()
+}
+
+### lateral
+lateralDistanceSE = summarySE(current_df, measurevar="lateralDistance", groupvars=c("style"))
+lateralDistanceSE$member = "lateralDistance"
+lateralDistanceSE = rename(lateralDistanceSE, c("lateralDistance"="mean"))
+ggplot(lateralDistanceSE, aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity")  +theme_Publication() 
+
+frontalDistanceSE = summarySE(current_df, measurevar="frontalDistance", groupvars=c("style"))
+frontalDistanceSE$member = "frontalDistance"
+frontalDistanceSE = rename(frontalDistanceSE, c("frontalDistance"="mean"))
+ggplot(frontalDistanceSE, aes(x=as.factor(style), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity")  +theme_Publication() 
+
+
+@
+
+<<>>=
+## QOM
+qomSE = summarySE(current_df, measurevar="QoM", groupvars=c("child","style"))
+ggplot(qomSE, aes(x=as.factor(child), y=QoM, colour=style, group=style)) + 
+    geom_errorbar(aes(ymin=QoM-sd, ymax=QoM+sd), width=.9) +
+    geom_point(size=1.5) +theme_Publication() 
+ggplot(qomSE, aes(x=child, y=QoM, fill=style, group=style)) + 
+    geom_errorbar(aes(ymin=QoM-sd, ymax=QoM+sd), width=.1) +
+    geom_bar(stat="identity",position="dodge") +theme_Publication() 
+
+### Aym
+kneeAsymSE = summarySE(current_df, measurevar="kneeAsym", groupvars=c("style","child"))
+kneeAsymSE$member = "knee"
+kneeAsymSE = rename(kneeAsymSE, c("kneeAsym"="mean"))
+Aym = kneeAsymSE
+ggplot(kneeAsymSE, aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+footAsymSE = summarySE(current_df, measurevar="footAsym", groupvars=c("style","child"))
+footAsymSE$member = "feet"
+footAsymSE = rename(footAsymSE, c("footAsym"="mean"))
+Aym =  rbind(Aym,footAsymSE)
+ggplot(footAsymSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+elbowAsymSE = summarySE(current_df, measurevar="elbowAsym", groupvars=c("style","child"))
+elbowAsymSE$member = "elbow"
+elbowAsymSE = rename(elbowAsymSE, c("elbowAsym"="mean"))
+Aym =  rbind(Aym,elbowAsymSE)
+ggplot(elbowAsymSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+handAsymSE = summarySE(current_df, measurevar="handAsym", groupvars=c("style","child"))
+handAsymSE$member = "hand"
+handAsymSE = rename(handAsymSE, c("handAsym"="mean"))
+Aym =  rbind(Aym,handAsymSE)
+ggplot(handAsymSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+ggplot(Aym,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() +facet_wrap(~member) 
+
+### volume
+volumeSE = summarySE(current_df, measurevar="volume", groupvars=c("style","child"))
+volumeSE$member = "volume"
+volumeSE = rename(volumeSE, c("volume"="mean"))
+ggplot(volumeSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+### distances
+### lateral
+lateralDistanceSE = summarySE(current_df, measurevar="lateralDistance", groupvars=c("style","child"))
+lateralDistanceSE$member = "lateralDistance"
+lateralDistanceSE = rename(lateralDistanceSE, c("lateralDistance"="mean"))
+ggplot(lateralDistanceSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+frontalDistanceSE = summarySE(current_df, measurevar="frontalDistance", groupvars=c("style","child"))
+frontalDistanceSE$member = "frontalDistance"
+frontalDistanceSE = rename(frontalDistanceSE, c("frontalDistance"="mean"))
+ggplot(frontalDistanceSE,  aes(x=as.factor(child), y=mean, fill=style)) + 
+    geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.9) +
+    geom_bar(stat="identity", position="dodge")  +theme_Publication() 
+
+@
+
 
 
 
@@ -190,59 +351,59 @@ We filtered the data as follow
 
 <<results=tex,echo=F>>=
 ### cleanning the data 
-features$MaxY <- remove_outliers(features$MaxY)
-features$MinY <- remove_outliers(features$MinY)
-features$MaxZ <- remove_outliers(features$MaxZ)
-features$MinZ <- remove_outliers(features$MinZ)
-features$MaxX <- remove_outliers(features$MaxX)
-features$MinX <- remove_outliers(features$MinX)
-
-quiz_features$MaxY <- remove_outliers(quiz_features$MaxY)
-quiz_features$MinY <- remove_outliers(quiz_features$MinY)
-quiz_features$MaxZ <- remove_outliers(quiz_features$MaxZ)
-quiz_features$MinZ <- remove_outliers(quiz_features$MinZ)
-quiz_features$MaxX <- remove_outliers(quiz_features$MaxX)
-quiz_features$MinX <- remove_outliers(quiz_features$MinX)
-
-dances$MaxY <- remove_outliers(dances$MaxY)
-dances$MinY <- remove_outliers(dances$MinY)
-dances$MaxZ <- remove_outliers(dances$MaxZ)
-dances$MinZ <- remove_outliers(dances$MinZ)
-dances$MaxX <- remove_outliers(dances$MaxX)
-dances$MinX <- remove_outliers(dances$MinX)
-
-explanations$MaxY <- remove_outliers(explanations$MaxY)
-explanations$MinY <- remove_outliers(explanations$MinY)
-explanations$MaxZ <- remove_outliers(explanations$MaxZ)
-explanations$MinZ <- remove_outliers(explanations$MinZ)
-explanations$MaxX <- remove_outliers(explanations$MaxX)
-explanations$MinX <- remove_outliers(explanations$MinX)
-
-
-### computing the volume
-features$height =  abs(features$MaxX - features$MinX)
-features$depth =  abs(features$MaxZ - features$MinZ)
-features$large =  abs(features$MaxY -features$MinY)
-features$body_volume <- features$depth * features$height *  features$large
-features$body_volume <- remove_outliers(features$body_volume)
-
-quiz_features$height =  abs(quiz_features$MaxX - quiz_features$MinX)
-quiz_features$depth =  abs(quiz_features$MaxZ - quiz_features$MinZ)
-quiz_features$large =  abs(quiz_features$MaxY -quiz_features$MinY)
-quiz_features$body_volume <- quiz_features$depth * quiz_features$height *  quiz_features$large
-quiz_features$body_volume <- remove_outliers(quiz_features$body_volume)
-
-dances$height =  abs(dances$MaxX - dances$MinX)
-dances$depth =  abs(dances$MaxZ - dances$MinZ)
-dances$large =  abs(dances$MaxY -dances$MinY)
-dances$body_volume <- dances$depth * dances$height *  dances$large
-dances$body_volume <- remove_outliers(dances$body_volume)
-
-explanations$height =  abs(explanations$MaxX - explanations$MinX)
-explanations$depth =  abs(explanations$MaxZ - explanations$MinZ)
-explanations$large =  abs(explanations$MaxY -explanations$MinY)
-explanations$body_volume <- explanations$depth * explanations$height *  explanations$large
-explanations$body_volume <- remove_outliers(explanations$body_volume)
+# features$MaxY <- remove_outliers(features$MaxY)
+# features$MinY <- remove_outliers(features$MinY)
+# features$MaxZ <- remove_outliers(features$MaxZ)
+# features$MinZ <- remove_outliers(features$MinZ)
+# features$MaxX <- remove_outliers(features$MaxX)
+# features$MinX <- remove_outliers(features$MinX)
+# 
+# quiz_features$MaxY <- remove_outliers(quiz_features$MaxY)
+# quiz_features$MinY <- remove_outliers(quiz_features$MinY)
+# quiz_features$MaxZ <- remove_outliers(quiz_features$MaxZ)
+# quiz_features$MinZ <- remove_outliers(quiz_features$MinZ)
+# quiz_features$MaxX <- remove_outliers(quiz_features$MaxX)
+# quiz_features$MinX <- remove_outliers(quiz_features$MinX)
+# 
+# dances$MaxY <- remove_outliers(dances$MaxY)
+# dances$MinY <- remove_outliers(dances$MinY)
+# dances$MaxZ <- remove_outliers(dances$MaxZ)
+# dances$MinZ <- remove_outliers(dances$MinZ)
+# dances$MaxX <- remove_outliers(dances$MaxX)
+# dances$MinX <- remove_outliers(dances$MinX)
+# 
+# explanations$MaxY <- remove_outliers(explanations$MaxY)
+# explanations$MinY <- remove_outliers(explanations$MinY)
+# explanations$MaxZ <- remove_outliers(explanations$MaxZ)
+# explanations$MinZ <- remove_outliers(explanations$MinZ)
+# explanations$MaxX <- remove_outliers(explanations$MaxX)
+# explanations$MinX <- remove_outliers(explanations$MinX)
+# 
+# 
+# ### computing the volume
+# features$height =  abs(features$MaxX - features$MinX)
+# features$depth =  abs(features$MaxZ - features$MinZ)
+# features$large =  abs(features$MaxY -features$MinY)
+# features$body_volume <- features$depth * features$height *  features$large
+# features$body_volume <- remove_outliers(features$body_volume)
+# 
+# quiz_features$height =  abs(quiz_features$MaxX - quiz_features$MinX)
+# quiz_features$depth =  abs(quiz_features$MaxZ - quiz_features$MinZ)
+# quiz_features$large =  abs(quiz_features$MaxY -quiz_features$MinY)
+# quiz_features$body_volume <- quiz_features$depth * quiz_features$height *  quiz_features$large
+# quiz_features$body_volume <- remove_outliers(quiz_features$body_volume)
+# 
+# dances$height =  abs(dances$MaxX - dances$MinX)
+# dances$depth =  abs(dances$MaxZ - dances$MinZ)
+# dances$large =  abs(dances$MaxY -dances$MinY)
+# dances$body_volume <- dances$depth * dances$height *  dances$large
+# dances$body_volume <- remove_outliers(dances$body_volume)
+# 
+# explanations$height =  abs(explanations$MaxX - explanations$MinX)
+# explanations$depth =  abs(explanations$MaxZ - explanations$MinZ)
+# explanations$large =  abs(explanations$MaxY -explanations$MinY)
+# explanations$body_volume <- explanations$depth * explanations$height *  explanations$large
+# explanations$body_volume <- remove_outliers(explanations$body_volume)
 
 @
 
